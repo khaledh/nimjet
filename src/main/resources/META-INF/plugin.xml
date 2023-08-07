@@ -1,0 +1,53 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>khaledh.nimjet</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>NimJet</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor
+        email="khaledh@gmail.com"
+        url="https://github.com/khaledh/nimjet">
+      Khaled Hammouda
+    </vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    Nim programming language plugin for JetBrains IDEs.
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+      <fileType
+          name="Nim File"
+          implementationClass="khaledh.nimjet.NimFileType"
+          fieldName="INSTANCE"
+          language="Nim"
+          extensions="nim"/>
+
+      <lang.parserDefinition
+          language="Nim"
+          implementationClass="khaledh.nimjet.NimParserDefinition"/>
+
+      <lang.syntaxHighlighterFactory
+          language="Nim"
+          implementationClass="khaledh.nimjet.NimSyntaxHighlighterFactory"/>
+
+      <annotator
+          language="Nim"
+          implementationClass="khaledh.nimjet.NimAnnotator"/>
+
+<!--      <colorSettingsPage-->
+<!--          implementation="khaledh.nimjet.NimColorSettingsPage"/>-->
+    </extensions>
+</idea-plugin>

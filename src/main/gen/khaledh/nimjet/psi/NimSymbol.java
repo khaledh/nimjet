@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface NimSymbol extends PsiElement {
 
   @NotNull
+  List<NimIdent> getIdentList();
+
+  @Nullable
+  NimBuiltInMagics getBuiltInMagics();
+
+  @NotNull
   List<NimKeyword> getKeywordList();
 
   @NotNull

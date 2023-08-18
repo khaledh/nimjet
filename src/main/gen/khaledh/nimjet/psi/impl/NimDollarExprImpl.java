@@ -29,14 +29,8 @@ public class NimDollarExprImpl extends NimExprImpl implements NimDollarExpr {
 
   @Override
   @NotNull
-  public List<NimIndopt> getIndoptList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIndopt.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimPrimaryExpr> getPrimaryExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPrimaryExpr.class);
+  public List<NimExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
   }
 
 }

@@ -7,14 +7,14 @@ import com.intellij.psi.PsiElement;
 
 public interface NimIdentColonEquals extends PsiElement {
 
+  @NotNull
+  List<NimIdent> getIdentList();
+
   @Nullable
   NimCommaOptcomment getCommaOptcomment();
 
   @Nullable
   NimExpr getExpr();
-
-  @NotNull
-  List<NimIndopt> getIndoptList();
 
   @Nullable
   NimTypeDesc getTypeDesc();

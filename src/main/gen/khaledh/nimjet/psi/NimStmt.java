@@ -14,6 +14,12 @@ public interface NimStmt extends PsiElement {
   NimBlockStmt getBlockStmt();
 
   @Nullable
+  NimCaseStmt getCaseStmt();
+
+  @Nullable
+  NimConstant getConstant();
+
+  @Nullable
   NimDeferStmt getDeferStmt();
 
   @Nullable

@@ -28,6 +28,12 @@ public class NimIdentColonEqualsImpl extends ASTWrapperPsiElement implements Nim
   }
 
   @Override
+  @NotNull
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
+  }
+
+  @Override
   @Nullable
   public NimCommaOptcomment getCommaOptcomment() {
     return findChildByClass(NimCommaOptcomment.class);
@@ -37,12 +43,6 @@ public class NimIdentColonEqualsImpl extends ASTWrapperPsiElement implements Nim
   @Nullable
   public NimExpr getExpr() {
     return findChildByClass(NimExpr.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimIndopt> getIndoptList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIndopt.class);
   }
 
   @Override

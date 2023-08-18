@@ -29,6 +29,24 @@ public class NimIdentOrLiteralImpl extends ASTWrapperPsiElement implements NimId
 
   @Override
   @Nullable
+  public NimArrayConstr getArrayConstr() {
+    return findChildByClass(NimArrayConstr.class);
+  }
+
+  @Override
+  @Nullable
+  public NimCastExpr getCastExpr() {
+    return findChildByClass(NimCastExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public NimExprColonEqExprList getExprColonEqExprList() {
+    return findChildByClass(NimExprColonEqExprList.class);
+  }
+
+  @Override
+  @Nullable
   public NimLiteral getLiteral() {
     return findChildByClass(NimLiteral.class);
   }
@@ -43,6 +61,12 @@ public class NimIdentOrLiteralImpl extends ASTWrapperPsiElement implements NimId
   @Nullable
   public NimSymbol getSymbol() {
     return findChildByClass(NimSymbol.class);
+  }
+
+  @Override
+  @Nullable
+  public NimTupleConstr getTupleConstr() {
+    return findChildByClass(NimTupleConstr.class);
   }
 
 }

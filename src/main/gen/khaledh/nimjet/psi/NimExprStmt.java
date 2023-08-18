@@ -7,7 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface NimExprStmt extends PsiElement {
 
-  @NotNull
-  NimSimpleExpr getSimpleExpr();
+  @Nullable
+  NimExpr getExpr();
+
+  @Nullable
+  NimPostExprBlocks getPostExprBlocks();
 
 }

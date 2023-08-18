@@ -28,9 +28,9 @@ public class NimSemiStmtListImpl extends ASTWrapperPsiElement implements NimSemi
   }
 
   @Override
-  @NotNull
-  public List<NimExpr> getExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
+  @Nullable
+  public NimExpr getExpr() {
+    return findChildByClass(NimExpr.class);
   }
 
   @Override

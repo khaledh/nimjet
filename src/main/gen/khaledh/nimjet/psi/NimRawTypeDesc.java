@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface NimRawTypeDesc extends PsiElement {
 
   @Nullable
-  NimPrimaryExpr getPrimaryExpr();
+  NimExpr getExpr();
 
   @Nullable
   NimRoutineType getRoutineType();

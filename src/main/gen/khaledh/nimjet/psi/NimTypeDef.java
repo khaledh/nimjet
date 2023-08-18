@@ -7,13 +7,19 @@ import com.intellij.psi.PsiElement;
 
 public interface NimTypeDef extends PsiElement {
 
+  @Nullable
+  NimGenericParamList getGenericParamList();
+
   @NotNull
+  NimIdentVis getIdentVis();
+
+  @Nullable
   NimIndAndComment getIndAndComment();
 
-  @NotNull
-  NimIndopt getIndopt();
+  @Nullable
+  NimPragma getPragma();
 
-  @NotNull
+  @Nullable
   NimTypeDefValue getTypeDefValue();
 
 }

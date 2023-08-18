@@ -7,8 +7,8 @@ import com.intellij.psi.PsiElement;
 
 public interface NimSemiStmtList extends PsiElement {
 
-  @NotNull
-  List<NimExpr> getExprList();
+  @Nullable
+  NimExpr getExpr();
 
   @NotNull
   List<NimStmt> getStmtList();

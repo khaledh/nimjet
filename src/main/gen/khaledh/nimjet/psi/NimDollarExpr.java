@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface NimDollarExpr extends NimExpr {
 
   @NotNull
-  List<NimIndopt> getIndoptList();
-
-  @NotNull
-  List<NimPrimaryExpr> getPrimaryExprList();
+  List<NimExpr> getExprList();
 
 }

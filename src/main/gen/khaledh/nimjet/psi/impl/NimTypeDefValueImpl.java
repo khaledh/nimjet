@@ -28,9 +28,39 @@ public class NimTypeDefValueImpl extends ASTWrapperPsiElement implements NimType
   }
 
   @Override
+  @Nullable
+  public NimConceptDecl getConceptDecl() {
+    return findChildByClass(NimConceptDecl.class);
+  }
+
+  @Override
+  @Nullable
+  public NimEnumDecl getEnumDecl() {
+    return findChildByClass(NimEnumDecl.class);
+  }
+
+  @Override
   @NotNull
+  public List<NimExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
+  }
+
+  @Override
+  @Nullable
   public NimObjectDecl getObjectDecl() {
-    return findNotNullChildByClass(NimObjectDecl.class);
+    return findChildByClass(NimObjectDecl.class);
+  }
+
+  @Override
+  @Nullable
+  public NimPostExprBlocks getPostExprBlocks() {
+    return findChildByClass(NimPostExprBlocks.class);
+  }
+
+  @Override
+  @Nullable
+  public NimTupleDecl getTupleDecl() {
+    return findChildByClass(NimTupleDecl.class);
   }
 
 }

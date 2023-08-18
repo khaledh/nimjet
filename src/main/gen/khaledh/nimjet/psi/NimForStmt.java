@@ -19,4 +19,7 @@ public interface NimForStmt extends PsiElement {
   @Nullable
   NimStmtList getStmtList();
 
+  @NotNull
+  List<NimVarTuple> getVarTupleList();
+
 }

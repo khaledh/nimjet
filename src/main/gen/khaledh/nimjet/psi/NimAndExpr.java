@@ -10,7 +10,4 @@ public interface NimAndExpr extends NimExpr {
   @NotNull
   List<NimExpr> getExprList();
 
-  @NotNull
-  List<NimIndopt> getIndoptList();
-
 }

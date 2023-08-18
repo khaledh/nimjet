@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface NimExpr extends PsiElement {
 
+  @Nullable
+  NimCaseStmt getCaseStmt();
+
 }

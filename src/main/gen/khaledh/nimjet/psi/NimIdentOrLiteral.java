@@ -8,6 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface NimIdentOrLiteral extends PsiElement {
 
   @Nullable
+  NimArrayConstr getArrayConstr();
+
+  @Nullable
+  NimCastExpr getCastExpr();
+
+  @Nullable
+  NimExprColonEqExprList getExprColonEqExprList();
+
+  @Nullable
   NimLiteral getLiteral();
 
   @Nullable
@@ -15,5 +24,8 @@ public interface NimIdentOrLiteral extends PsiElement {
 
   @Nullable
   NimSymbol getSymbol();
+
+  @Nullable
+  NimTupleConstr getTupleConstr();
 
 }

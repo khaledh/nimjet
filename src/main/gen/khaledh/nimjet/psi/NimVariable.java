@@ -10,10 +10,13 @@ public interface NimVariable extends PsiElement {
   @Nullable
   NimColonBody getColonBody();
 
-  @NotNull
+  @Nullable
   NimIdentColonEquals getIdentColonEquals();
 
   @NotNull
   NimIndAndComment getIndAndComment();
+
+  @Nullable
+  NimVarTuple getVarTuple();
 
 }

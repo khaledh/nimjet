@@ -33,10 +33,4 @@ public class NimPlusExprImpl extends NimExprImpl implements NimPlusExpr {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
   }
 
-  @Override
-  @NotNull
-  public List<NimIndopt> getIndoptList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIndopt.class);
-  }
-
 }

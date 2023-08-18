@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface NimObjectDecl extends PsiElement {
 
   @Nullable
-  NimObjectPart getObjectPart();
-
-  @Nullable
   NimTypeDesc getTypeDesc();
 
 }

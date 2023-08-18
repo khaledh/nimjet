@@ -28,9 +28,9 @@ public class NimObjectPartImpl extends ASTWrapperPsiElement implements NimObject
   }
 
   @Override
-  @Nullable
-  public NimSimpleObjectPart getSimpleObjectPart() {
-    return findChildByClass(NimSimpleObjectPart.class);
+  @NotNull
+  public List<NimObjectPartItem> getObjectPartItemList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimObjectPartItem.class);
   }
 
 }

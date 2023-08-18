@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface NimLiteral extends PsiElement {
 
-  @Nullable
-  NimIntLit getIntLit();
-
 }

@@ -14,9 +14,6 @@ public interface NimCondExpr extends NimExpr {
   List<NimExpr> getExprList();
 
   @NotNull
-  List<NimIndopt> getIndoptList();
-
-  @NotNull
   List<NimStmtList> getStmtListList();
 
 }

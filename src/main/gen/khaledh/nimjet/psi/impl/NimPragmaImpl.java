@@ -33,10 +33,4 @@ public class NimPragmaImpl extends ASTWrapperPsiElement implements NimPragma {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
   }
 
-  @Override
-  @Nullable
-  public NimIndopt getIndopt() {
-    return findChildByClass(NimIndopt.class);
-  }
-
 }

@@ -28,9 +28,27 @@ public class NimPrimaryExprImpl extends NimExprImpl implements NimPrimaryExpr {
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public NimExpr getExpr() {
+    return findChildByClass(NimExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public NimOperator getOperator() {
+    return findChildByClass(NimOperator.class);
+  }
+
+  @Override
+  @Nullable
+  public NimRawTypeDesc getRawTypeDesc() {
+    return findChildByClass(NimRawTypeDesc.class);
+  }
+
+  @Override
+  @Nullable
   public NimSimplePrimary getSimplePrimary() {
-    return findNotNullChildByClass(NimSimplePrimary.class);
+    return findChildByClass(NimSimplePrimary.class);
   }
 
 }

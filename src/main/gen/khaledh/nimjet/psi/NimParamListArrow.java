@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface NimParamListArrow extends PsiElement {
 
   @Nullable
-  NimIndopt getIndopt();
-
-  @Nullable
   NimParamList getParamList();
 
   @Nullable

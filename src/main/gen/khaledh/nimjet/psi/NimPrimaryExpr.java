@@ -7,7 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface NimPrimaryExpr extends NimExpr {
 
-  @NotNull
+  @Nullable
+  NimExpr getExpr();
+
+  @Nullable
+  NimOperator getOperator();
+
+  @Nullable
+  NimRawTypeDesc getRawTypeDesc();
+
+  @Nullable
   NimSimplePrimary getSimplePrimary();
 
 }

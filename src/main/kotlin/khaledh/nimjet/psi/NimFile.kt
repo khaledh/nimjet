@@ -8,5 +8,5 @@ import com.intellij.psi.FileViewProvider
 
 class NimFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, NimLanguage) {
     override fun getFileType(): FileType = NimFileType
-    override fun toString(): String = "Nim File"
+    override fun toString(): String = "Nim"
 }

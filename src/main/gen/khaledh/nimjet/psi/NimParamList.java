@@ -10,7 +10,4 @@ public interface NimParamList extends PsiElement {
   @NotNull
   List<NimIdentColonEquals> getIdentColonEqualsList();
 
-  @Nullable
-  NimIndopt getIndopt();
-
 }

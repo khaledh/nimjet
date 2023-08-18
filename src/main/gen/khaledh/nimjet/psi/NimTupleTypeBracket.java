@@ -10,7 +10,4 @@ public interface NimTupleTypeBracket extends PsiElement {
   @NotNull
   List<NimIdentColonEquals> getIdentColonEqualsList();
 
-  @Nullable
-  NimIndopt getIndopt();
-
 }

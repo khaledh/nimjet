@@ -25,22 +25,34 @@ module                ::= <<initContext>> &INDZERO <<optlist stmt (SEMICOLON | I
 stmt                  ::= if_stmt
                         | when_stmt
                         | while_stmt
+                        | case_stmt
                         | try_stmt
+//                        | EXCEPT except_block
+//                        | FINALLY except_block
                         | for_stmt
                         | block_stmt
                         | static_stmt
                         | defer_stmt
                         | asm_stmt
-                        | VAR <<section variable>>
-                        | TYPE <<section type_def>>
                         | PROC routine
+                        | METHOD routine
+                        | FUNC routine
+                        | ITERATOR routine
+                        | MACRO routine
+                        | TEMPLATE routine
+                        | CONVERTER routine
+                        | TYPE <<section type_def>>
+                        | CONST <<section constant>>
+                        | (LET | VAR | USING) <<section variable>>
+//                        | bind_stmt
+//                        | mixin_stmt
                         | simple_stmt
                         {pin(".*")=1 recoverWhile=stmt_recover}
 private stmt_recover  ::= !(SEMICOLON | INDEQ | INDLT | INDZERO)
 
 if_stmt               ::= IF cond_stmt {pin=1}
 when_stmt             ::= WHEN cond_stmt {pin=1}
-cond_stmt             ::= DEC_LIT colon_comment stmt_list COMMENT?
+cond_stmt             ::= expr colon_comment stmt_list COMMENT?
                           (INDEQ ELIF expr colon_comment stmt_list)*
                           (INDEQ ELSE colon_comment stmt_list)? {pin=1}
 while_stmt            ::= WHILE expr colon_comment stmt_list {pin=1}
@@ -61,20 +73,20 @@ stmt_list             ::= INDNONE <<list simple_stmt SEMICOLON>>
                         | <<indented <<list stmt (SEMICOLON | INDEQ)>>>>
                         {pin="SEMICOLON"}
 
-simple_stmt         ::= ( return_stmt
-                        | raise_stmt
-                        | yield_stmt
-                        | discard_stmt
-                        | break_stmt
-                        | continue_stmt
-                        | pragma_stmt
-                        | import_stmt
-                        | export_stmt
-                        | from_stmt
-                        | include_stmt
-                        | comment_stmt
-                        | expr_stmt
-                        ) COMMENT?
+simple_stmt           ::= ( return_stmt
+                          | raise_stmt
+                          | yield_stmt
+                          | discard_stmt
+                          | break_stmt
+                          | continue_stmt
+                          | pragma_stmt
+                          | import_stmt
+                          | export_stmt
+                          | from_stmt
+                          | include_stmt
+                          | comment_stmt
+                          | expr_stmt
+                          ) COMMENT?
 
 return_stmt           ::= RETURN <<maybeind expr>>? {pin=1}
 raise_stmt            ::= RAISE <<maybeind expr>>? {pin=1}
@@ -83,29 +95,33 @@ discard_stmt          ::= DISCARD <<maybeind expr>>? {pin=1}
 break_stmt            ::= BREAK <<maybeind expr>>? {pin=1}
 continue_stmt         ::= CONTINUE <<maybeind expr>>? {pin=1}
 pragma_stmt           ::= pragma (COLON COMMENT? stmt_list)?
-import_stmt           ::= IMPORT indopt expr
-                          ( EXCEPT <<list expr (COMMA indopt)>> | (COMMA indopt expr)* )
+import_stmt           ::= IMPORT optind expr
+                          ( EXCEPT <<list expr (COMMA optind)>> | (COMMA optind expr)* )
                           {pin=1 pin(".*")=1}
-export_stmt           ::= EXPORT indopt expr
-                          ( EXCEPT <<list expr (COMMA indopt)>> | (COMMA indopt expr)* )
+export_stmt           ::= EXPORT optind expr
+                          ( EXCEPT <<list expr (COMMA optind)>> | (COMMA optind expr)* )
                           {pin=1 pin(".*")=1}
-from_stmt             ::= FROM expr IMPORT indopt <<list expr (COMMA indopt)>> {pin=1 pin=3}
-include_stmt          ::= INCLUDE indopt <<list expr (COMMA indopt)>> {pin=1}
+from_stmt             ::= FROM expr IMPORT optind <<list expr (COMMA optind)>> {pin=1 pin=3}
+include_stmt          ::= INCLUDE optind <<list expr (COMMA optind)>> {pin=1}
 comment_stmt          ::= COMMENT
 
-expr_stmt             ::= simple_expr // post_expr_blocks?
-//                        | simple_primary (exprEqExpr ^+ comma) postExprBlocks?
-//                        | simpleExpr '=' optInd (expr postExprBlocks?)
+expr_stmt             ::= <<pmTrySimple simple_expr>>
+                          ( EQUALS optind expr
+                          | ( &(INDNONE expr_start)
+                              <<list <<pmNormal command_param_extra>> ((COMMA | optpar) indopt)>>
+                            )?
+                          )
+                          post_expr_blocks?
+                        {pin(".*_0")=1}
 
-//comment_stmt        ::= COMMENT
+expr_start            ::= IDENT | ACCENT | OPR | NOT | NIL | CAST | IF | FOR | PROC | FUNC | ITERATOR
+                        | BIND | LPAREN | LBRACKET | LBRACE | VAR | REF | PTR | ENUM | TUPLE | OBJET
+                        | WHEN | CASE | OUT | TRY | BLOCK
+                        | literal
+                        | built_in_magics
+built_in_magics       ::= TYPE | STATIC | ADDR
 
-//private decl        ::= var_decl | proc_decl
-//
-//var_decl            ::= VAR <<section variable>> {
-//                          pin=1
-//                          methods=[getName setName getNameIdentifier]
-//                          implements="khaledh.nimjet.psi.NimNamedElement"
-//                        }
+expr_eq_expr          ::= expr (EQUALS expr | do_block extra_post_expr_block*)?
 
 private invalid       ::= INVALID_IDENT
 
@@ -120,17 +136,26 @@ raw_type_desc         ::= ( tuple_type
                           {pin(".*_0_4")=1 pin(".*_0")=1}
 type_desc_expr        ::= (routine_type | simple_expr) (NOT primary_expr)?
 tuple_type            ::= TUPLE tuple_type_bracket {pin=1}
-tuple_type_bracket    ::= LBRACKET indopt (ident_colon_equals (COMMA|SEMICOLON)?)* <<opt_par RBRACKET>>
-                          {pin=1 pin(".*_2_0")=2}
+tuple_type_bracket    ::= LBRACKET optind (ident_colon_equals (COMMA|SEMICOLON)?)* optpar RBRACKET
+                          {pin=1}
 
 routine_type          ::= (PROC | ITERATOR) param_list_colon pragma?
                           {pin(".*")=1}
 
+constant              ::= (var_tuple | ident_with_pragma) (colon_comment type_desc)?
+                          EQUALS optind expr ind_and_comment
+                          {pin=3}
 
-variable              ::= ident_colon_equals colon_body? ind_and_comment
+var_tuple              ::= var_tuple_lhs EQUALS optind expr
+var_tuple_lhs          ::= LPAREN
+                           optind <<list (ident_with_pragma | var_tuple_lhs) COMMA>>
+                           optpar RPAREN
+                           {pin=1}
 
-ident_colon_equals    ::= <<list IDENT (COMMA indopt)>> comma_optcomment?
-                          <<and_or colon_type_desc (EQUALS indopt expr)>>
+variable              ::= (var_tuple | ident_colon_equals) colon_body? ind_and_comment
+
+ident_colon_equals    ::= <<list IDENT (COMMA optind)>> comma_optcomment?
+                          <<and_or colon_type_desc (EQUALS optind expr)>>
                           {pin(".*")=1}
 comma_optcomment      ::= COMMA COMMENT?
 
@@ -139,59 +164,110 @@ colon_comment         ::= COLON COMMENT? {pin=1}
 
 ind_and_comment       ::= (COMMENT | <<indented COMMENT>>)?
 
-indopt                ::= COMMENT? INDOPT?
+private optind        ::= COMMENT? INDGTOPT
+private optpar        ::= INDGTEOPT
+
 private meta maybeind ::= INDNONE <<p>> | COMMENT? <<indented <<p>>>>
 
 private
-colon_type_desc       ::= COLON indopt type_desc {pin=1}
+colon_type_desc       ::= COLON optind type_desc {pin=1}
 
-type_def              ::= IDENT EQUALS indopt type_def_value ind_and_comment
-type_def_value        ::= object_decl
-object_decl           ::= OBJECT (OF type_desc)? COMMENT? object_part {pin=1}
-object_part           ::= <<indented <<list simple_object_part INDEQ>>>>
-                        | simple_object_part
+type_def              ::= ident_vis generic_param_list? pragma? EQUALS optind type_def_value ind_and_comment
+                          {pin=4}
+type_def_value        ::= ( ( tuple_decl | enum_decl | object_decl | concept_decl
+                            | (REF | PTR | DISTINCT) (tuple_decl | object_decl)
+                            )
+                          | ( simple_expr (<<list expr_eq_expr COMMA>> post_expr_blocks?)? )
+                          )
+                          (NOT primary_expr)?
 
-simple_object_part    ::= NIL | DISCARD | ident_colon_equals
-//                      | object_when | object_case | 'nil' | 'discard' | decl_colon_equals
+tuple_decl            ::= TUPLE
+                          ( tuple_type_bracket
+                          | COMMENT? ( <<indented <<list ident_colon_equals INDEQ>>>> )?
+                          )
+                          {pin=1}
 
-routine               ::= indopt ident_vis pattern? // genericParamList?
+object_decl           ::= OBJECT (&INDNONE OF type_desc)? COMMENT? (&INDGT <<indented object_part>>)? {pin=1}
+object_part           ::= <<list object_part_item INDEQ>>
+object_part_item      ::= decl_colon_equals | object_when | object_case | NIL | DISCARD
+                        | &INDGT <<indented object_part>>
+
+object_when           ::= WHEN expr colon_comment object_part COMMENT?
+                          (ELIF expr colon_comment object_part COMMENT?)*
+                          (ELSE colon_comment object_part COMMENT?)?
+                          {pin(".*")=1}
+
+object_case           ::= CASE decl_colon_equals COLON? COMMENT?
+                          (<<indented object_branches>>
+                          | INDEQ object_branches)
+                          {pin=1}
+object_branches       ::= <<list object_branch INDEQ>>
+                          (INDEQ ELIF expr colon_comment object_part)*
+                          (INDEQ ELSE colon_comment object_part)?
+                          {pin(".*_0")=2}
+object_branch         ::= OF expr_list colon_comment object_part {pin=1}
+
+enum_decl             ::= ENUM optind
+                          ( &INDGTOPT symbol pragma?
+                            (&INDNONE EQUALS optind expr (&INDGTEOPT COMMENT)?)?
+                            ( &INDNONE COMMA COMMENT? | &INDGTEOPT COMMENT? )?
+
+                          )+
+                          {pin=1}
+
+concept_decl          ::= CONCEPT <<optlist concept_param COMMA>> (pragma)? (OF <<optlist type_desc COMMA>>)?
+                          <<indented stmt_list>>
+concept_param         ::= (VAR | OUT)? symbol
+
+decl_colon_equals     ::= <<list ident_with_pragma COMMA>> COMMA?
+                          (COLON optind type_desc_expr)? (EQUALS optind expr)?
+
+routine               ::= optind ident_vis pattern? generic_param_list?
                           param_list_colon pragma? (EQUALS COMMENT? stmt_list)? ind_and_comment
 
 ident_vis             ::= symbol OPR?  // postfix position
 
-symbol                ::= ( BACKTICK
-                            ( keyword | IDENT | (operator|LPAREN|RPAREN|LBRACKET|RBRACKET|LBRACE|RBRACE|EQUALS)+ )+
-                            // |keyword|literal|(operator|LPAREN|RPAREN|LBRACKET|RBRACKET|LBRACE|RBRACE|EQUALS)+)+
-                            BACKTICK
+generic_param_list    ::= LBRACKET optind <<optlist generic_param (COMMA | SEMICOLON)>> optpar RBRACKET
+                          {pin=1}
+generic_param         ::= <<optlist IDENT COMMA>> (COLON expr)? (EQUALS optind expr)?
+
+symbol                ::= ( ACCENT
+                            ( keyword | IDENT
+                            | (operator|DOT|DOTDOT|EQUALS|LPAREN|RPAREN|LBRACKET|RBRACKET|LBRACE|RBRACE)+
+                            )+
+                            ACCENT
                           )
-                          | IDENT | ADDR | TYPE | STATIC
+                          | IDENT | built_in_magics
                         {pin(".*")=1}
 
 symbol_or_keyword     ::= symbol | keyword
 
+OP0                   ::= OP_ARROW | OP_ARROW_LIKE
+OP6                   ::= DOTDOT | OP_DOTLIKE
 OPR                   ::= OP0 | OP1 | OP2 | OP3 | OP4 | OP5 | OP6 | OP7 | OP8 | OP9 | OP10
 
-operator              ::= OPR | OP3_KW | OP4_KW | OP5_KW | OP9_KW
+operator              ::= OPR | OP3_KW | OP4_KW | OP5_KW | OP9_KW | DOTDOT
 
 pattern               ::= LBRACE stmt_list RBRACE
                         {pin=1}
 
-param_list_colon      ::= param_list? (COLON indopt type_desc)? {pin(".*")="COLON"}
-param_list            ::= LPAREN indopt <<optlist ident_colon_equals (COMMA | SEMICOLON)>> RPAREN
+param_list_colon      ::= param_list? (COLON optind type_desc)? {pin(".*")="COLON"}
+param_list            ::= LPAREN optind <<optlist ident_colon_equals (COMMA | SEMICOLON)>> RPAREN
                         {pin=1}
 
 ident_with_pragma     ::= ident_vis pragma?
 
-pragma                ::= LBRACE_DOT indopt (expr_colon_eq_expr COMMA?)* <<opt_par (DOT_RBRACE | RBRACE)>> {pin=1}
+pragma                ::= LBRACE_DOT optind (expr_colon_eq_expr COMMA?)* optpar (DOT_RBRACE | RBRACE) {pin=1}
 
-expr_colon_eq_expr    ::= expr ((COLON | EQUALS) expr | do_block extra_post_expr_block*)? {pin(".*")=1}
-expr_colon_eq_expr_list ::= <<list expr_colon_eq_expr COMMA>> (COMMA)?
-
-private meta opt_par  ::= <<p>> | (INDEQ <<p>>) | <<indented <<p>>>>
+expr_colon_eq_expr    ::= expr ( (COLON | EQUALS) expr
+                               | do_block extra_post_expr_block*
+                               )?
+                          {pin(".*")=1}
+expr_colon_eq_expr_list ::= optpar <<optlist expr_colon_eq_expr COMMA>> optpar
 
 do_block              ::= DO param_list_arrow pragma? colon_comment stmt_list {pin=1}
 
-param_list_arrow      ::= param_list? (ARROW indopt type_desc)?
+param_list_arrow      ::= param_list? (OP_ARROW optind type_desc)?
 
 extra_post_expr_block ::= ( INDEQ do_block
                           | INDEQ OF expr_list COLON stmt_list
@@ -208,76 +284,116 @@ opt_expr_list         ::= <<optlist expr COMMA>>
 if_expr               ::= IF cond_expr {pin=1}
 when_expr             ::= WHEN cond_expr {pin=1}
 
-cond_expr             ::= expr colon_comment stmt_list indopt
-                          (ELIF expr colon_comment stmt_list indopt)*
+cond_expr             ::= expr colon_comment stmt_list optind
+                          (ELIF expr colon_comment stmt_list optind)*
                           ELSE colcom stmt_list
 
 block_expr            ::= BLOCK symbol? colon_comment stmt_list {pin=1}
+
+case_stmt             ::= CASE expr COLON? COMMENT?
+                          (<<indented of_branches>>
+                          | INDEQ of_branches
+                          )
+                          {pin=1}
+of_branches           ::=  (INDEQ OF expr_list colon_comment stmt_list)*
+                           (INDEQ ELIF expr colon_comment stmt_list)*
+                           (INDEQ ELSE colon_comment stmt_list)?
 
 // the root expression rule
 expr                  ::= block_expr
                         | if_expr
                         | when_expr
-//                        | case_stmt
+                        | case_stmt
 //                        | for_expr
 //                        | try_expr
                         | simple_expr
 
-simple_expr           ::= arrow_expr (OP0 indopt arrow_expr)* pragma?
-arrow_expr            ::= assign_expr (OP1 indopt assign_expr)*
-assign_expr           ::= or_expr (OP2 indopt or_expr)*
-or_expr               ::= and_expr ((OP3|OP3_KW) indopt and_expr)*
-and_expr              ::= cmp_expr ((OP4|OP4_KW) indopt cmp_expr)*
-cmp_expr              ::= slice_expr ((OP5|OP5_KW) indopt slice_expr)*
-slice_expr            ::= amp_expr (OP6 indopt amp_expr)*
-amp_expr              ::= plus_expr (OP7 indopt plus_expr)*
-plus_expr             ::= mul_expr (OP8 indopt mul_expr)*
-mul_expr              ::= dollar_expr ((OP9|OP9_KW) indopt dollar_expr)*
-dollar_expr           ::= primary_expr (OP10 indopt primary_expr)*
+simple_expr           ::= arrow_expr (OP0 optind arrow_expr)* pragma?
+arrow_expr            ::= assign_expr (OP1 optind assign_expr)*
+assign_expr           ::= or_expr (OP2 optind or_expr)*
+or_expr               ::= and_expr ((OP3|OP3_KW) optind and_expr)*
+and_expr              ::= cmp_expr ((OP4|OP4_KW) optind cmp_expr)*
+cmp_expr              ::= slice_expr ((OP5|OP5_KW) optind slice_expr)*
+slice_expr            ::= amp_expr (OP6 optind amp_expr)*
+amp_expr              ::= plus_expr (OP7 optind plus_expr)*
+plus_expr             ::= mul_expr (OP8 optind mul_expr)*
+mul_expr              ::= dollar_expr ((OP9|OP9_KW) optind dollar_expr)*
+dollar_expr           ::= primary_expr (OP10 optind primary_expr)*
 primary_expr          ::= simple_primary // (command_start expr (do_block extra_post_expr_block*)?)?
-//                        | operator primary
-//                        | routine_expr
-//                        | raw_type_desc
-//                        | prefix_operator primary
+                        | operator optind primary_expr
+                        | routine_expr
+                        | raw_type_desc
+//                        | prefix_operator primary_expr
 
-//simple_primary         ::= SIGILLIKEOP? ident_or_literal primary_suffix*
-simple_primary        ::= ident_or_literal primary_suffix*
-primary_suffix        ::= LPAREN (expr_colon_eq_expr COMMA?)* RPAREN
-                        | DOT indopt symbol_or_keyword
-//                          ( LBRACKET_COLON expr_list RBRACKET )?
-//                            (LPAREN expr_colon_eq_expr RPAREN)?
-//                          )? // generalized_lit?
-                        | DOTLIKEOP indopt symbol_or_keyword // generalized_lit?
-                        | LBRACKET indopt expr_colon_eq_expr_list <<opt_par RBRACKET>>
-                        | LBRACE indopt expr_colon_eq_expr_list <<opt_par RBRACE>>
-                        {pin(".*")=1}
+simple_primary        ::= (<<sigilOpr>> optind)? ident_or_literal primary_suffix* primary_suffix_cmd?
+                          {pin=2}
+primary_suffix        ::= &INDNONE paren_suffix
+                        | optpar dot_suffix
+                        | &INDNONE dot_like_suffix
+                        | &INDNONE bracket_suffix
+                        | &INDNONE brace_suffix
 
-ident_or_literal      ::= /* generalized_lit | */ symbol | literal | par
-//                        | array_constr | set_or_table_constr | tuple_constr
-//                        | cast_expr
+primary_suffix_cmd    ::= &INDNONE
+                          &( IDENT | ACCENT | literal | NIL | CAST | VAR | OUT | STATIC | TYPE
+                           | ENUM | TUPLE | OBJECT | PROC | <<isUnary OPR>> | <<isUnary DOTDOT>>
+                           )
+                          command_expr
 
-literal               ::= INT_LIT // | INT8_LIT | INT16_LIT | INT32_LIT | INT64_LIT
-//                        | UINT_LIT | UINT8_LIT | UINT16_LIT | UINT32_LIT | UINT64_LIT
-//                        | FLOAT_LIT | FLOAT32_LIT | FLOAT64_LIT
+paren_suffix          ::= &NOSPACE named_params
+                        | !<<inTrySimpleMode>> LPAREN command_expr RPAREN {pin(".*")="LPAREN"}
+named_params          ::= LPAREN expr_colon_eq_expr_list RPAREN {pin=1}
+command_expr          ::= command_param_first
+command_param_first   ::= expr post_expr_blocks?
+command_param_extra   ::= expr_eq_expr
+
+dot_suffix            ::= DOT optind symbol_or_keyword
+                          ( &NOSPACE LBRACKET_COLON expr_list RBRACKET
+                            (&NOSPACE LPAREN expr_colon_eq_expr RPAREN)?
+                          )?
+                          // generalized_lit?
+                          {pin=1 pin(".*_0")=2}
+dot_like_suffix       ::= OP_DOTLIKE optind symbol_or_keyword /* generalized_lit? */ {pin=1}
+bracket_suffix        ::= LBRACKET optind expr_colon_eq_expr_list optpar RBRACKET {pin=1}
+brace_suffix          ::= LBRACE optind expr_colon_eq_expr_list optpar RBRACE {pin=1}
+
+routine_expr          ::= (PROC | FUNC | ITERATOR) param_list_colon pragma? (EQUALS COMMENT? stmt_list)?
+
+
+ident_or_literal      ::= /* generalized_lit | */ symbol | literal
+                        | LPAREN (<<inTypeDescMode>> | <<inTypeDefMode>>) expr_colon_eq_expr_list optpar RPAREN
+                        | &LPAREN par
+                        | array_constr | tuple_constr // | set_or_table_constr
+                        | cast_expr
+
+literal               ::= INT_LIT | FLOAT_LIT | CUSTOM_NUMERIC_LIT
                         | STR_LIT | RSTR_LIT | TRIPLESTR_LIT
-                        | CHAR_LIT // | CUSTOM_NUMERIC_LIT
-//                        | NIL
-INT_LIT               ::= DEC_LIT | BIN_LIT | OCT_LIT | HEX_LIT
+                        | CHAR_LIT | NIL
 
-par                   ::= LPAREN indopt
+par                   ::= LPAREN optind
                           ( &par_keyword semi_stmt_list
                           | SEMICOLON semi_stmt_list
                           | pragma_stmt
                           | simple_expr
                             ( ( do_block extra_post_expr_block* )
-                            | ( EQUALS expr (SEMICOLON semi_stmt_list)? )
-                            | ( COLON expr (COMMA <<list expr_colon_eq_expr COMMA>>)? )
-                            )?
+                            | ( EQUALS optind expr (SEMICOLON semi_stmt_list)? )
+                            | ( SEMICOLON semi_stmt_list )
+                            | ( (COLON expr | EQUALS expr)?
+                                (COMMA <<list expr_colon_eq_expr COMMA>>)?
+                              )
+                            )
                           )
-                          <<opt_par RPAREN>>
+                          optpar RPAREN
                           {pin=1}
 
-semi_stmt_list        ::= <<list (if_expr | when_expr | stmt) SEMICOLON>>
+
+array_constr          ::= LBRACKET optind expr_colon_eq_expr_list? optpar RBRACKET {pin=1}
+tuple_constr          ::= LPAREN optind expr_colon_eq_expr_list? optpar RPAREN {pin=1}
+cast_expr             ::= CAST (LBRACKET optind type_desc optpar RBRACKET LPAREN optind expr optpar RPAREN)
+                        | (LPAREN optind expr_colon_eq_expr optpar RPAREN)
+                        {pin(".*")=1}
+
+semi_stmt_list        ::= (if_expr | when_expr | stmt)?
+                          <<optlist (INDGTEOPT stmt) SEMICOLON>>
 
 par_keyword           ::= DISCARD | INCLUDE | IF | WHILE | CASE | TRY | DEFER
                         | FINALLY | EXCEPT | FOR | BLOCK | CONST | LET
@@ -291,6 +407,15 @@ keyword               ::= ADDR | AND | AS | ASM | BIND | BLOCK | BREAK | CASE | 
                         | PROC | PTR | RAISE | REF | RETURN | SHL | SHR | STATIC | TEMPLATE | TRY
                         | TUPLE | TYPE | USING | VAR | WHEN | WHILE | XOR | YIELD
 
+IDENT                 ::= ID
+                        | TRUE | FALSE
+                        | CHAR | STRING | CSTRING
+                        | INT | INT8 | INT16 | INT32 | INT64
+                        | UINT | UINT8 | UINT16 | UINT32 | UINT64
+                        | FLOAT | FLOAT32 | FLOAT64
+                        | ARRAY | SEQ | OPENARRAY | SET | UNCHECKEDARRAY | VOID
+                        | AUTO | VARARGS | NEW | ASSERT | ECHO
+
 // operators
 
 private OP3_KW        ::= OR | XOR
@@ -302,9 +427,14 @@ private OP9_KW        ::= DIV | MOD | SHL | SHR
 
 external INDNONE      ::= indNone {name="INDNONE"}
 external INDZERO      ::= indZero {name="INDZERO"}
-external INDOPT       ::= indOptional {name="INDOPT"}
 external INDEQ        ::= indEquals {name="INDEQ"}
 external INDLT        ::= indLessThan {name="INDLT"}
+external INDGT        ::= indGreaterThan {name="INDGT"}
+
+external INDGTOPT     ::= optGTIndent {name="INDGTOPT"}
+external INDGTEOPT    ::= optGTEIndent {name="INDGTEOPT"}
+
+external NOSPACE      ::= noSpace {name="NOSPACE"}
 
 // meta rules
 

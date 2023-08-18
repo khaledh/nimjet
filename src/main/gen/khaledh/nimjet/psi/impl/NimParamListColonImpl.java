@@ -29,12 +29,6 @@ public class NimParamListColonImpl extends ASTWrapperPsiElement implements NimPa
 
   @Override
   @Nullable
-  public NimIndopt getIndopt() {
-    return findChildByClass(NimIndopt.class);
-  }
-
-  @Override
-  @Nullable
   public NimParamList getParamList() {
     return findChildByClass(NimParamList.class);
   }

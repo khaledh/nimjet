@@ -51,4 +51,10 @@ public class NimForStmtImpl extends ASTWrapperPsiElement implements NimForStmt {
     return findChildByClass(NimStmtList.class);
   }
 
+  @Override
+  @NotNull
+  public List<NimVarTuple> getVarTupleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimVarTuple.class);
+  }
+
 }

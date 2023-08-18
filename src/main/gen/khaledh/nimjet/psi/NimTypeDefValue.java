@@ -7,7 +7,22 @@ import com.intellij.psi.PsiElement;
 
 public interface NimTypeDefValue extends PsiElement {
 
+  @Nullable
+  NimConceptDecl getConceptDecl();
+
+  @Nullable
+  NimEnumDecl getEnumDecl();
+
   @NotNull
+  List<NimExpr> getExprList();
+
+  @Nullable
   NimObjectDecl getObjectDecl();
+
+  @Nullable
+  NimPostExprBlocks getPostExprBlocks();
+
+  @Nullable
+  NimTupleDecl getTupleDecl();
 
 }

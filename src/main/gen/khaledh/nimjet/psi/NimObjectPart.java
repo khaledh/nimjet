@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface NimObjectPart extends PsiElement {
 
-  @Nullable
-  NimSimpleObjectPart getSimpleObjectPart();
+  @NotNull
+  List<NimObjectPartItem> getObjectPartItemList();
 
 }

@@ -7,16 +7,19 @@ import com.intellij.psi.PsiElement;
 
 public interface NimPrimarySuffix extends PsiElement {
 
-  @NotNull
-  List<NimExpr> getExprList();
+  @Nullable
+  NimBraceSuffix getBraceSuffix();
 
   @Nullable
-  NimExprColonEqExprList getExprColonEqExprList();
+  NimBracketSuffix getBracketSuffix();
 
   @Nullable
-  NimIndopt getIndopt();
+  NimDotLikeSuffix getDotLikeSuffix();
 
   @Nullable
-  NimSymbolOrKeyword getSymbolOrKeyword();
+  NimDotSuffix getDotSuffix();
+
+  @Nullable
+  NimParenSuffix getParenSuffix();
 
 }

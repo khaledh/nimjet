@@ -29,14 +29,14 @@ public class NimSimpleExprImpl extends NimExprImpl implements NimSimpleExpr {
 
   @Override
   @NotNull
-  public List<NimExpr> getExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
+  public List<NimOp0> getOp0List() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOp0.class);
   }
 
   @Override
   @NotNull
-  public List<NimIndopt> getIndoptList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIndopt.class);
+  public List<NimExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
   }
 
   @Override

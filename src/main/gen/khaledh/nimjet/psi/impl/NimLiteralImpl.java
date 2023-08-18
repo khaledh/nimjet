@@ -27,10 +27,4 @@ public class NimLiteralImpl extends ASTWrapperPsiElement implements NimLiteral {
     else super.accept(visitor);
   }
 
-  @Override
-  @Nullable
-  public NimIntLit getIntLit() {
-    return findChildByClass(NimIntLit.class);
-  }
-
 }

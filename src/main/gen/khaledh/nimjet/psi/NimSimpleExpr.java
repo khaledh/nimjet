@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface NimSimpleExpr extends NimExpr {
 
   @NotNull
-  List<NimExpr> getExprList();
+  List<NimOp0> getOp0List();
 
   @NotNull
-  List<NimIndopt> getIndoptList();
+  List<NimExpr> getExprList();
 
   @Nullable
   NimPragma getPragma();

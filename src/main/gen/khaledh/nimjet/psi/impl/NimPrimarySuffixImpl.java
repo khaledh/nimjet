@@ -28,27 +28,33 @@ public class NimPrimarySuffixImpl extends ASTWrapperPsiElement implements NimPri
   }
 
   @Override
-  @NotNull
-  public List<NimExpr> getExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
+  @Nullable
+  public NimBraceSuffix getBraceSuffix() {
+    return findChildByClass(NimBraceSuffix.class);
   }
 
   @Override
   @Nullable
-  public NimExprColonEqExprList getExprColonEqExprList() {
-    return findChildByClass(NimExprColonEqExprList.class);
+  public NimBracketSuffix getBracketSuffix() {
+    return findChildByClass(NimBracketSuffix.class);
   }
 
   @Override
   @Nullable
-  public NimIndopt getIndopt() {
-    return findChildByClass(NimIndopt.class);
+  public NimDotLikeSuffix getDotLikeSuffix() {
+    return findChildByClass(NimDotLikeSuffix.class);
   }
 
   @Override
   @Nullable
-  public NimSymbolOrKeyword getSymbolOrKeyword() {
-    return findChildByClass(NimSymbolOrKeyword.class);
+  public NimDotSuffix getDotSuffix() {
+    return findChildByClass(NimDotSuffix.class);
+  }
+
+  @Override
+  @Nullable
+  public NimParenSuffix getParenSuffix() {
+    return findChildByClass(NimParenSuffix.class);
   }
 
 }

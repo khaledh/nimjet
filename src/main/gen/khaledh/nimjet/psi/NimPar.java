@@ -17,9 +17,6 @@ public interface NimPar extends PsiElement {
   List<NimExtraPostExprBlock> getExtraPostExprBlockList();
 
   @Nullable
-  NimIndopt getIndopt();
-
-  @Nullable
   NimPragmaStmt getPragmaStmt();
 
   @Nullable

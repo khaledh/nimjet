@@ -41,12 +41,6 @@ public class NimCondExprImpl extends NimExprImpl implements NimCondExpr {
 
   @Override
   @NotNull
-  public List<NimIndopt> getIndoptList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIndopt.class);
-  }
-
-  @Override
-  @NotNull
   public List<NimStmtList> getStmtListList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimStmtList.class);
   }

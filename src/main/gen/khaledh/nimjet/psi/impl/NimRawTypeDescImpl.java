@@ -29,8 +29,8 @@ public class NimRawTypeDescImpl extends ASTWrapperPsiElement implements NimRawTy
 
   @Override
   @Nullable
-  public NimPrimaryExpr getPrimaryExpr() {
-    return findChildByClass(NimPrimaryExpr.class);
+  public NimExpr getExpr() {
+    return findChildByClass(NimExpr.class);
   }
 
   @Override

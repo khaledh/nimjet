@@ -32,7 +32,8 @@ val placeholders = hashMapOf(
     NimTypes.INT_LIT to "int literal",
     NimTypes.FLOAT_LIT to "float literal",
     NimTypes.CUSTOM_NUMERIC_LIT to "custom numeric literal",
-    NimTypes.COMMENT to "comment",
+//    NimTypes.LINE_COMMENT to "comment",
+//    NimTypes.MULTILINE_COMMENT to "comment",
 )
 
 val punctuations = hashMapOf(

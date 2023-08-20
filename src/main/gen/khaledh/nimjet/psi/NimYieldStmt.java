@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimYieldStmt extends PsiElement {
 
   @Nullable
+  NimComment getComment();
+
+  @Nullable
   NimExpr getExpr();
 
 }

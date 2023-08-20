@@ -28,6 +28,12 @@ public class NimGenericParamImpl extends ASTWrapperPsiElement implements NimGene
   }
 
   @Override
+  @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
   @NotNull
   public List<NimIdent> getIdentList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);

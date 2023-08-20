@@ -147,6 +147,7 @@ class NimSyntaxHighlighter : SyntaxHighlighterBase() {
             NimTypes.YIELD,
                 -> KEYWORD_KEYS
 
+            NimTypes.BOOL,
             NimTypes.TRUE,
             NimTypes.FALSE,
             NimTypes.CHAR,
@@ -171,11 +172,12 @@ class NimSyntaxHighlighter : SyntaxHighlighterBase() {
             NimTypes.SET,
             NimTypes.UNCHECKEDARRAY,
             NimTypes.VOID,
+            NimTypes.UNTYPED,
             NimTypes.AUTO,
             NimTypes.VARARGS,
-            NimTypes.NEW,
-            NimTypes.ASSERT,
-            NimTypes.ECHO,
+//            NimTypes.NEW,
+//            NimTypes.ASSERT,
+//            NimTypes.ECHO,
                 -> BUILTIN_KEYS
 
             NimTypes.IDENT
@@ -236,7 +238,9 @@ class NimSyntaxHighlighter : SyntaxHighlighterBase() {
             NimTypes.DOT,
                 -> DOT_KEYS
 
-            NimTypes.COMMENT
+            NimTypes.LINE_COMMENT,
+            NimTypes.MULTILINE_COMMENT,
+            NimTypes.MULTILINE_COMMENT_ERROR
                 -> COMMENT_KEYS
 
             TokenType.BAD_CHARACTER

@@ -27,4 +27,10 @@ public class NimCommentStmtImpl extends ASTWrapperPsiElement implements NimComme
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public NimComment getComment() {
+    return findNotNullChildByClass(NimComment.class);
+  }
+
 }

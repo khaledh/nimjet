@@ -29,14 +29,20 @@ public class NimVarTupleImpl extends ASTWrapperPsiElement implements NimVarTuple
 
   @Override
   @NotNull
-  public NimExpr getExpr() {
-    return findNotNullChildByClass(NimExpr.class);
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
   }
 
   @Override
   @NotNull
-  public NimVarTupleLhs getVarTupleLhs() {
-    return findNotNullChildByClass(NimVarTupleLhs.class);
+  public List<NimIdentWithPragma> getIdentWithPragmaList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdentWithPragma.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimVarTuple> getVarTupleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimVarTuple.class);
   }
 
 }

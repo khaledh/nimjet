@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface NimRoutine extends PsiElement {
 
+  @NotNull
+  List<NimComment> getCommentList();
+
   @Nullable
   NimGenericParamList getGenericParamList();
 

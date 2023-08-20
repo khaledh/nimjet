@@ -29,6 +29,12 @@ public class NimStmtImpl extends ASTWrapperPsiElement implements NimStmt {
 
   @Override
   @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
+  @Nullable
   public NimAsmStmt getAsmStmt() {
     return findChildByClass(NimAsmStmt.class);
   }

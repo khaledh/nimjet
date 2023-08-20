@@ -33,7 +33,8 @@ class NimParserDefinition : ParserDefinition {
 
     companion object {
         val WHITE_SPACES: TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
-        val COMMENTS: TokenSet = TokenSet.create(NimTypes.COMMENT)
+//        val COMMENTS: TokenSet = TokenSet.create(NimTypes.MULTILINE_COMMENT, NimTypes.MULTILINE_COMMENT_ERROR)
+        val COMMENTS: TokenSet = TokenSet.EMPTY
         val STRINGS: TokenSet = TokenSet.create(NimTypes.STR_LIT, NimTypes.TRIPLESTR_LIT, NimTypes.RSTR_LIT)
         val FILE = IFileElementType(NimLanguage)
     }

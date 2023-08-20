@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimBracketSuffix extends PsiElement {
 
   @Nullable
+  NimComment getComment();
+
+  @Nullable
   NimExprColonEqExprList getExprColonEqExprList();
 
 }

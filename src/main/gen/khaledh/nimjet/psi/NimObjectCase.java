@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimObjectCase extends PsiElement {
 
   @Nullable
+  NimComment getComment();
+
+  @Nullable
   NimDeclColonEquals getDeclColonEquals();
 
   @Nullable

@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimExprColonEqExprList extends PsiElement {
 
   @NotNull
+  List<NimComment> getCommentList();
+
+  @NotNull
   List<NimExpr> getExprList();
 
 }

@@ -29,6 +29,12 @@ public class NimDotLikeSuffixImpl extends ASTWrapperPsiElement implements NimDot
 
   @Override
   @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
+  @Nullable
   public NimSymbolOrKeyword getSymbolOrKeyword() {
     return findChildByClass(NimSymbolOrKeyword.class);
   }

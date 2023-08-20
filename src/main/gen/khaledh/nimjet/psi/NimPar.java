@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface NimPar extends PsiElement {
 
+  @NotNull
+  List<NimComment> getCommentList();
+
   @Nullable
   NimDoBlock getDoBlock();
 

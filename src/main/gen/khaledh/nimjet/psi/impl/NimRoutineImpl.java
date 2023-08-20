@@ -28,6 +28,12 @@ public class NimRoutineImpl extends ASTWrapperPsiElement implements NimRoutine {
   }
 
   @Override
+  @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
+  }
+
+  @Override
   @Nullable
   public NimGenericParamList getGenericParamList() {
     return findChildByClass(NimGenericParamList.class);

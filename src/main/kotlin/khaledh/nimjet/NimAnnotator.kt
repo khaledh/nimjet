@@ -8,11 +8,9 @@ import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
-import com.intellij.psi.util.parentOfType
-import com.intellij.psi.util.parentOfTypes
+import com.intellij.refactoring.suggested.endOffset
 import khaledh.nimjet.psi.*
 import org.jetbrains.annotations.NotNull
-import java.awt.Font
 
 class NimAnnotator : Annotator {
     companion object {
@@ -30,37 +28,70 @@ class NimAnnotator : Annotator {
                 val endOffset = element.textRange.endOffset
                 val range = TextRange.create(endOffset - 1, endOffset)
                 holder.newAnnotation(HighlightSeverity.ERROR, "closing $expected expected")
-                    .range(range)
                     .afterEndOfLine()
+                    .range(range)
+                    .create()
+            }
+
+            NimTypes.MULTILINE_COMMENT_ERROR -> {
+                val expected = "]#"
+                val endOffset = element.textRange.endOffset
+                val range = TextRange.create(endOffset - 1, endOffset)
+                holder.newAnnotation(HighlightSeverity.ERROR, "closing $expected expected")
+                    .afterEndOfLine()
+                    .range(range)
                     .create()
             }
 
             NimTypes.INVALID_IDENT -> {
                 holder.newAnnotation(HighlightSeverity.ERROR, "invalid identifier")
-                    .range(element)
                     .create()
             }
         }
 
         if (element is NimIdentVis && element.parent is NimRoutine) {
             holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                .range(element)
                 .textAttributes(ROUTINE_KEY)
                 .create()
         }
 
         if (element is NimIdentVis && element.parent is NimTypeDef) {
             holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                .range(element)
                 .textAttributes(TYPE_KEY)
                 .create()
         }
 
         if (element is NimPragma) {
-            holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                .range(element)
-                .textAttributes(METADATA_KEY)
-                .create()
+            // set background color
+            val attributes = TextAttributes()
+            attributes.backgroundColor = DefaultLanguageHighlighterColors.METADATA.defaultAttributes.backgroundColor
+
+            // naming: *Offset is relative to the whole file, *Index is relative to the element's text
+            var startOffset = element.textRange.startOffset
+            var nextNewLineIndex = element.text.indexOf('\n')
+            while (nextNewLineIndex != -1) {
+                val endOffset = element.textRange.startOffset + nextNewLineIndex
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .textAttributes(METADATA_KEY)
+                    .range(TextRange.create(startOffset, endOffset))
+                    .create()
+                startOffset = element.textRange.startOffset + nextNewLineIndex + 1
+                // find first non whitespace character offset, starting from  startOffset
+                val nonWhitespaceDelta = element.text.subSequence(
+                    nextNewLineIndex + 1, element.text.length
+                ).indexOfFirst { !it.isWhitespace() }
+                if (nonWhitespaceDelta != -1) {
+                    startOffset += nonWhitespaceDelta
+                }
+                nextNewLineIndex = element.text.indexOf('\n', nextNewLineIndex + 1)
+            }
+
+            if (startOffset < element.textRange.endOffset) {
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .textAttributes(METADATA_KEY)
+                    .range(TextRange.create(startOffset, element.textRange.endOffset))
+                    .create()
+            }
         }
     }
 }

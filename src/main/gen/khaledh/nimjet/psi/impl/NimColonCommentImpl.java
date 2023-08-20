@@ -27,4 +27,10 @@ public class NimColonCommentImpl extends ASTWrapperPsiElement implements NimColo
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
 }

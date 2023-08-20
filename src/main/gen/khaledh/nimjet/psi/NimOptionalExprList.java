@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimVarTupleLhs extends PsiElement {
+public interface NimOptionalExprList extends PsiElement {
 
   @NotNull
-  List<NimIdentWithPragma> getIdentWithPragmaList();
-
-  @NotNull
-  List<NimVarTupleLhs> getVarTupleLhsList();
+  List<NimExpr> getExprList();
 
 }

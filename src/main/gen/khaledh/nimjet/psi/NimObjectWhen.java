@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimObjectWhen extends PsiElement {
 
   @NotNull
+  List<NimComment> getCommentList();
+
+  @NotNull
   List<NimColonComment> getColonCommentList();
 
   @NotNull

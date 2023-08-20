@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimTupleDecl extends PsiElement {
 
   @Nullable
+  NimComment getComment();
+
+  @Nullable
   NimTupleTypeBracket getTupleTypeBracket();
 
 }

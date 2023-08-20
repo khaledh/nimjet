@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class NimVisitor extends PsiElementVisitor {
 
+  public void visitComment(@NotNull NimComment o) {
+    visitPsiElement(o);
+  }
+
   public void visitIdent(@NotNull NimIdent o) {
     visitPsiElement(o);
   }
@@ -203,6 +207,10 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitForExpr(@NotNull NimForExpr o) {
+    visitExpr(o);
+  }
+
   public void visitForStmt(@NotNull NimForStmt o) {
     visitPsiElement(o);
   }
@@ -219,7 +227,15 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitIdentColonEquals(@NotNull NimIdentColonEquals o) {
+  public void visitIdentColonEquals0(@NotNull NimIdentColonEquals0 o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdentColonEquals1(@NotNull NimIdentColonEquals1 o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdentDotWithPragma(@NotNull NimIdentDotWithPragma o) {
     visitPsiElement(o);
   }
 
@@ -228,6 +244,10 @@ public class NimVisitor extends PsiElementVisitor {
   }
 
   public void visitIdentVis(@NotNull NimIdentVis o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdentVisDot(@NotNull NimIdentVisDot o) {
     visitPsiElement(o);
   }
 
@@ -308,6 +328,10 @@ public class NimVisitor extends PsiElementVisitor {
   }
 
   public void visitOptExprList(@NotNull NimOptExprList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitOptionalExprList(@NotNull NimOptionalExprList o) {
     visitPsiElement(o);
   }
 
@@ -399,6 +423,10 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitSetOrTableConstr(@NotNull NimSetOrTableConstr o) {
+    visitPsiElement(o);
+  }
+
   public void visitSimpleExpr(@NotNull NimSimpleExpr o) {
     visitExpr(o);
   }
@@ -433,6 +461,10 @@ public class NimVisitor extends PsiElementVisitor {
 
   public void visitSymbolOrKeyword(@NotNull NimSymbolOrKeyword o) {
     visitPsiElement(o);
+  }
+
+  public void visitTryExpr(@NotNull NimTryExpr o) {
+    visitExpr(o);
   }
 
   public void visitTryStmt(@NotNull NimTryStmt o) {
@@ -472,10 +504,6 @@ public class NimVisitor extends PsiElementVisitor {
   }
 
   public void visitVarTuple(@NotNull NimVarTuple o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVarTupleLhs(@NotNull NimVarTupleLhs o) {
     visitPsiElement(o);
   }
 

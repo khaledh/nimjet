@@ -29,6 +29,12 @@ public class NimTupleDeclImpl extends ASTWrapperPsiElement implements NimTupleDe
 
   @Override
   @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
+  @Nullable
   public NimTupleTypeBracket getTupleTypeBracket() {
     return findChildByClass(NimTupleTypeBracket.class);
   }

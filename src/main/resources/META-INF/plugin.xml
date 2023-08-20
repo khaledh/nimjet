@@ -47,7 +47,11 @@
           language="Nim"
           implementationClass="khaledh.nimjet.NimAnnotator"/>
 
-<!--      <colorSettingsPage-->
+      <additionalTextAttributes
+          scheme="Default"
+          file="colorSchemes/NimTextAttributes.xml"/>
+
+      <!--      <colorSettingsPage-->
 <!--          implementation="khaledh.nimjet.NimColorSettingsPage"/>-->
     </extensions>
 </idea-plugin>

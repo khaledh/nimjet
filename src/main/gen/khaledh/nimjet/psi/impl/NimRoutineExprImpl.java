@@ -28,6 +28,12 @@ public class NimRoutineExprImpl extends NimExprImpl implements NimRoutineExpr {
   }
 
   @Override
+  @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
   @NotNull
   public NimParamListColon getParamListColon() {
     return findNotNullChildByClass(NimParamListColon.class);

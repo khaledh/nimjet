@@ -28,6 +28,12 @@ public class NimSimplePrimaryImpl extends ASTWrapperPsiElement implements NimSim
   }
 
   @Override
+  @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
   @NotNull
   public NimIdentOrLiteral getIdentOrLiteral() {
     return findNotNullChildByClass(NimIdentOrLiteral.class);

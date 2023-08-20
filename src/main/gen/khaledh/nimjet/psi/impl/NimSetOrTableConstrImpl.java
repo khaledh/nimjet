@@ -11,14 +11,14 @@ import static khaledh.nimjet.psi.NimTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimIdentColonEqualsImpl extends ASTWrapperPsiElement implements NimIdentColonEquals {
+public class NimSetOrTableConstrImpl extends ASTWrapperPsiElement implements NimSetOrTableConstr {
 
-  public NimIdentColonEqualsImpl(@NotNull ASTNode node) {
+  public NimSetOrTableConstrImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitIdentColonEquals(this);
+    visitor.visitSetOrTableConstr(this);
   }
 
   @Override
@@ -29,26 +29,14 @@ public class NimIdentColonEqualsImpl extends ASTWrapperPsiElement implements Nim
 
   @Override
   @NotNull
-  public List<NimIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
   }
 
   @Override
-  @Nullable
-  public NimCommaOptcomment getCommaOptcomment() {
-    return findChildByClass(NimCommaOptcomment.class);
-  }
-
-  @Override
-  @Nullable
-  public NimExpr getExpr() {
-    return findChildByClass(NimExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public NimTypeDesc getTypeDesc() {
-    return findChildByClass(NimTypeDesc.class);
+  @NotNull
+  public List<NimExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
   }
 
 }

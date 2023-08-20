@@ -29,6 +29,12 @@ public class NimReturnStmtImpl extends ASTWrapperPsiElement implements NimReturn
 
   @Override
   @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
+  @Nullable
   public NimExpr getExpr() {
     return findChildByClass(NimExpr.class);
   }

@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimConstant extends PsiElement {
 
   @Nullable
+  NimComment getComment();
+
+  @Nullable
   NimColonComment getColonComment();
 
   @Nullable

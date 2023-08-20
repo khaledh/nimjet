@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface NimSimplePrimary extends PsiElement {
 
+  @Nullable
+  NimComment getComment();
+
   @NotNull
   NimIdentOrLiteral getIdentOrLiteral();
 

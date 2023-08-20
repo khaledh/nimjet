@@ -29,6 +29,12 @@ public class NimTupleConstrImpl extends ASTWrapperPsiElement implements NimTuple
 
   @Override
   @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
+  @Nullable
   public NimExprColonEqExprList getExprColonEqExprList() {
     return findChildByClass(NimExprColonEqExprList.class);
   }

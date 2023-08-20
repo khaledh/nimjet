@@ -28,6 +28,12 @@ public class NimParImpl extends ASTWrapperPsiElement implements NimPar {
   }
 
   @Override
+  @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
+  }
+
+  @Override
   @Nullable
   public NimDoBlock getDoBlock() {
     return findChildByClass(NimDoBlock.class);

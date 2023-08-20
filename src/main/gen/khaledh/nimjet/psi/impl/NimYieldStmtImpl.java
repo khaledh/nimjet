@@ -29,6 +29,12 @@ public class NimYieldStmtImpl extends ASTWrapperPsiElement implements NimYieldSt
 
   @Override
   @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
+  @Nullable
   public NimExpr getExpr() {
     return findChildByClass(NimExpr.class);
   }

@@ -28,6 +28,12 @@ public class NimPragmaImpl extends ASTWrapperPsiElement implements NimPragma {
   }
 
   @Override
+  @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
   @NotNull
   public List<NimExpr> getExprList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);

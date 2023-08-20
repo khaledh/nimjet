@@ -29,6 +29,12 @@ public class NimObjectCaseImpl extends ASTWrapperPsiElement implements NimObject
 
   @Override
   @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
+  @Nullable
   public NimDeclColonEquals getDeclColonEquals() {
     return findChildByClass(NimDeclColonEquals.class);
   }

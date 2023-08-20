@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimRaiseStmt extends PsiElement {
 
   @Nullable
+  NimComment getComment();
+
+  @Nullable
   NimExpr getExpr();
 
 }

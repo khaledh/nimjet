@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimTypeDef extends PsiElement {
 
   @Nullable
+  NimComment getComment();
+
+  @Nullable
   NimGenericParamList getGenericParamList();
 
   @NotNull

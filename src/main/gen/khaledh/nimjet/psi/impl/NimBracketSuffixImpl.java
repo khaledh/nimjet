@@ -29,6 +29,12 @@ public class NimBracketSuffixImpl extends ASTWrapperPsiElement implements NimBra
 
   @Override
   @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
+  @Nullable
   public NimExprColonEqExprList getExprColonEqExprList() {
     return findChildByClass(NimExprColonEqExprList.class);
   }

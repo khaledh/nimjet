@@ -27,4 +27,10 @@ public class NimIndAndCommentImpl extends ASTWrapperPsiElement implements NimInd
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
 }

@@ -29,6 +29,12 @@ public class NimDeclColonEqualsImpl extends ASTWrapperPsiElement implements NimD
 
   @Override
   @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimExpr> getExprList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
   }

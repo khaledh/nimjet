@@ -21,9 +21,11 @@ import java.util.Set;
 
 %state TRIPLEQUOTE
 %state RAWSTRING
+%state MULTILINE_COMMENT
 %{
 private int tripleQuoteCount = 0;
 private int rawQuoteCount = 0;
+private int multilineCommentLevel = 0;
 
 private final Set<Character> UNARY_MINUS_PRED =
     new HashSet<Character>(Arrays.asList(' ', '\t', '\n', '\r', ',', ';', '(', '[', '{'));
@@ -92,8 +94,10 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
 
   ("r"|"R")\"            { yybegin(RAWSTRING); rawQuoteCount = 0; }
 
-  "#"[^\n]*(\n(\s*"#"[^\n]*))*
-                         { return NimTypes.COMMENT; }
+  "#"?"#["               { yybegin(MULTILINE_COMMENT); multilineCommentLevel = 1; }
+
+  "#"[^\[]?[^\n]*(\n(\s*"#"[^\n]*))*
+                         { return NimTypes.LINE_COMMENT; }
 
                          // '*:' is a special case, because it is two tokens in 'var v*: int'
                          // unless it is followed by an operator chracter
@@ -140,6 +144,7 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
   {CharLit}              { return NimTypes.CHAR_LIT; }
 
   // built-ins
+  "bool"                 { return NimTypes.BOOL; }
   "true"                 { return NimTypes.TRUE; }
   "false"                { return NimTypes.FALSE; }
   "char"                 { return NimTypes.CHAR; }
@@ -164,11 +169,12 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
   "set"                  { return NimTypes.SET; }
   "UncheckedArray"       { return NimTypes.UNCHECKEDARRAY; }
   "void"                 { return NimTypes.VOID; }
+  "untyped"              { return NimTypes.UNTYPED; }
   "auto"                 { return NimTypes.AUTO; }
   "varargs"              { return NimTypes.VARARGS; }
-  "new"                  { return NimTypes.NEW; }
-  "assert"               { return NimTypes.ASSERT; }
-  "echo"                 { return NimTypes.ECHO; }
+//  "new"                  { return NimTypes.NEW; }
+//  "assert"               { return NimTypes.ASSERT; }
+//  "echo"                 { return NimTypes.ECHO; }
 
   // keywords
   "addr"                 { return NimTypes.ADDR; }
@@ -277,4 +283,18 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
                            return NimTypes.STR_ERROR;
                          }
  [^]                     { rawQuoteCount = 0; }
+}
+
+<MULTILINE_COMMENT> {
+  "#"?"#["               { multilineCommentLevel++; }
+  "]#"#?                 { multilineCommentLevel--;
+                           if (multilineCommentLevel == 0) {
+                             yybegin(YYINITIAL);
+                             return NimTypes.MULTILINE_COMMENT;
+                           }
+                         }
+  <<EOF>>                { yybegin(YYINITIAL);
+                           return NimTypes.MULTILINE_COMMENT_ERROR;
+                         }
+ [^]                     { }
 }

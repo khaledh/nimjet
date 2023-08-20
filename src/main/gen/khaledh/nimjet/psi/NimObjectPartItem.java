@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimObjectPartItem extends PsiElement {
 
   @Nullable
+  NimComment getComment();
+
+  @Nullable
   NimDeclColonEquals getDeclColonEquals();
 
   @Nullable

@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimPrimaryExpr extends NimExpr {
 
   @Nullable
+  NimComment getComment();
+
+  @Nullable
   NimExpr getExpr();
 
   @Nullable

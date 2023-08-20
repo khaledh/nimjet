@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface NimColonComment extends PsiElement {
 
+  @Nullable
+  NimComment getComment();
+
 }

@@ -8,9 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface NimVarTuple extends PsiElement {
 
   @NotNull
-  NimExpr getExpr();
+  List<NimComment> getCommentList();
 
   @NotNull
-  NimVarTupleLhs getVarTupleLhs();
+  List<NimIdentWithPragma> getIdentWithPragmaList();
+
+  @NotNull
+  List<NimVarTuple> getVarTupleList();
 
 }

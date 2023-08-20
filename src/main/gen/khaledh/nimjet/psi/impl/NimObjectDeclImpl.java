@@ -29,6 +29,12 @@ public class NimObjectDeclImpl extends ASTWrapperPsiElement implements NimObject
 
   @Override
   @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
+  @Nullable
   public NimTypeDesc getTypeDesc() {
     return findChildByClass(NimTypeDesc.class);
   }

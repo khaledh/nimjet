@@ -28,9 +28,15 @@ public class NimParamListImpl extends ASTWrapperPsiElement implements NimParamLi
   }
 
   @Override
+  @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
   @NotNull
-  public List<NimIdentColonEquals> getIdentColonEqualsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdentColonEquals.class);
+  public List<NimIdentColonEquals0> getIdentColonEquals0List() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdentColonEquals0.class);
   }
 
 }

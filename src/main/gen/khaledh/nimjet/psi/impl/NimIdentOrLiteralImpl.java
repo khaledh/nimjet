@@ -59,6 +59,12 @@ public class NimIdentOrLiteralImpl extends ASTWrapperPsiElement implements NimId
 
   @Override
   @Nullable
+  public NimSetOrTableConstr getSetOrTableConstr() {
+    return findChildByClass(NimSetOrTableConstr.class);
+  }
+
+  @Override
+  @Nullable
   public NimSymbol getSymbol() {
     return findChildByClass(NimSymbol.class);
   }

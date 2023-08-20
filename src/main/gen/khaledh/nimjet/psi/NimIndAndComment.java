@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface NimIndAndComment extends PsiElement {
 
+  @Nullable
+  NimComment getComment();
+
 }

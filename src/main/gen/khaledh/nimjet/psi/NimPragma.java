@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface NimPragma extends PsiElement {
 
+  @Nullable
+  NimComment getComment();
+
   @NotNull
   List<NimExpr> getExprList();
 

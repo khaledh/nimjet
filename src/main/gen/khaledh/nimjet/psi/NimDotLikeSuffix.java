@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimDotLikeSuffix extends PsiElement {
 
   @Nullable
+  NimComment getComment();
+
+  @Nullable
   NimSymbolOrKeyword getSymbolOrKeyword();
 
 }

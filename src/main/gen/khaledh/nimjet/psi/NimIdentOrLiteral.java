@@ -23,6 +23,9 @@ public interface NimIdentOrLiteral extends PsiElement {
   NimPar getPar();
 
   @Nullable
+  NimSetOrTableConstr getSetOrTableConstr();
+
+  @Nullable
   NimSymbol getSymbol();
 
   @Nullable

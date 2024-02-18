@@ -10,7 +10,7 @@ public interface NimDotLikeSuffix extends PsiElement {
   @Nullable
   NimComment getComment();
 
-  @Nullable
+  @NotNull
   NimSymbolOrKeyword getSymbolOrKeyword();
 
 }

@@ -163,6 +163,10 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDotOrCmdStart(@NotNull NimDotOrCmdStart o) {
+    visitPsiElement(o);
+  }
+
   public void visitDotSuffix(@NotNull NimDotSuffix o) {
     visitPsiElement(o);
   }
@@ -501,6 +505,10 @@ public class NimVisitor extends PsiElementVisitor {
 
   public void visitTypeDescExpr(@NotNull NimTypeDescExpr o) {
     visitExpr(o);
+  }
+
+  public void visitUnaryOp(@NotNull NimUnaryOp o) {
+    visitPsiElement(o);
   }
 
   public void visitVarTuple(@NotNull NimVarTuple o) {

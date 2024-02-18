@@ -28,9 +28,21 @@ public class NimPrimarySuffixCmdImpl extends ASTWrapperPsiElement implements Nim
   }
 
   @Override
-  @NotNull
+  @Nullable
   public NimCommandExpr getCommandExpr() {
-    return findNotNullChildByClass(NimCommandExpr.class);
+    return findChildByClass(NimCommandExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public NimDotOrCmdStart getDotOrCmdStart() {
+    return findChildByClass(NimDotOrCmdStart.class);
+  }
+
+  @Override
+  @Nullable
+  public NimUnaryOp getUnaryOp() {
+    return findChildByClass(NimUnaryOp.class);
   }
 
 }

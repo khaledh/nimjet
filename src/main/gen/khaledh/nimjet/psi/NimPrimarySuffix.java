@@ -22,4 +22,7 @@ public interface NimPrimarySuffix extends PsiElement {
   @Nullable
   NimParenSuffix getParenSuffix();
 
+  @Nullable
+  NimPrimarySuffixCmd getPrimarySuffixCmd();
+
 }

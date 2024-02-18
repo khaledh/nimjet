@@ -57,4 +57,10 @@ public class NimPrimarySuffixImpl extends ASTWrapperPsiElement implements NimPri
     return findChildByClass(NimParenSuffix.class);
   }
 
+  @Override
+  @Nullable
+  public NimPrimarySuffixCmd getPrimarySuffixCmd() {
+    return findChildByClass(NimPrimarySuffixCmd.class);
+  }
+
 }

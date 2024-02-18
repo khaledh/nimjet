@@ -47,15 +47,15 @@ private IElementType considerAssign(IElementType type) {
 }
 %}
 
-Opr            = [=+\-*/<>@$~&%|!?\^.:\\]
-NotOpr         = [^=+\-*/<>@$~&%|!?\^.:\\]
+Opr            = [=+\-*/<>@$~&%|!?\^\.:\\]
+NotOpr         = [^=+\-*/<>@$~&%|!?\^\.:\\]
 
 IdentStartChar = [a-zA-Z\x80-\xFF]
 IdentChar      = [a-zA-Z0-9\x80-\xFF]
 Ident          = {IdentStartChar} ("_"? {IdentChar})*
 
 Char           = [^\'\r\n]
-CharEsc        = \\r|\\c|\\n|\\l|\\f|\\t|\\v|\\\\|\\\"|\\'|\\[0-9]+|\\a|\\b|\\e|\\x[0-9a-fA-F]{2}
+CharEsc        = \\[rR]|\\[cC]|\\[nN]|\\[lL]|\\[fF]|\\[tT]|\\[vV]|\\\\|\\\"|\\'|\\[0-9]+|\\[aA]|\\[bB]|\\[eE]|\\[xX][0-9a-fA-F]{2}
 CharLit        = \'({Char}|{CharEsc})\'
 
 Digit          = [0-9]
@@ -166,12 +166,41 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
   "array"                { return NimTypes.ARRAY; }
   "seq"                  { return NimTypes.SEQ; }
   "openArray"            { return NimTypes.OPENARRAY; }
-  "set"                  { return NimTypes.SET; }
   "UncheckedArray"       { return NimTypes.UNCHECKEDARRAY; }
+  "set"                  { return NimTypes.SET; }
+  "object"               { return NimTypes.OBJECT; }
+  "enum"                 { return NimTypes.ENUM; }
+  "tuple"                { return NimTypes.TUPLE; }
+  "concept"              { return NimTypes.CONCEPT; }
+  "nil"                  { return NimTypes.NIL; }
+  "pointer"              { return NimTypes.POINTER; }
   "void"                 { return NimTypes.VOID; }
   "untyped"              { return NimTypes.UNTYPED; }
   "auto"                 { return NimTypes.AUTO; }
   "varargs"              { return NimTypes.VARARGS; }
+
+  // c (compatibility) types
+  "BiggestFloat"         { return NimTypes.BIGGEST_FLOAT; }
+  "BiggestInt"           { return NimTypes.BIGGEST_INT; }
+  "BiggestUInt"          { return NimTypes.BIGGEST_UINT; }
+  "cchar"                { return NimTypes.CCHAR; }
+  "cdouble"              { return NimTypes.CDOUBLE; }
+  "cfloat"               { return NimTypes.CFLOAT; }
+  "cint"                 { return NimTypes.CINT; }
+  "clong"                { return NimTypes.CLONG; }
+  "clongdouble"          { return NimTypes.CLONG_DOUBLE; }
+  "clonglong"            { return NimTypes.CLONG_LONG; }
+  "cschar"               { return NimTypes.CSCHAR; }
+  "cshort"               { return NimTypes.CSHORT; }
+  "csize_t"              { return NimTypes.CSIZE_T; }
+  "cstringArray"         { return NimTypes.CSTRING_ARRAY; }
+  "cuchar"               { return NimTypes.CUCHAR; }
+  "cuint"                { return NimTypes.CUINT; }
+  "culong"               { return NimTypes.CULONG; }
+  "culonglong"           { return NimTypes.CULONG_LONG; }
+  "cushort"              { return NimTypes.CUSHORT; }
+
+
 //  "new"                  { return NimTypes.NEW; }
 //  "assert"               { return NimTypes.ASSERT; }
 //  "echo"                 { return NimTypes.ECHO; }
@@ -186,7 +215,6 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
   "break"                { return NimTypes.BREAK; }
   "case"                 { return NimTypes.CASE; }
   "cast"                 { return NimTypes.CAST; }
-  "concept"              { return NimTypes.CONCEPT; }
   "const"                { return NimTypes.CONST; }
   "continue"             { return NimTypes.CONTINUE; }
   "converter"            { return NimTypes.CONVERTER; }
@@ -198,7 +226,6 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
   "elif"                 { return NimTypes.ELIF; }
   "else"                 { return NimTypes.ELSE; }
   "end"                  { return NimTypes.END; }
-  "enum"                 { return NimTypes.ENUM; }
   "except"               { return NimTypes.EXCEPT; }
   "export"               { return NimTypes.EXPORT; }
   "finally"              { return NimTypes.FINALLY; }
@@ -218,10 +245,8 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
   "method"               { return NimTypes.METHOD; }
   "mixin"                { return NimTypes.MIXIN; }
   "mod"                  { return NimTypes.MOD; }
-  "nil"                  { return NimTypes.NIL; }
   "notin"                { return NimTypes.NOTIN; }
   "not"                  { return NimTypes.NOT; }
-  "object"               { return NimTypes.OBJECT; }
   "of"                   { return NimTypes.OF; }
   "or"                   { return NimTypes.OR; }
   "out"                  { return NimTypes.OUT; }
@@ -235,7 +260,6 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
   "static"               { return NimTypes.STATIC; }
   "template"             { return NimTypes.TEMPLATE; }
   "try"                  { return NimTypes.TRY; }
-  "tuple"                { return NimTypes.TUPLE; }
   "type"                 { return NimTypes.TYPE; }
   "using"                { return NimTypes.USING; }
   "var"                  { return NimTypes.VAR; }

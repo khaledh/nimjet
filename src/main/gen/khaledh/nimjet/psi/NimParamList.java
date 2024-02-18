@@ -7,8 +7,8 @@ import com.intellij.psi.PsiElement;
 
 public interface NimParamList extends PsiElement {
 
-  @Nullable
-  NimComment getComment();
+  @NotNull
+  List<NimComment> getCommentList();
 
   @NotNull
   List<NimIdentColonEquals0> getIdentColonEquals0List();

@@ -107,7 +107,7 @@ comment_stmt          ::= COMMENT
 expr_stmt             ::= <<pmTrySimple simple_expr>>
                           ( EQUALS optind expr
                           | ( &(INDNONE expr_start)
-                              <<list <<pmNormal command_param_extra>> ((COMMA | optpar) indopt)>>
+                              <<list <<pmNormal command_param_extra>> ((COMMA | optpar) optind)>>
                             )?
                           )
                           post_expr_blocks?
@@ -134,8 +134,10 @@ raw_type_desc         ::= ( tuple_type
                           (NOT primary_expr)?
                           {pin(".*_0_4")=1 pin(".*_0")=1}
 type_desc_expr        ::= (routine_type | simple_expr) (NOT primary_expr)?
-tuple_type            ::= TUPLE tuple_type_bracket {pin=1}
-tuple_type_bracket    ::= LBRACKET optind (<<ident_colon_equals_1 IDENT>> (COMMA|SEMICOLON)?)* optpar RBRACKET
+tuple_type            ::= TUPLE tuple_type_bracket? {pin=1}
+tuple_type_bracket    ::= LBRACKET optind
+                          (<<ident_colon_equals_1 IDENT>> (COMMA|SEMICOLON)?)*
+                          optpar RBRACKET
                           {pin=1}
 
 routine_type          ::= (PROC | ITERATOR) param_list_colon pragma?
@@ -264,7 +266,7 @@ pattern               ::= LBRACE stmt_list RBRACE
 
 param_list_colon      ::= param_list? (COLON optind type_desc)? {pin(".*")="COLON"}
 param_list            ::= LPAREN optind
-                          <<optlist <<ident_colon_equals_0 ident_with_pragma>> (COMMA | SEMICOLON)>> COMMA?
+                          <<optlist <<ident_colon_equals_0 ident_with_pragma>> ((COMMA | SEMICOLON) COMMENT?)>> COMMA?
                           optpar RPAREN
                         {pin=1}
 
@@ -328,51 +330,51 @@ expr                  ::= block_expr
                         | try_expr
                         | simple_expr
 
-simple_expr           ::= arrow_expr (&INDNONE OP0 INDGTEOPT arrow_expr)* pragma?
-arrow_expr            ::= assign_expr (&INDNONE OP1 INDGTEOPT assign_expr)*
-assign_expr           ::= or_expr (&INDNONE OP2 INDGTEOPT or_expr)*
-or_expr               ::= and_expr (&INDNONE (OP3|OP3_KW) INDGTEOPT and_expr)*
-and_expr              ::= cmp_expr (&INDNONE (OP4|OP4_KW) INDGTEOPT cmp_expr)*
-cmp_expr              ::= slice_expr (&INDNONE (OP5|OP5_KW) INDGTEOPT slice_expr)*
-slice_expr            ::= amp_expr (&INDNONE OP6 INDGTEOPT amp_expr)*
-amp_expr              ::= plus_expr (&INDNONE OP7 INDGTEOPT plus_expr)*
-plus_expr             ::= mul_expr (&INDNONE OP8 INDGTEOPT mul_expr)*
-mul_expr              ::= dollar_expr (&INDNONE (OP9|OP9_KW) INDGTEOPT dollar_expr)*
-dollar_expr           ::= primary_expr (&INDNONE OP10 INDGTEOPT primary_expr)*
+simple_expr           ::= arrow_expr (&INDNONE OP0 COMMENT? optpar arrow_expr)* pragma? {pin(".*_0")=2}
+arrow_expr            ::= assign_expr (&INDNONE OP1 COMMENT? optpar assign_expr)* {pin(".*_0")=2}
+assign_expr           ::= or_expr (&INDNONE OP2 COMMENT? optpar or_expr)* {pin(".*_0")=2}
+or_expr               ::= and_expr (&INDNONE (OP3|OP3_KW) COMMENT? optpar and_expr)* {pin(".*_0")=2}
+and_expr              ::= cmp_expr (&INDNONE (OP4|OP4_KW) COMMENT? optpar cmp_expr)* {pin(".*_0")=2}
+cmp_expr              ::= slice_expr (&INDNONE (OP5|OP5_KW) COMMENT? optpar slice_expr)* {pin(".*_0")=2}
+slice_expr            ::= amp_expr (&INDNONE OP6 COMMENT? optpar amp_expr)* {pin(".*_0")=2}
+amp_expr              ::= plus_expr (&INDNONE OP7 COMMENT? optpar plus_expr)* {pin(".*_0")=2}
+plus_expr             ::= mul_expr (&INDNONE OP8 COMMENT? optpar mul_expr)* {pin(".*_0")=2}
+mul_expr              ::= dollar_expr (&INDNONE (OP9|OP9_KW) COMMENT? optpar dollar_expr)* {pin(".*_0")=2}
+dollar_expr           ::= primary_expr (&INDNONE OP10 COMMENT? optpar primary_expr)* {pin(".*_0")=2}
 primary_expr          ::= simple_primary // (command_start expr (do_block extra_post_expr_block*)?)?
                         | operator optind primary_expr
                         | routine_expr
                         | raw_type_desc
 //                        | prefix_operator primary_expr
 
-simple_primary        ::= (<<sigilOpr>> optind)? ident_or_literal primary_suffix* primary_suffix_cmd?
+simple_primary        ::= (<<sigilOpr>> optind)? ident_or_literal primary_suffix*
                           {pin=2}
 primary_suffix        ::= &INDNONE paren_suffix
-                        | optpar dot_suffix
-                        | &INDNONE dot_like_suffix
                         | &INDNONE bracket_suffix
                         | &INDNONE brace_suffix
+                        | optpar DOT dot_suffix
+                        | &INDNONE OP_DOTLIKE dot_suffix
+                        | &INDNONE
+                          ( <<inTrySimpleMode>> cmd_start
+                          | cmd_start command_expr
+                          )
 
-primary_suffix_cmd    ::= &INDNONE
-                          &( IDENT | ACCENT | literal | NIL | CAST | VAR | OUT | STATIC | TYPE
-                           | ENUM | TUPLE | OBJECT | PROC | <<isUnary OPR>> | <<isUnary DOTDOT>>
-                           )
-                          command_expr
+cmd_start             ::= IDENT | ACCENT | literal | NIL | CAST | VAR | OUT | STATIC | TYPE
+                        | ENUM | TUPLE | OBJECT | PROC | <<isUnary OPR>> | <<isUnary DOTDOT>>
 
 paren_suffix          ::= &NOSPACE named_params
                         | !<<inTrySimpleMode>> LPAREN command_expr RPAREN {pin(".*")="LPAREN"}
 named_params          ::= LPAREN optind expr_colon_eq_expr_list RPAREN {pin=1}
 command_expr          ::= command_param_first
-command_param_first   ::= expr post_expr_blocks?
+command_param_first   ::= expr (&DO post_expr_blocks)?
 command_param_extra   ::= expr_eq_expr
 
-dot_suffix            ::= DOT optind symbol_or_keyword
+dot_suffix            ::= optind symbol_or_keyword
                           ( &NOSPACE LBRACKET_COLON expr_list RBRACKET
                             (&NOSPACE LPAREN expr_colon_eq_expr RPAREN)?
                           )?
                           // generalized_lit?
                           {pin=1 pin(".*_0")=2}
-dot_like_suffix       ::= OP_DOTLIKE optind symbol_or_keyword /* generalized_lit? */ {pin=1}
 bracket_suffix        ::= LBRACKET optind expr_colon_eq_expr_list optpar RBRACKET {pin=1}
 brace_suffix          ::= LBRACE optind expr_colon_eq_expr_list optpar RBRACE {pin=1}
 
@@ -408,12 +410,13 @@ par                   ::= LPAREN optind
 
 array_constr          ::= LBRACKET optind expr_colon_eq_expr_list? optpar RBRACKET {pin=1}
 tuple_constr          ::= LPAREN optind expr_colon_eq_expr_list? optpar RPAREN {pin=1}
-set_or_table_constr   ::= LBRACE optind (COLON | <<optlist expr_colon_eq_expr (COMMA COMMENT?)>>) optpar RBRACE {pin=1}
+set_or_table_constr   ::= LBRACE optind (COLON | <<optlist expr_colon_eq_expr (COMMA COMMENT?)>>) optpar RBRACE
+                          {pin(".*")=1}
 cast_expr             ::= CAST (LBRACKET optind type_desc optpar RBRACKET LPAREN optind expr optpar RPAREN)
                         | (LPAREN optind expr_colon_eq_expr optpar RPAREN)
                         {pin(".*")=1}
 
-semi_stmt_list        ::= (if_expr | when_expr | stmt)?
+semi_stmt_list        ::= (if_expr | when_expr | stmt) SEMICOLON?
                           <<optlist (INDGTEOPT stmt) SEMICOLON>>
 
 par_keyword           ::= DISCARD | INCLUDE | IF | WHILE | CASE | TRY | DEFER
@@ -434,8 +437,12 @@ IDENT                 ::= ID
                         | INT | INT8 | INT16 | INT32 | INT64
                         | UINT | UINT8 | UINT16 | UINT32 | UINT64
                         | FLOAT | FLOAT32 | FLOAT64
-                        | ARRAY | SEQ | OPENARRAY | SET | UNCHECKEDARRAY | VOID | UNTYPED
-                        | AUTO | VARARGS // | NEW | ASSERT | ECHO
+                        | ARRAY | SEQ | OPENARRAY | SET | UNCHECKEDARRAY | POINTER | VOID | UNTYPED
+                        | AUTO | VARARGS
+                        | BIGGEST_FLOAT | BIGGEST_INT | BIGGEST_UINT
+                        | CCHAR | CDOUBLE | CFLOAT | CINT | CLONG | CLONG_DOUBLE | CLONG_LONG
+                        | CSCHAR | CSHORT | CSIZE_T | CSTRING_ARRAY
+                        | CUCHAR | CUINT | CULONG | CULONG_LONG | CUSHORT
 
 COMMENT               ::= LINE_COMMENT | MULTILINE_COMMENT | MULTILINE_COMMENT_ERROR
 

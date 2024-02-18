@@ -29,6 +29,12 @@ public class NimSliceExprImpl extends NimExprImpl implements NimSliceExpr {
 
   @Override
   @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimOp6> getOp6List() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOp6.class);
   }

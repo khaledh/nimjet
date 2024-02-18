@@ -7,8 +7,8 @@ import com.intellij.psi.PsiElement;
 
 public interface NimExprStmt extends PsiElement {
 
-  @Nullable
-  NimComment getComment();
+  @NotNull
+  List<NimComment> getCommentList();
 
   @Nullable
   NimExpr getExpr();

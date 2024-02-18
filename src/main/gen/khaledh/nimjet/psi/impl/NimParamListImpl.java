@@ -28,9 +28,9 @@ public class NimParamListImpl extends ASTWrapperPsiElement implements NimParamLi
   }
 
   @Override
-  @Nullable
-  public NimComment getComment() {
-    return findChildByClass(NimComment.class);
+  @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
   }
 
   @Override

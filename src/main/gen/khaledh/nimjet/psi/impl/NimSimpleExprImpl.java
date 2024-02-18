@@ -29,6 +29,12 @@ public class NimSimpleExprImpl extends NimExprImpl implements NimSimpleExpr {
 
   @Override
   @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimOp0> getOp0List() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOp0.class);
   }

@@ -16,7 +16,4 @@ public interface NimSimplePrimary extends PsiElement {
   @NotNull
   List<NimPrimarySuffix> getPrimarySuffixList();
 
-  @Nullable
-  NimPrimarySuffixCmd getPrimarySuffixCmd();
-
 }

@@ -45,10 +45,4 @@ public class NimSimplePrimaryImpl extends ASTWrapperPsiElement implements NimSim
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPrimarySuffix.class);
   }
 
-  @Override
-  @Nullable
-  public NimPrimarySuffixCmd getPrimarySuffixCmd() {
-    return findChildByClass(NimPrimarySuffixCmd.class);
-  }
-
 }

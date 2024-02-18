@@ -7,7 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface NimPrimarySuffixCmd extends PsiElement {
 
-  @NotNull
+  @Nullable
   NimCommandExpr getCommandExpr();
+
+  @Nullable
+  NimDotOrCmdStart getDotOrCmdStart();
+
+  @Nullable
+  NimUnaryOp getUnaryOp();
 
 }

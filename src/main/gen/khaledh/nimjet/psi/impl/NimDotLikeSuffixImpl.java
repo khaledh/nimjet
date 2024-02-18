@@ -34,9 +34,9 @@ public class NimDotLikeSuffixImpl extends ASTWrapperPsiElement implements NimDot
   }
 
   @Override
-  @Nullable
+  @NotNull
   public NimSymbolOrKeyword getSymbolOrKeyword() {
-    return findChildByClass(NimSymbolOrKeyword.class);
+    return findNotNullChildByClass(NimSymbolOrKeyword.class);
   }
 
 }

@@ -42,6 +42,7 @@ public interface NimTypes {
   IElementType DISCARD_STMT = new NimElementType("DISCARD_STMT");
   IElementType DOLLAR_EXPR = new NimElementType("DOLLAR_EXPR");
   IElementType DOT_LIKE_SUFFIX = new NimElementType("DOT_LIKE_SUFFIX");
+  IElementType DOT_OR_CMD_START = new NimElementType("DOT_OR_CMD_START");
   IElementType DOT_SUFFIX = new NimElementType("DOT_SUFFIX");
   IElementType DO_BLOCK = new NimElementType("DO_BLOCK");
   IElementType ENUM_DECL = new NimElementType("ENUM_DECL");
@@ -132,6 +133,7 @@ public interface NimTypes {
   IElementType TYPE_DEF_VALUE = new NimElementType("TYPE_DEF_VALUE");
   IElementType TYPE_DESC = new NimElementType("TYPE_DESC");
   IElementType TYPE_DESC_EXPR = new NimElementType("TYPE_DESC_EXPR");
+  IElementType UNARY_OP = new NimElementType("UNARY_OP");
   IElementType VARIABLE = new NimElementType("VARIABLE");
   IElementType VAR_TUPLE = new NimElementType("VAR_TUPLE");
   IElementType WHEN_EXPR = new NimElementType("WHEN_EXPR");
@@ -146,21 +148,40 @@ public interface NimTypes {
   IElementType AS = new NimTokenType("AS");
   IElementType ASM = new NimTokenType("ASM");
   IElementType AUTO = new NimTokenType("AUTO");
+  IElementType BIGGEST_FLOAT = new NimTokenType("BIGGEST_FLOAT");
+  IElementType BIGGEST_INT = new NimTokenType("BIGGEST_INT");
+  IElementType BIGGEST_UINT = new NimTokenType("BIGGEST_UINT");
   IElementType BIND = new NimTokenType("BIND");
   IElementType BLOCK = new NimTokenType("BLOCK");
   IElementType BOOL = new NimTokenType("BOOL");
   IElementType BREAK = new NimTokenType("BREAK");
   IElementType CASE = new NimTokenType("CASE");
   IElementType CAST = new NimTokenType("CAST");
+  IElementType CCHAR = new NimTokenType("CCHAR");
+  IElementType CDOUBLE = new NimTokenType("CDOUBLE");
+  IElementType CFLOAT = new NimTokenType("CFLOAT");
   IElementType CHAR = new NimTokenType("CHAR");
   IElementType CHAR_LIT = new NimTokenType("CHAR_LIT");
+  IElementType CINT = new NimTokenType("CINT");
+  IElementType CLONG = new NimTokenType("CLONG");
+  IElementType CLONG_DOUBLE = new NimTokenType("CLONG_DOUBLE");
+  IElementType CLONG_LONG = new NimTokenType("CLONG_LONG");
   IElementType COLON = new NimTokenType("COLON");
   IElementType COMMA = new NimTokenType("COMMA");
   IElementType CONCEPT = new NimTokenType("CONCEPT");
   IElementType CONST = new NimTokenType("CONST");
   IElementType CONTINUE = new NimTokenType("CONTINUE");
   IElementType CONVERTER = new NimTokenType("CONVERTER");
+  IElementType CSCHAR = new NimTokenType("CSCHAR");
+  IElementType CSHORT = new NimTokenType("CSHORT");
+  IElementType CSIZE_T = new NimTokenType("CSIZE_T");
   IElementType CSTRING = new NimTokenType("CSTRING");
+  IElementType CSTRING_ARRAY = new NimTokenType("CSTRING_ARRAY");
+  IElementType CUCHAR = new NimTokenType("CUCHAR");
+  IElementType CUINT = new NimTokenType("CUINT");
+  IElementType CULONG = new NimTokenType("CULONG");
+  IElementType CULONG_LONG = new NimTokenType("CULONG_LONG");
+  IElementType CUSHORT = new NimTokenType("CUSHORT");
   IElementType CUSTOM_NUMERIC_LIT = new NimTokenType("CUSTOM_NUMERIC_LIT");
   IElementType DEFER = new NimTokenType("DEFER");
   IElementType DISCARD = new NimTokenType("DISCARD");
@@ -191,7 +212,6 @@ public interface NimTypes {
   IElementType IMPORT = new NimTokenType("IMPORT");
   IElementType IN = new NimTokenType("IN");
   IElementType INCLUDE = new NimTokenType("INCLUDE");
-  IElementType INDOPT = new NimTokenType("indopt");
   IElementType INT = new NimTokenType("INT");
   IElementType INT16 = new NimTokenType("INT16");
   IElementType INT32 = new NimTokenType("INT32");
@@ -237,6 +257,7 @@ public interface NimTypes {
   IElementType OP_DOTLIKE = new NimTokenType("OP_DOTLIKE");
   IElementType OR = new NimTokenType("OR");
   IElementType OUT = new NimTokenType("OUT");
+  IElementType POINTER = new NimTokenType("POINTER");
   IElementType PROC = new NimTokenType("PROC");
   IElementType PTR = new NimTokenType("PTR");
   IElementType RAISE = new NimTokenType("RAISE");
@@ -382,6 +403,9 @@ public interface NimTypes {
       }
       else if (type == DOT_LIKE_SUFFIX) {
         return new NimDotLikeSuffixImpl(node);
+      }
+      else if (type == DOT_OR_CMD_START) {
+        return new NimDotOrCmdStartImpl(node);
       }
       else if (type == DOT_SUFFIX) {
         return new NimDotSuffixImpl(node);
@@ -652,6 +676,9 @@ public interface NimTypes {
       }
       else if (type == TYPE_DESC_EXPR) {
         return new NimTypeDescExprImpl(node);
+      }
+      else if (type == UNARY_OP) {
+        return new NimUnaryOpImpl(node);
       }
       else if (type == VARIABLE) {
         return new NimVariableImpl(node);

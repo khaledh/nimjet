@@ -2672,7 +2672,7 @@ public class NimParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident_vis dot_suffix?
+  // ident_vis (DOT dot_suffix)?
   public static boolean ident_vis_dot(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ident_vis_dot")) return false;
     boolean r;
@@ -2683,11 +2683,22 @@ public class NimParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // dot_suffix?
+  // (DOT dot_suffix)?
   private static boolean ident_vis_dot_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ident_vis_dot_1")) return false;
-    dot_suffix(b, l + 1);
+    ident_vis_dot_1_0(b, l + 1);
     return true;
+  }
+
+  // DOT dot_suffix
+  private static boolean ident_vis_dot_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ident_vis_dot_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DOT);
+    r = r && dot_suffix(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */

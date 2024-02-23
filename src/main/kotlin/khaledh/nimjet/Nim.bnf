@@ -238,7 +238,7 @@ routine               ::= optind ident_vis pattern? generic_param_list?
 ident_with_pragma     ::= ident_vis pragma?
 ident_dot_with_pragma ::= ident_vis_dot pragma?
 ident_vis             ::= symbol OPR?  // postfix position
-ident_vis_dot         ::= ident_vis dot_suffix?
+ident_vis_dot         ::= ident_vis (DOT dot_suffix)?
 
 generic_param_list    ::= LBRACKET optind <<optlist generic_param (COMMA | SEMICOLON)>> optpar RBRACKET
                           {pin=1}

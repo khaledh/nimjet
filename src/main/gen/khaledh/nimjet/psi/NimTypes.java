@@ -22,6 +22,7 @@ public interface NimTypes {
   IElementType BUILT_IN_MAGICS = new NimElementType("BUILT_IN_MAGICS");
   IElementType CASE_STMT = new NimElementType("CASE_STMT");
   IElementType CAST_EXPR = new NimElementType("CAST_EXPR");
+  IElementType CMD_START = new NimElementType("CMD_START");
   IElementType CMP_EXPR = new NimElementType("CMP_EXPR");
   IElementType COLON_BODY = new NimElementType("COLON_BODY");
   IElementType COLON_COMMENT = new NimElementType("COLON_COMMENT");
@@ -41,8 +42,6 @@ public interface NimTypes {
   IElementType DEFER_STMT = new NimElementType("DEFER_STMT");
   IElementType DISCARD_STMT = new NimElementType("DISCARD_STMT");
   IElementType DOLLAR_EXPR = new NimElementType("DOLLAR_EXPR");
-  IElementType DOT_LIKE_SUFFIX = new NimElementType("DOT_LIKE_SUFFIX");
-  IElementType DOT_OR_CMD_START = new NimElementType("DOT_OR_CMD_START");
   IElementType DOT_SUFFIX = new NimElementType("DOT_SUFFIX");
   IElementType DO_BLOCK = new NimElementType("DO_BLOCK");
   IElementType ENUM_DECL = new NimElementType("ENUM_DECL");
@@ -105,7 +104,6 @@ public interface NimTypes {
   IElementType PRAGMA_STMT = new NimElementType("PRAGMA_STMT");
   IElementType PRIMARY_EXPR = new NimElementType("PRIMARY_EXPR");
   IElementType PRIMARY_SUFFIX = new NimElementType("PRIMARY_SUFFIX");
-  IElementType PRIMARY_SUFFIX_CMD = new NimElementType("PRIMARY_SUFFIX_CMD");
   IElementType RAISE_STMT = new NimElementType("RAISE_STMT");
   IElementType RAW_TYPE_DESC = new NimElementType("RAW_TYPE_DESC");
   IElementType RETURN_STMT = new NimElementType("RETURN_STMT");
@@ -133,7 +131,6 @@ public interface NimTypes {
   IElementType TYPE_DEF_VALUE = new NimElementType("TYPE_DEF_VALUE");
   IElementType TYPE_DESC = new NimElementType("TYPE_DESC");
   IElementType TYPE_DESC_EXPR = new NimElementType("TYPE_DESC_EXPR");
-  IElementType UNARY_OP = new NimElementType("UNARY_OP");
   IElementType VARIABLE = new NimElementType("VARIABLE");
   IElementType VAR_TUPLE = new NimElementType("VAR_TUPLE");
   IElementType WHEN_EXPR = new NimElementType("WHEN_EXPR");
@@ -344,6 +341,9 @@ public interface NimTypes {
       else if (type == CAST_EXPR) {
         return new NimCastExprImpl(node);
       }
+      else if (type == CMD_START) {
+        return new NimCmdStartImpl(node);
+      }
       else if (type == CMP_EXPR) {
         return new NimCmpExprImpl(node);
       }
@@ -400,12 +400,6 @@ public interface NimTypes {
       }
       else if (type == DOLLAR_EXPR) {
         return new NimDollarExprImpl(node);
-      }
-      else if (type == DOT_LIKE_SUFFIX) {
-        return new NimDotLikeSuffixImpl(node);
-      }
-      else if (type == DOT_OR_CMD_START) {
-        return new NimDotOrCmdStartImpl(node);
       }
       else if (type == DOT_SUFFIX) {
         return new NimDotSuffixImpl(node);
@@ -593,9 +587,6 @@ public interface NimTypes {
       else if (type == PRIMARY_SUFFIX) {
         return new NimPrimarySuffixImpl(node);
       }
-      else if (type == PRIMARY_SUFFIX_CMD) {
-        return new NimPrimarySuffixCmdImpl(node);
-      }
       else if (type == RAISE_STMT) {
         return new NimRaiseStmtImpl(node);
       }
@@ -676,9 +667,6 @@ public interface NimTypes {
       }
       else if (type == TYPE_DESC_EXPR) {
         return new NimTypeDescExprImpl(node);
-      }
-      else if (type == UNARY_OP) {
-        return new NimUnaryOpImpl(node);
       }
       else if (type == VARIABLE) {
         return new NimVariableImpl(node);

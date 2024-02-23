@@ -14,15 +14,15 @@ public interface NimPrimarySuffix extends PsiElement {
   NimBracketSuffix getBracketSuffix();
 
   @Nullable
-  NimDotLikeSuffix getDotLikeSuffix();
+  NimCmdStart getCmdStart();
+
+  @Nullable
+  NimCommandExpr getCommandExpr();
 
   @Nullable
   NimDotSuffix getDotSuffix();
 
   @Nullable
   NimParenSuffix getParenSuffix();
-
-  @Nullable
-  NimPrimarySuffixCmd getPrimarySuffixCmd();
 
 }

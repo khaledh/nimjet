@@ -41,8 +41,14 @@ public class NimPrimarySuffixImpl extends ASTWrapperPsiElement implements NimPri
 
   @Override
   @Nullable
-  public NimDotLikeSuffix getDotLikeSuffix() {
-    return findChildByClass(NimDotLikeSuffix.class);
+  public NimCmdStart getCmdStart() {
+    return findChildByClass(NimCmdStart.class);
+  }
+
+  @Override
+  @Nullable
+  public NimCommandExpr getCommandExpr() {
+    return findChildByClass(NimCommandExpr.class);
   }
 
   @Override
@@ -55,12 +61,6 @@ public class NimPrimarySuffixImpl extends ASTWrapperPsiElement implements NimPri
   @Nullable
   public NimParenSuffix getParenSuffix() {
     return findChildByClass(NimParenSuffix.class);
-  }
-
-  @Override
-  @Nullable
-  public NimPrimarySuffixCmd getPrimarySuffixCmd() {
-    return findChildByClass(NimPrimarySuffixCmd.class);
   }
 
 }

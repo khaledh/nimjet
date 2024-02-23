@@ -20,7 +20,7 @@
   parserUtilClass="khaledh.nimjet.NimParserUtil"
 }
 
-module                ::= <<initContext>> &INDZERO <<optlist stmt (SEMICOLON | INDEQ)>>
+module                ::= <<initContext>> &INDZERO (stmt | SEMICOLON &(INDNONE | INDZERO))*
 
 stmt                  ::= if_stmt
                         | when_stmt

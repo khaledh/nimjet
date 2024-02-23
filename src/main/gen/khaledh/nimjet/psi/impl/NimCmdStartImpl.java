@@ -11,14 +11,14 @@ import static khaledh.nimjet.psi.NimTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimPrimarySuffixCmdImpl extends ASTWrapperPsiElement implements NimPrimarySuffixCmd {
+public class NimCmdStartImpl extends ASTWrapperPsiElement implements NimCmdStart {
 
-  public NimPrimarySuffixCmdImpl(@NotNull ASTNode node) {
+  public NimCmdStartImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitPrimarySuffixCmd(this);
+    visitor.visitCmdStart(this);
   }
 
   @Override
@@ -29,20 +29,14 @@ public class NimPrimarySuffixCmdImpl extends ASTWrapperPsiElement implements Nim
 
   @Override
   @Nullable
-  public NimCommandExpr getCommandExpr() {
-    return findChildByClass(NimCommandExpr.class);
+  public NimIdent getIdent() {
+    return findChildByClass(NimIdent.class);
   }
 
   @Override
   @Nullable
-  public NimDotOrCmdStart getDotOrCmdStart() {
-    return findChildByClass(NimDotOrCmdStart.class);
-  }
-
-  @Override
-  @Nullable
-  public NimUnaryOp getUnaryOp() {
-    return findChildByClass(NimUnaryOp.class);
+  public NimLiteral getLiteral() {
+    return findChildByClass(NimLiteral.class);
   }
 
 }

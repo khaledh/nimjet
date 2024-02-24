@@ -3,7 +3,7 @@ package khaledh.nimjet
 import com.intellij.lang.PsiBuilder
 import com.intellij.lang.parser.GeneratedParserUtilBase
 import com.intellij.openapi.util.Key
-import khaledh.nimjet.psi.NimTypes
+import khaledh.nimjet.psi.NimElementTypes
 
 
 fun <T> stackOf(vararg elements: T) = ArrayDeque(elements.toList())
@@ -186,7 +186,7 @@ class NimParserUtil : GeneratedParserUtilBase() {
 
         @JvmStatic
         fun sigilOpr(builder: PsiBuilder, level: Int): Boolean {
-            if (builder.tokenType == NimTypes.OP2) {
+            if (builder.tokenType == NimElementTypes.OP2) {
                 if (builder.originalText[builder.currentOffset] == '@') {
                     builder.advanceLexer()
                     return true

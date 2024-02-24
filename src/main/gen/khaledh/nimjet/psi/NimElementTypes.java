@@ -6,7 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
 import khaledh.nimjet.psi.impl.*;
 
-public interface NimTypes {
+public interface NimElementTypes {
 
   IElementType AMP_EXPR = new NimElementType("AMP_EXPR");
   IElementType AND_EXPR = new NimElementType("AND_EXPR");

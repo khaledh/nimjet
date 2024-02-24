@@ -3,7 +3,7 @@ package khaledh.nimjet;
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
-import khaledh.nimjet.psi.NimTypes;
+import khaledh.nimjet.psi.NimElementTypes;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -39,11 +39,11 @@ private IElementType handleUnaryMinus(IElementType type) {
     }
     yypushback(yylength() - 1);
     yybegin(YYINITIAL);
-    return NimTypes.OP8;
+    return NimElementTypes.OP8;
 }
 
 private IElementType considerAssign(IElementType type) {
-    return yycharat(yylength() - 1) == '=' ? NimTypes.OP1 : type;
+    return yycharat(yylength() - 1) == '=' ? NimElementTypes.OP1 : type;
 }
 %}
 
@@ -84,12 +84,12 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
 %%
 
 <YYINITIAL> {
-  "-"? {FloatLit}        { return handleUnaryMinus(NimTypes.FLOAT_LIT); }
-  "-"? {IntLit}          { return handleUnaryMinus(NimTypes.INT_LIT); }
-  "-"? {CustomNumLit}    { return handleUnaryMinus(NimTypes.CUSTOM_NUMERIC_LIT); }
+  "-"? {FloatLit}        { return handleUnaryMinus(NimElementTypes.FLOAT_LIT); }
+  "-"? {IntLit}          { return handleUnaryMinus(NimElementTypes.INT_LIT); }
+  "-"? {CustomNumLit}    { return handleUnaryMinus(NimElementTypes.CUSTOM_NUMERIC_LIT); }
 
-  \"(\\.|[^\"\\\n])*\n   { return NimTypes.STR_ERROR; }
-  \"(\\.|[^\"\\\n])*\"   { return NimTypes.STR_LIT; }
+  \"(\\.|[^\"\\\n])*\n   { return NimElementTypes.STR_ERROR; }
+  \"(\\.|[^\"\\\n])*\"   { return NimElementTypes.STR_LIT; }
   \"\"\"                 { yybegin(TRIPLEQUOTE); tripleQuoteCount = 0; }
 
   ("r"|"R")\"            { yybegin(RAWSTRING); rawQuoteCount = 0; }
@@ -97,108 +97,108 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
   "#"?"#["               { yybegin(MULTILINE_COMMENT); multilineCommentLevel = 1; }
 
   "#"[^\[]?[^\n]*(\n(\s*"#"[^\n]*))*
-                         { return NimTypes.LINE_COMMENT; }
+                         { return NimElementTypes.LINE_COMMENT; }
 
                          // '*:' is a special case, because it is two tokens in 'var v*: int'
                          // unless it is followed by an operator chracter
-  "*:"{Opr}+             { return NimTypes.OP9; }
-  "*:"                   { yypushback(1); return NimTypes.OP9; }
-  ","                    { return NimTypes.COMMA; }
+  "*:"{Opr}+             { return NimElementTypes.OP9; }
+  "*:"                   { yypushback(1); return NimElementTypes.OP9; }
+  ","                    { return NimElementTypes.COMMA; }
 //  "(."[^\.]              { yypushback(1); return NimTypes.LPAREN_DOT; }
-  "("                    { return NimTypes.LPAREN; }
-  ")"                    { return NimTypes.RPAREN; }
+  "("                    { return NimElementTypes.LPAREN; }
+  ")"                    { return NimElementTypes.RPAREN; }
 //  "[."[^\.]              { yypushback(1); return NimTypes.LBRACKET_DOT; }
 //  "[:"                   { return NimTypes.LBRACKET_COLON; }
-  "["                    { return NimTypes.LBRACKET; }
-  "]"                    { return NimTypes.RBRACKET; }
-  "{."[^\.]              { yypushback(1); return NimTypes.LBRACE_DOT; }
-  "{"                    { return NimTypes.LBRACE; }
-  "}"                    { return NimTypes.RBRACE; }
+  "["                    { return NimElementTypes.LBRACKET; }
+  "]"                    { return NimElementTypes.RBRACKET; }
+  "{."[^\.]              { yypushback(1); return NimElementTypes.LBRACE_DOT; }
+  "{"                    { return NimElementTypes.LBRACE; }
+  "}"                    { return NimElementTypes.RBRACE; }
 //  ".)"                   { return NimTypes.DOT_RPAREN; }
 //  ".]"                   { return NimTypes.DOT_RBRACKET; }
-  ".}"                   { return NimTypes.DOT_RBRACE; }
-  ";"                    { return NimTypes.SEMICOLON; }
-  "`"                    { return NimTypes.ACCENT; }
+  ".}"                   { return NimElementTypes.DOT_RBRACE; }
+  ";"                    { return NimElementTypes.SEMICOLON; }
+  "`"                    { return NimElementTypes.ACCENT; }
 
   // special operator tokens: ':', '::', '=', '.', '..'
-  ":"{NotOpr}            { yypushback(1); return NimTypes.COLON; }
+  ":"{NotOpr}            { yypushback(1); return NimElementTypes.COLON; }
 //  "::"{NotOpr}           { yypushback(1); return NimTypes.COLONCOLON; }
-  "="{NotOpr}            { yypushback(1); return NimTypes.EQUALS; }
-  ".."{NotOpr}           { yypushback(1); return NimTypes.DOTDOT; }
-  "."{NotOpr}            { yypushback(1); return NimTypes.DOT; }
+  "="{NotOpr}            { yypushback(1); return NimElementTypes.EQUALS; }
+  ".."{NotOpr}           { yypushback(1); return NimElementTypes.DOTDOT; }
+  "."{NotOpr}            { yypushback(1); return NimElementTypes.DOT; }
 
   // operators have 11 precendence levels (0 to 10)
   // the order of the rules is important, because the first match wins
-  "->"                   { return NimTypes.OP_ARROW; }
-  {Opr}*?[\-~=]">"       { return NimTypes.OP_ARROW_LIKE; }
-  [$\^]{Opr}*            { return considerAssign(NimTypes.OP10); }
-  [*%/\\]{Opr}*          { return considerAssign(NimTypes.OP9); }
-  \~{Opr}*               { return NimTypes.OP8; }
-  [+\-|]{Opr}*           { return considerAssign(NimTypes.OP8); }
-  \&{Opr}*               { return considerAssign(NimTypes.OP7); }
-  \.{Opr}*               { return considerAssign(NimTypes.OP_DOTLIKE); }
-  [=<>!]{Opr}*           { return NimTypes.OP5; }
-  \?{Opr}*               { return NimTypes.OP2; }
-  {Opr}+                 { return NimTypes.OP2; }
+  "->"                   { return NimElementTypes.OP_ARROW; }
+  {Opr}*?[\-~=]">"       { return NimElementTypes.OP_ARROW_LIKE; }
+  [$\^]{Opr}*            { return considerAssign(NimElementTypes.OP10); }
+  [*%/\\]{Opr}*          { return considerAssign(NimElementTypes.OP9); }
+  \~{Opr}*               { return NimElementTypes.OP8; }
+  [+\-|]{Opr}*           { return considerAssign(NimElementTypes.OP8); }
+  \&{Opr}*               { return considerAssign(NimElementTypes.OP7); }
+  \.{Opr}*               { return considerAssign(NimElementTypes.OP_DOTLIKE); }
+  [=<>!]{Opr}*           { return NimElementTypes.OP5; }
+  \?{Opr}*               { return NimElementTypes.OP2; }
+  {Opr}+                 { return NimElementTypes.OP2; }
 
-  {CharLit}              { return NimTypes.CHAR_LIT; }
+  {CharLit}              { return NimElementTypes.CHAR_LIT; }
 
   // built-ins
-  "bool"                 { return NimTypes.BOOL; }
-  "true"                 { return NimTypes.TRUE; }
-  "false"                { return NimTypes.FALSE; }
-  "char"                 { return NimTypes.CHAR; }
-  "string"               { return NimTypes.STRING; }
-  "cstring"              { return NimTypes.CSTRING; }
-  "int"                  { return NimTypes.INT; }
-  "int8"                 { return NimTypes.INT8; }
-  "int16"                { return NimTypes.INT16; }
-  "int32"                { return NimTypes.INT32; }
-  "int64"                { return NimTypes.INT64; }
-  "uint"                 { return NimTypes.UINT; }
-  "uint8"                { return NimTypes.UINT8; }
-  "uint16"               { return NimTypes.UINT16; }
-  "uint32"               { return NimTypes.UINT32; }
-  "uint64"               { return NimTypes.UINT64; }
-  "float"                { return NimTypes.FLOAT; }
-  "float32"              { return NimTypes.FLOAT32; }
-  "float64"              { return NimTypes.FLOAT64; }
-  "array"                { return NimTypes.ARRAY; }
-  "seq"                  { return NimTypes.SEQ; }
-  "openArray"            { return NimTypes.OPENARRAY; }
-  "UncheckedArray"       { return NimTypes.UNCHECKEDARRAY; }
-  "set"                  { return NimTypes.SET; }
-  "object"               { return NimTypes.OBJECT; }
-  "enum"                 { return NimTypes.ENUM; }
-  "tuple"                { return NimTypes.TUPLE; }
-  "concept"              { return NimTypes.CONCEPT; }
-  "nil"                  { return NimTypes.NIL; }
-  "pointer"              { return NimTypes.POINTER; }
-  "void"                 { return NimTypes.VOID; }
-  "untyped"              { return NimTypes.UNTYPED; }
-  "auto"                 { return NimTypes.AUTO; }
-  "varargs"              { return NimTypes.VARARGS; }
+  "bool"                 { return NimElementTypes.BOOL; }
+  "true"                 { return NimElementTypes.TRUE; }
+  "false"                { return NimElementTypes.FALSE; }
+  "char"                 { return NimElementTypes.CHAR; }
+  "string"               { return NimElementTypes.STRING; }
+  "cstring"              { return NimElementTypes.CSTRING; }
+  "int"                  { return NimElementTypes.INT; }
+  "int8"                 { return NimElementTypes.INT8; }
+  "int16"                { return NimElementTypes.INT16; }
+  "int32"                { return NimElementTypes.INT32; }
+  "int64"                { return NimElementTypes.INT64; }
+  "uint"                 { return NimElementTypes.UINT; }
+  "uint8"                { return NimElementTypes.UINT8; }
+  "uint16"               { return NimElementTypes.UINT16; }
+  "uint32"               { return NimElementTypes.UINT32; }
+  "uint64"               { return NimElementTypes.UINT64; }
+  "float"                { return NimElementTypes.FLOAT; }
+  "float32"              { return NimElementTypes.FLOAT32; }
+  "float64"              { return NimElementTypes.FLOAT64; }
+  "array"                { return NimElementTypes.ARRAY; }
+  "seq"                  { return NimElementTypes.SEQ; }
+  "openArray"            { return NimElementTypes.OPENARRAY; }
+  "UncheckedArray"       { return NimElementTypes.UNCHECKEDARRAY; }
+  "set"                  { return NimElementTypes.SET; }
+  "object"               { return NimElementTypes.OBJECT; }
+  "enum"                 { return NimElementTypes.ENUM; }
+  "tuple"                { return NimElementTypes.TUPLE; }
+  "concept"              { return NimElementTypes.CONCEPT; }
+  "nil"                  { return NimElementTypes.NIL; }
+  "pointer"              { return NimElementTypes.POINTER; }
+  "void"                 { return NimElementTypes.VOID; }
+  "untyped"              { return NimElementTypes.UNTYPED; }
+  "auto"                 { return NimElementTypes.AUTO; }
+  "varargs"              { return NimElementTypes.VARARGS; }
 
   // c (compatibility) types
-  "BiggestFloat"         { return NimTypes.BIGGEST_FLOAT; }
-  "BiggestInt"           { return NimTypes.BIGGEST_INT; }
-  "BiggestUInt"          { return NimTypes.BIGGEST_UINT; }
-  "cchar"                { return NimTypes.CCHAR; }
-  "cdouble"              { return NimTypes.CDOUBLE; }
-  "cfloat"               { return NimTypes.CFLOAT; }
-  "cint"                 { return NimTypes.CINT; }
-  "clong"                { return NimTypes.CLONG; }
-  "clongdouble"          { return NimTypes.CLONG_DOUBLE; }
-  "clonglong"            { return NimTypes.CLONG_LONG; }
-  "cschar"               { return NimTypes.CSCHAR; }
-  "cshort"               { return NimTypes.CSHORT; }
-  "csize_t"              { return NimTypes.CSIZE_T; }
-  "cstringArray"         { return NimTypes.CSTRING_ARRAY; }
-  "cuchar"               { return NimTypes.CUCHAR; }
-  "cuint"                { return NimTypes.CUINT; }
-  "culong"               { return NimTypes.CULONG; }
-  "culonglong"           { return NimTypes.CULONG_LONG; }
-  "cushort"              { return NimTypes.CUSHORT; }
+  "BiggestFloat"         { return NimElementTypes.BIGGEST_FLOAT; }
+  "BiggestInt"           { return NimElementTypes.BIGGEST_INT; }
+  "BiggestUInt"          { return NimElementTypes.BIGGEST_UINT; }
+  "cchar"                { return NimElementTypes.CCHAR; }
+  "cdouble"              { return NimElementTypes.CDOUBLE; }
+  "cfloat"               { return NimElementTypes.CFLOAT; }
+  "cint"                 { return NimElementTypes.CINT; }
+  "clong"                { return NimElementTypes.CLONG; }
+  "clongdouble"          { return NimElementTypes.CLONG_DOUBLE; }
+  "clonglong"            { return NimElementTypes.CLONG_LONG; }
+  "cschar"               { return NimElementTypes.CSCHAR; }
+  "cshort"               { return NimElementTypes.CSHORT; }
+  "csize_t"              { return NimElementTypes.CSIZE_T; }
+  "cstringArray"         { return NimElementTypes.CSTRING_ARRAY; }
+  "cuchar"               { return NimElementTypes.CUCHAR; }
+  "cuint"                { return NimElementTypes.CUINT; }
+  "culong"               { return NimElementTypes.CULONG; }
+  "culonglong"           { return NimElementTypes.CULONG_LONG; }
+  "cushort"              { return NimElementTypes.CUSHORT; }
 
 
 //  "new"                  { return NimTypes.NEW; }
@@ -206,72 +206,72 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
 //  "echo"                 { return NimTypes.ECHO; }
 
   // keywords
-  "addr"                 { return NimTypes.ADDR; }
-  "and"                  { return NimTypes.AND; }
-  "asm"                  { return NimTypes.ASM; }
-  "as"                   { return NimTypes.AS; }
-  "bind"                 { return NimTypes.BIND; }
-  "block"                { return NimTypes.BLOCK; }
-  "break"                { return NimTypes.BREAK; }
-  "case"                 { return NimTypes.CASE; }
-  "cast"                 { return NimTypes.CAST; }
-  "const"                { return NimTypes.CONST; }
-  "continue"             { return NimTypes.CONTINUE; }
-  "converter"            { return NimTypes.CONVERTER; }
-  "defer"                { return NimTypes.DEFER; }
-  "discard"              { return NimTypes.DISCARD; }
-  "distinct"             { return NimTypes.DISTINCT; }
-  "div"                  { return NimTypes.DIV; }
-  "do"                   { return NimTypes.DO; }
-  "elif"                 { return NimTypes.ELIF; }
-  "else"                 { return NimTypes.ELSE; }
-  "end"                  { return NimTypes.END; }
-  "except"               { return NimTypes.EXCEPT; }
-  "export"               { return NimTypes.EXPORT; }
-  "finally"              { return NimTypes.FINALLY; }
-  "for"                  { return NimTypes.FOR; }
-  "from"                 { return NimTypes.FROM; }
-  "func"                 { return NimTypes.FUNC; }
-  "if"                   { return NimTypes.IF; }
-  "import"               { return NimTypes.IMPORT; }
-  "include"              { return NimTypes.INCLUDE; }
-  "interface"            { return NimTypes.INTERFACE; }
-  "in"                   { return NimTypes.IN; }
-  "isnot"                { return NimTypes.ISNOT; }
-  "is"                   { return NimTypes.IS; }
-  "iterator"             { return NimTypes.ITERATOR; }
-  "let"                  { return NimTypes.LET; }
-  "macro"                { return NimTypes.MACRO; }
-  "method"               { return NimTypes.METHOD; }
-  "mixin"                { return NimTypes.MIXIN; }
-  "mod"                  { return NimTypes.MOD; }
-  "notin"                { return NimTypes.NOTIN; }
-  "not"                  { return NimTypes.NOT; }
-  "of"                   { return NimTypes.OF; }
-  "or"                   { return NimTypes.OR; }
-  "out"                  { return NimTypes.OUT; }
-  "proc"                 { return NimTypes.PROC; }
-  "ptr"                  { return NimTypes.PTR; }
-  "raise"                { return NimTypes.RAISE; }
-  "ref"                  { return NimTypes.REF; }
-  "return"               { return NimTypes.RETURN; }
-  "shl"                  { return NimTypes.SHL; }
-  "shr"                  { return NimTypes.SHR; }
-  "static"               { return NimTypes.STATIC; }
-  "template"             { return NimTypes.TEMPLATE; }
-  "try"                  { return NimTypes.TRY; }
-  "type"                 { return NimTypes.TYPE; }
-  "using"                { return NimTypes.USING; }
-  "var"                  { return NimTypes.VAR; }
-  "when"                 { return NimTypes.WHEN; }
-  "while"                { return NimTypes.WHILE; }
-  "xor"                  { return NimTypes.XOR; }
-  "yield"                { return NimTypes.YIELD; }
+  "addr"                 { return NimElementTypes.ADDR; }
+  "and"                  { return NimElementTypes.AND; }
+  "asm"                  { return NimElementTypes.ASM; }
+  "as"                   { return NimElementTypes.AS; }
+  "bind"                 { return NimElementTypes.BIND; }
+  "block"                { return NimElementTypes.BLOCK; }
+  "break"                { return NimElementTypes.BREAK; }
+  "case"                 { return NimElementTypes.CASE; }
+  "cast"                 { return NimElementTypes.CAST; }
+  "const"                { return NimElementTypes.CONST; }
+  "continue"             { return NimElementTypes.CONTINUE; }
+  "converter"            { return NimElementTypes.CONVERTER; }
+  "defer"                { return NimElementTypes.DEFER; }
+  "discard"              { return NimElementTypes.DISCARD; }
+  "distinct"             { return NimElementTypes.DISTINCT; }
+  "div"                  { return NimElementTypes.DIV; }
+  "do"                   { return NimElementTypes.DO; }
+  "elif"                 { return NimElementTypes.ELIF; }
+  "else"                 { return NimElementTypes.ELSE; }
+  "end"                  { return NimElementTypes.END; }
+  "except"               { return NimElementTypes.EXCEPT; }
+  "export"               { return NimElementTypes.EXPORT; }
+  "finally"              { return NimElementTypes.FINALLY; }
+  "for"                  { return NimElementTypes.FOR; }
+  "from"                 { return NimElementTypes.FROM; }
+  "func"                 { return NimElementTypes.FUNC; }
+  "if"                   { return NimElementTypes.IF; }
+  "import"               { return NimElementTypes.IMPORT; }
+  "include"              { return NimElementTypes.INCLUDE; }
+  "interface"            { return NimElementTypes.INTERFACE; }
+  "in"                   { return NimElementTypes.IN; }
+  "isnot"                { return NimElementTypes.ISNOT; }
+  "is"                   { return NimElementTypes.IS; }
+  "iterator"             { return NimElementTypes.ITERATOR; }
+  "let"                  { return NimElementTypes.LET; }
+  "macro"                { return NimElementTypes.MACRO; }
+  "method"               { return NimElementTypes.METHOD; }
+  "mixin"                { return NimElementTypes.MIXIN; }
+  "mod"                  { return NimElementTypes.MOD; }
+  "notin"                { return NimElementTypes.NOTIN; }
+  "not"                  { return NimElementTypes.NOT; }
+  "of"                   { return NimElementTypes.OF; }
+  "or"                   { return NimElementTypes.OR; }
+  "out"                  { return NimElementTypes.OUT; }
+  "proc"                 { return NimElementTypes.PROC; }
+  "ptr"                  { return NimElementTypes.PTR; }
+  "raise"                { return NimElementTypes.RAISE; }
+  "ref"                  { return NimElementTypes.REF; }
+  "return"               { return NimElementTypes.RETURN; }
+  "shl"                  { return NimElementTypes.SHL; }
+  "shr"                  { return NimElementTypes.SHR; }
+  "static"               { return NimElementTypes.STATIC; }
+  "template"             { return NimElementTypes.TEMPLATE; }
+  "try"                  { return NimElementTypes.TRY; }
+  "type"                 { return NimElementTypes.TYPE; }
+  "using"                { return NimElementTypes.USING; }
+  "var"                  { return NimElementTypes.VAR; }
+  "when"                 { return NimElementTypes.WHEN; }
+  "while"                { return NimElementTypes.WHILE; }
+  "xor"                  { return NimElementTypes.XOR; }
+  "yield"                { return NimElementTypes.YIELD; }
 
 
-  "_"({IdentChar}|_)+    { return NimTypes.INVALID_IDENT; }
-  "_"                    { return NimTypes.ID; }
-  {Ident}                { return NimTypes.ID; }
+  "_"({IdentChar}|_)+    { return NimElementTypes.INVALID_IDENT; }
+  "_"                    { return NimElementTypes.ID; }
+  {Ident}                { return NimElementTypes.ID; }
 
 
   [ \t\n\r]+             { return TokenType.WHITE_SPACE; }
@@ -280,45 +280,45 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
 
 <TRIPLEQUOTE> {
   \"                     { tripleQuoteCount++;
-                           if (tripleQuoteCount >= 3) {
-                             if (yycharat(yylength()) != '\"') {
-                               yybegin(YYINITIAL);
-                               return NimTypes.TRIPLESTR_LIT;
+                             if (tripleQuoteCount >= 3) {
+                               if (yycharat(yylength()) != '\"') {
+                                 yybegin(YYINITIAL);
+                                 return NimElementTypes.TRIPLESTR_LIT;
+                               }
                              }
                            }
-                         }
   <<EOF>>                { yybegin(YYINITIAL);
-                           return NimTypes.TRIPLESTR_ERROR;
-                         }
+                             return NimElementTypes.TRIPLESTR_ERROR;
+                           }
  [^]                     { tripleQuoteCount = 0; }
 }
 
 <RAWSTRING> {
   \"                     { rawQuoteCount++;
-                           if (rawQuoteCount == 1 && yycharat(yylength()) != '\"') {
-                             yybegin(YYINITIAL);
-                             return NimTypes.RSTR_LIT;
-                           } else if (rawQuoteCount == 2) {
-                              rawQuoteCount = 0;
+                             if (rawQuoteCount == 1 && yycharat(yylength()) != '\"') {
+                               yybegin(YYINITIAL);
+                               return NimElementTypes.RSTR_LIT;
+                             } else if (rawQuoteCount == 2) {
+                                rawQuoteCount = 0;
+                             }
                            }
-                         }
   \n                     { yypushback(1);
-                           yybegin(YYINITIAL);
-                           return NimTypes.STR_ERROR;
-                         }
+                             yybegin(YYINITIAL);
+                             return NimElementTypes.STR_ERROR;
+                           }
  [^]                     { rawQuoteCount = 0; }
 }
 
 <MULTILINE_COMMENT> {
   "#"?"#["               { multilineCommentLevel++; }
   "]#"#?                 { multilineCommentLevel--;
-                           if (multilineCommentLevel == 0) {
-                             yybegin(YYINITIAL);
-                             return NimTypes.MULTILINE_COMMENT;
+                             if (multilineCommentLevel == 0) {
+                               yybegin(YYINITIAL);
+                               return NimElementTypes.MULTILINE_COMMENT;
+                             }
                            }
-                         }
   <<EOF>>                { yybegin(YYINITIAL);
-                           return NimTypes.MULTILINE_COMMENT_ERROR;
-                         }
+                             return NimElementTypes.MULTILINE_COMMENT_ERROR;
+                           }
  [^]                     { }
 }

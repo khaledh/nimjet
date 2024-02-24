@@ -2,7 +2,7 @@ package khaledh.nimjet.psi.impl
 
 import khaledh.nimjet.NimIcons
 import khaledh.nimjet.psi.NimNamedElement
-import khaledh.nimjet.psi.NimTypes
+import khaledh.nimjet.psi.NimElementTypes
 import com.intellij.lang.ASTNode
 import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.PsiElement
@@ -26,7 +26,7 @@ class NimPsiImplUtil {
 
         @JvmStatic
         fun getName(element: NimNamedElement): String {
-            return element.node.findChildByType(NimTypes.IDENT)?.text ?: ""
+            return element.node.findChildByType(NimElementTypes.IDENT)?.text ?: ""
         }
 
         @JvmStatic
@@ -42,7 +42,7 @@ class NimPsiImplUtil {
 
         @JvmStatic
         fun getNameIdentifier(element: NimNamedElement): ASTNode {
-            return element.node.findChildByType(NimTypes.IDENT)!!
+            return element.node.findChildByType(NimElementTypes.IDENT)!!
         }
 
         @JvmStatic

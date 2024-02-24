@@ -6,7 +6,7 @@ package khaledh.nimjet;
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
-import khaledh.nimjet.psi.NimTypes;
+import khaledh.nimjet.psi.NimElementTypes;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -1023,11 +1023,11 @@ private IElementType handleUnaryMinus(IElementType type) {
     }
     yypushback(yylength() - 1);
     yybegin(YYINITIAL);
-    return NimTypes.OP8;
+    return NimElementTypes.OP8;
 }
 
 private IElementType considerAssign(IElementType type) {
-    return yycharat(yylength() - 1) == '=' ? NimTypes.OP1 : type;
+    return yycharat(yylength() - 1) == '=' ? NimElementTypes.OP1 : type;
 }
 
 
@@ -1286,12 +1286,12 @@ private IElementType considerAssign(IElementType type) {
             switch (zzLexicalState) {
             case TRIPLEQUOTE: {
               yybegin(YYINITIAL);
-                           return NimTypes.TRIPLESTR_ERROR;
+                             return NimElementTypes.TRIPLESTR_ERROR;
             }  // fall though
             case 548: break;
             case MULTILINE_COMMENT: {
               yybegin(YYINITIAL);
-                           return NimTypes.MULTILINE_COMMENT_ERROR;
+                             return NimElementTypes.MULTILINE_COMMENT_ERROR;
             }  // fall though
             case 549: break;
             default:
@@ -1311,102 +1311,102 @@ private IElementType considerAssign(IElementType type) {
           // fall through
           case 165: break;
           case 3:
-            { return NimTypes.OP5;
+            { return NimElementTypes.OP5;
             }
           // fall through
           case 166: break;
           case 4:
-            { return NimTypes.LINE_COMMENT;
+            { return NimElementTypes.LINE_COMMENT;
             }
           // fall through
           case 167: break;
           case 5:
-            { return considerAssign(NimTypes.OP10);
+            { return considerAssign(NimElementTypes.OP10);
             }
           // fall through
           case 168: break;
           case 6:
-            { return considerAssign(NimTypes.OP9);
+            { return considerAssign(NimElementTypes.OP9);
             }
           // fall through
           case 169: break;
           case 7:
-            { return considerAssign(NimTypes.OP7);
+            { return considerAssign(NimElementTypes.OP7);
             }
           // fall through
           case 170: break;
           case 8:
-            { return NimTypes.LPAREN;
+            { return NimElementTypes.LPAREN;
             }
           // fall through
           case 171: break;
           case 9:
-            { return NimTypes.RPAREN;
+            { return NimElementTypes.RPAREN;
             }
           // fall through
           case 172: break;
           case 10:
-            { return considerAssign(NimTypes.OP8);
+            { return considerAssign(NimElementTypes.OP8);
             }
           // fall through
           case 173: break;
           case 11:
-            { return NimTypes.COMMA;
+            { return NimElementTypes.COMMA;
             }
           // fall through
           case 174: break;
           case 12:
-            { return considerAssign(NimTypes.OP_DOTLIKE);
+            { return considerAssign(NimElementTypes.OP_DOTLIKE);
             }
           // fall through
           case 175: break;
           case 13:
-            { return handleUnaryMinus(NimTypes.INT_LIT);
+            { return handleUnaryMinus(NimElementTypes.INT_LIT);
             }
           // fall through
           case 176: break;
           case 14:
-            { return NimTypes.OP2;
+            { return NimElementTypes.OP2;
             }
           // fall through
           case 177: break;
           case 15:
-            { return NimTypes.SEMICOLON;
+            { return NimElementTypes.SEMICOLON;
             }
           // fall through
           case 178: break;
           case 16:
-            { return NimTypes.ID;
+            { return NimElementTypes.ID;
             }
           // fall through
           case 179: break;
           case 17:
-            { return NimTypes.LBRACKET;
+            { return NimElementTypes.LBRACKET;
             }
           // fall through
           case 180: break;
           case 18:
-            { return NimTypes.RBRACKET;
+            { return NimElementTypes.RBRACKET;
             }
           // fall through
           case 181: break;
           case 19:
-            { return NimTypes.ACCENT;
+            { return NimElementTypes.ACCENT;
             }
           // fall through
           case 182: break;
           case 20:
-            { return NimTypes.LBRACE;
+            { return NimElementTypes.LBRACE;
             }
           // fall through
           case 183: break;
           case 21:
-            { return NimTypes.RBRACE;
+            { return NimElementTypes.RBRACE;
             }
           // fall through
           case 184: break;
           case 22:
-            { return NimTypes.OP8;
+            { return NimElementTypes.OP8;
             }
           // fall through
           case 185: break;
@@ -1417,12 +1417,12 @@ private IElementType considerAssign(IElementType type) {
           case 186: break;
           case 24:
             { tripleQuoteCount++;
-                           if (tripleQuoteCount >= 3) {
-                             if (yycharat(yylength()) != '\"') {
-                               yybegin(YYINITIAL);
-                               return NimTypes.TRIPLESTR_LIT;
+                             if (tripleQuoteCount >= 3) {
+                               if (yycharat(yylength()) != '\"') {
+                                 yybegin(YYINITIAL);
+                                 return NimElementTypes.TRIPLESTR_LIT;
+                               }
                              }
-                           }
             }
           // fall through
           case 187: break;
@@ -1433,19 +1433,19 @@ private IElementType considerAssign(IElementType type) {
           case 188: break;
           case 26:
             { yypushback(1);
-                           yybegin(YYINITIAL);
-                           return NimTypes.STR_ERROR;
+                             yybegin(YYINITIAL);
+                             return NimElementTypes.STR_ERROR;
             }
           // fall through
           case 189: break;
           case 27:
             { rawQuoteCount++;
-                           if (rawQuoteCount == 1 && yycharat(yylength()) != '\"') {
-                             yybegin(YYINITIAL);
-                             return NimTypes.RSTR_LIT;
-                           } else if (rawQuoteCount == 2) {
-                              rawQuoteCount = 0;
-                           }
+                             if (rawQuoteCount == 1 && yycharat(yylength()) != '\"') {
+                               yybegin(YYINITIAL);
+                               return NimElementTypes.RSTR_LIT;
+                             } else if (rawQuoteCount == 2) {
+                                rawQuoteCount = 0;
+                             }
             }
           // fall through
           case 190: break;
@@ -1455,12 +1455,12 @@ private IElementType considerAssign(IElementType type) {
           // fall through
           case 191: break;
           case 29:
-            { return NimTypes.STR_ERROR;
+            { return NimElementTypes.STR_ERROR;
             }
           // fall through
           case 192: break;
           case 30:
-            { return NimTypes.STR_LIT;
+            { return NimElementTypes.STR_LIT;
             }
           // fall through
           case 193: break;
@@ -1470,42 +1470,42 @@ private IElementType considerAssign(IElementType type) {
           // fall through
           case 194: break;
           case 32:
-            { yypushback(1); return NimTypes.OP9;
+            { yypushback(1); return NimElementTypes.OP9;
             }
           // fall through
           case 195: break;
           case 33:
-            { return NimTypes.OP_ARROW;
+            { return NimElementTypes.OP_ARROW;
             }
           // fall through
           case 196: break;
           case 34:
-            { yypushback(1); return NimTypes.DOT;
+            { yypushback(1); return NimElementTypes.DOT;
             }
           // fall through
           case 197: break;
           case 35:
-            { return NimTypes.DOT_RBRACE;
+            { return NimElementTypes.DOT_RBRACE;
             }
           // fall through
           case 198: break;
           case 36:
-            { return handleUnaryMinus(NimTypes.FLOAT_LIT);
+            { return handleUnaryMinus(NimElementTypes.FLOAT_LIT);
             }
           // fall through
           case 199: break;
           case 37:
-            { yypushback(1); return NimTypes.COLON;
+            { yypushback(1); return NimElementTypes.COLON;
             }
           // fall through
           case 200: break;
           case 38:
-            { yypushback(1); return NimTypes.EQUALS;
+            { yypushback(1); return NimElementTypes.EQUALS;
             }
           // fall through
           case 201: break;
           case 39:
-            { return NimTypes.OP_ARROW_LIKE;
+            { return NimElementTypes.OP_ARROW_LIKE;
             }
           // fall through
           case 202: break;
@@ -1515,42 +1515,42 @@ private IElementType considerAssign(IElementType type) {
           // fall through
           case 203: break;
           case 41:
-            { return NimTypes.INVALID_IDENT;
+            { return NimElementTypes.INVALID_IDENT;
             }
           // fall through
           case 204: break;
           case 42:
-            { return NimTypes.AS;
+            { return NimElementTypes.AS;
             }
           // fall through
           case 205: break;
           case 43:
-            { return NimTypes.DO;
+            { return NimElementTypes.DO;
             }
           // fall through
           case 206: break;
           case 44:
-            { return NimTypes.IF;
+            { return NimElementTypes.IF;
             }
           // fall through
           case 207: break;
           case 45:
-            { return NimTypes.IN;
+            { return NimElementTypes.IN;
             }
           // fall through
           case 208: break;
           case 46:
-            { return NimTypes.IS;
+            { return NimElementTypes.IS;
             }
           // fall through
           case 209: break;
           case 47:
-            { return NimTypes.OF;
+            { return NimElementTypes.OF;
             }
           // fall through
           case 210: break;
           case 48:
-            { return NimTypes.OR;
+            { return NimElementTypes.OR;
             }
           // fall through
           case 211: break;
@@ -1561,10 +1561,10 @@ private IElementType considerAssign(IElementType type) {
           case 212: break;
           case 50:
             { multilineCommentLevel--;
-                           if (multilineCommentLevel == 0) {
-                             yybegin(YYINITIAL);
-                             return NimTypes.MULTILINE_COMMENT;
-                           }
+                             if (multilineCommentLevel == 0) {
+                               yybegin(YYINITIAL);
+                               return NimElementTypes.MULTILINE_COMMENT;
+                             }
             }
           // fall through
           case 213: break;
@@ -1574,562 +1574,562 @@ private IElementType considerAssign(IElementType type) {
           // fall through
           case 214: break;
           case 52:
-            { return NimTypes.CHAR_LIT;
+            { return NimElementTypes.CHAR_LIT;
             }
           // fall through
           case 215: break;
           case 53:
-            { return NimTypes.OP9;
+            { return NimElementTypes.OP9;
             }
           // fall through
           case 216: break;
           case 54:
-            { yypushback(1); return NimTypes.DOTDOT;
+            { yypushback(1); return NimElementTypes.DOTDOT;
             }
           // fall through
           case 217: break;
           case 55:
-            { return handleUnaryMinus(NimTypes.CUSTOM_NUMERIC_LIT);
+            { return handleUnaryMinus(NimElementTypes.CUSTOM_NUMERIC_LIT);
             }
           // fall through
           case 218: break;
           case 56:
-            { return NimTypes.AND;
+            { return NimElementTypes.AND;
             }
           // fall through
           case 219: break;
           case 57:
-            { return NimTypes.ASM;
+            { return NimElementTypes.ASM;
             }
           // fall through
           case 220: break;
           case 58:
-            { return NimTypes.DIV;
+            { return NimElementTypes.DIV;
             }
           // fall through
           case 221: break;
           case 59:
-            { return NimTypes.END;
+            { return NimElementTypes.END;
             }
           // fall through
           case 222: break;
           case 60:
-            { return NimTypes.FOR;
+            { return NimElementTypes.FOR;
             }
           // fall through
           case 223: break;
           case 61:
-            { return NimTypes.INT;
+            { return NimElementTypes.INT;
             }
           // fall through
           case 224: break;
           case 62:
-            { return NimTypes.LET;
+            { return NimElementTypes.LET;
             }
           // fall through
           case 225: break;
           case 63:
-            { return NimTypes.MOD;
+            { return NimElementTypes.MOD;
             }
           // fall through
           case 226: break;
           case 64:
-            { return NimTypes.NIL;
+            { return NimElementTypes.NIL;
             }
           // fall through
           case 227: break;
           case 65:
-            { return NimTypes.NOT;
+            { return NimElementTypes.NOT;
             }
           // fall through
           case 228: break;
           case 66:
-            { return NimTypes.OUT;
+            { return NimElementTypes.OUT;
             }
           // fall through
           case 229: break;
           case 67:
-            { return NimTypes.PTR;
+            { return NimElementTypes.PTR;
             }
           // fall through
           case 230: break;
           case 68:
-            { return NimTypes.REF;
+            { return NimElementTypes.REF;
             }
           // fall through
           case 231: break;
           case 69:
-            { return NimTypes.SEQ;
+            { return NimElementTypes.SEQ;
             }
           // fall through
           case 232: break;
           case 70:
-            { return NimTypes.SET;
+            { return NimElementTypes.SET;
             }
           // fall through
           case 233: break;
           case 71:
-            { return NimTypes.SHL;
+            { return NimElementTypes.SHL;
             }
           // fall through
           case 234: break;
           case 72:
-            { return NimTypes.SHR;
+            { return NimElementTypes.SHR;
             }
           // fall through
           case 235: break;
           case 73:
-            { return NimTypes.TRY;
+            { return NimElementTypes.TRY;
             }
           // fall through
           case 236: break;
           case 74:
-            { return NimTypes.VAR;
+            { return NimElementTypes.VAR;
             }
           // fall through
           case 237: break;
           case 75:
-            { return NimTypes.XOR;
+            { return NimElementTypes.XOR;
             }
           // fall through
           case 238: break;
           case 76:
-            { yypushback(1); return NimTypes.LBRACE_DOT;
+            { yypushback(1); return NimElementTypes.LBRACE_DOT;
             }
           // fall through
           case 239: break;
           case 77:
-            { return NimTypes.ADDR;
+            { return NimElementTypes.ADDR;
             }
           // fall through
           case 240: break;
           case 78:
-            { return NimTypes.AUTO;
+            { return NimElementTypes.AUTO;
             }
           // fall through
           case 241: break;
           case 79:
-            { return NimTypes.BIND;
+            { return NimElementTypes.BIND;
             }
           // fall through
           case 242: break;
           case 80:
-            { return NimTypes.BOOL;
+            { return NimElementTypes.BOOL;
             }
           // fall through
           case 243: break;
           case 81:
-            { return NimTypes.CASE;
+            { return NimElementTypes.CASE;
             }
           // fall through
           case 244: break;
           case 82:
-            { return NimTypes.CAST;
+            { return NimElementTypes.CAST;
             }
           // fall through
           case 245: break;
           case 83:
-            { return NimTypes.CHAR;
+            { return NimElementTypes.CHAR;
             }
           // fall through
           case 246: break;
           case 84:
-            { return NimTypes.CINT;
+            { return NimElementTypes.CINT;
             }
           // fall through
           case 247: break;
           case 85:
-            { return NimTypes.ELIF;
+            { return NimElementTypes.ELIF;
             }
           // fall through
           case 248: break;
           case 86:
-            { return NimTypes.ELSE;
+            { return NimElementTypes.ELSE;
             }
           // fall through
           case 249: break;
           case 87:
-            { return NimTypes.ENUM;
+            { return NimElementTypes.ENUM;
             }
           // fall through
           case 250: break;
           case 88:
-            { return NimTypes.FROM;
+            { return NimElementTypes.FROM;
             }
           // fall through
           case 251: break;
           case 89:
-            { return NimTypes.FUNC;
+            { return NimElementTypes.FUNC;
             }
           // fall through
           case 252: break;
           case 90:
-            { return NimTypes.INT8;
+            { return NimElementTypes.INT8;
             }
           // fall through
           case 253: break;
           case 91:
-            { return NimTypes.PROC;
+            { return NimElementTypes.PROC;
             }
           // fall through
           case 254: break;
           case 92:
-            { return NimTypes.TRUE;
+            { return NimElementTypes.TRUE;
             }
           // fall through
           case 255: break;
           case 93:
-            { return NimTypes.TYPE;
+            { return NimElementTypes.TYPE;
             }
           // fall through
           case 256: break;
           case 94:
-            { return NimTypes.UINT;
+            { return NimElementTypes.UINT;
             }
           // fall through
           case 257: break;
           case 95:
-            { return NimTypes.VOID;
+            { return NimElementTypes.VOID;
             }
           // fall through
           case 258: break;
           case 96:
-            { return NimTypes.WHEN;
+            { return NimElementTypes.WHEN;
             }
           // fall through
           case 259: break;
           case 97:
-            { return NimTypes.ARRAY;
+            { return NimElementTypes.ARRAY;
             }
           // fall through
           case 260: break;
           case 98:
-            { return NimTypes.BLOCK;
+            { return NimElementTypes.BLOCK;
             }
           // fall through
           case 261: break;
           case 99:
-            { return NimTypes.BREAK;
+            { return NimElementTypes.BREAK;
             }
           // fall through
           case 262: break;
           case 100:
-            { return NimTypes.CCHAR;
+            { return NimElementTypes.CCHAR;
             }
           // fall through
           case 263: break;
           case 101:
-            { return NimTypes.CLONG;
+            { return NimElementTypes.CLONG;
             }
           // fall through
           case 264: break;
           case 102:
-            { return NimTypes.CONST;
+            { return NimElementTypes.CONST;
             }
           // fall through
           case 265: break;
           case 103:
-            { return NimTypes.CUINT;
+            { return NimElementTypes.CUINT;
             }
           // fall through
           case 266: break;
           case 104:
-            { return NimTypes.DEFER;
+            { return NimElementTypes.DEFER;
             }
           // fall through
           case 267: break;
           case 105:
-            { return NimTypes.FALSE;
+            { return NimElementTypes.FALSE;
             }
           // fall through
           case 268: break;
           case 106:
-            { return NimTypes.FLOAT;
+            { return NimElementTypes.FLOAT;
             }
           // fall through
           case 269: break;
           case 107:
-            { return NimTypes.INT16;
+            { return NimElementTypes.INT16;
             }
           // fall through
           case 270: break;
           case 108:
-            { return NimTypes.INT32;
+            { return NimElementTypes.INT32;
             }
           // fall through
           case 271: break;
           case 109:
-            { return NimTypes.INT64;
+            { return NimElementTypes.INT64;
             }
           // fall through
           case 272: break;
           case 110:
-            { return NimTypes.ISNOT;
+            { return NimElementTypes.ISNOT;
             }
           // fall through
           case 273: break;
           case 111:
-            { return NimTypes.MACRO;
+            { return NimElementTypes.MACRO;
             }
           // fall through
           case 274: break;
           case 112:
-            { return NimTypes.MIXIN;
+            { return NimElementTypes.MIXIN;
             }
           // fall through
           case 275: break;
           case 113:
-            { return NimTypes.NOTIN;
+            { return NimElementTypes.NOTIN;
             }
           // fall through
           case 276: break;
           case 114:
-            { return NimTypes.RAISE;
+            { return NimElementTypes.RAISE;
             }
           // fall through
           case 277: break;
           case 115:
-            { return NimTypes.TUPLE;
+            { return NimElementTypes.TUPLE;
             }
           // fall through
           case 278: break;
           case 116:
-            { return NimTypes.UINT8;
+            { return NimElementTypes.UINT8;
             }
           // fall through
           case 279: break;
           case 117:
-            { return NimTypes.USING;
+            { return NimElementTypes.USING;
             }
           // fall through
           case 280: break;
           case 118:
-            { return NimTypes.WHILE;
+            { return NimElementTypes.WHILE;
             }
           // fall through
           case 281: break;
           case 119:
-            { return NimTypes.YIELD;
+            { return NimElementTypes.YIELD;
             }
           // fall through
           case 282: break;
           case 120:
-            { return NimTypes.CFLOAT;
+            { return NimElementTypes.CFLOAT;
             }
           // fall through
           case 283: break;
           case 121:
-            { return NimTypes.CSCHAR;
+            { return NimElementTypes.CSCHAR;
             }
           // fall through
           case 284: break;
           case 122:
-            { return NimTypes.CSHORT;
+            { return NimElementTypes.CSHORT;
             }
           // fall through
           case 285: break;
           case 123:
-            { return NimTypes.CUCHAR;
+            { return NimElementTypes.CUCHAR;
             }
           // fall through
           case 286: break;
           case 124:
-            { return NimTypes.CULONG;
+            { return NimElementTypes.CULONG;
             }
           // fall through
           case 287: break;
           case 125:
-            { return NimTypes.EXCEPT;
+            { return NimElementTypes.EXCEPT;
             }
           // fall through
           case 288: break;
           case 126:
-            { return NimTypes.EXPORT;
+            { return NimElementTypes.EXPORT;
             }
           // fall through
           case 289: break;
           case 127:
-            { return NimTypes.IMPORT;
+            { return NimElementTypes.IMPORT;
             }
           // fall through
           case 290: break;
           case 128:
-            { return NimTypes.METHOD;
+            { return NimElementTypes.METHOD;
             }
           // fall through
           case 291: break;
           case 129:
-            { return NimTypes.OBJECT;
+            { return NimElementTypes.OBJECT;
             }
           // fall through
           case 292: break;
           case 130:
-            { return NimTypes.RETURN;
+            { return NimElementTypes.RETURN;
             }
           // fall through
           case 293: break;
           case 131:
-            { return NimTypes.STATIC;
+            { return NimElementTypes.STATIC;
             }
           // fall through
           case 294: break;
           case 132:
-            { return NimTypes.STRING;
+            { return NimElementTypes.STRING;
             }
           // fall through
           case 295: break;
           case 133:
-            { return NimTypes.UINT16;
+            { return NimElementTypes.UINT16;
             }
           // fall through
           case 296: break;
           case 134:
-            { return NimTypes.UINT32;
+            { return NimElementTypes.UINT32;
             }
           // fall through
           case 297: break;
           case 135:
-            { return NimTypes.UINT64;
+            { return NimElementTypes.UINT64;
             }
           // fall through
           case 298: break;
           case 136:
-            { return NimTypes.CDOUBLE;
+            { return NimElementTypes.CDOUBLE;
             }
           // fall through
           case 299: break;
           case 137:
-            { return NimTypes.CONCEPT;
+            { return NimElementTypes.CONCEPT;
             }
           // fall through
           case 300: break;
           case 138:
-            { return NimTypes.CSIZE_T;
+            { return NimElementTypes.CSIZE_T;
             }
           // fall through
           case 301: break;
           case 139:
-            { return NimTypes.CSTRING;
+            { return NimElementTypes.CSTRING;
             }
           // fall through
           case 302: break;
           case 140:
-            { return NimTypes.CUSHORT;
+            { return NimElementTypes.CUSHORT;
             }
           // fall through
           case 303: break;
           case 141:
-            { return NimTypes.DISCARD;
+            { return NimElementTypes.DISCARD;
             }
           // fall through
           case 304: break;
           case 142:
-            { return NimTypes.FINALLY;
+            { return NimElementTypes.FINALLY;
             }
           // fall through
           case 305: break;
           case 143:
-            { return NimTypes.FLOAT32;
+            { return NimElementTypes.FLOAT32;
             }
           // fall through
           case 306: break;
           case 144:
-            { return NimTypes.FLOAT64;
+            { return NimElementTypes.FLOAT64;
             }
           // fall through
           case 307: break;
           case 145:
-            { return NimTypes.INCLUDE;
+            { return NimElementTypes.INCLUDE;
             }
           // fall through
           case 308: break;
           case 146:
-            { return NimTypes.POINTER;
+            { return NimElementTypes.POINTER;
             }
           // fall through
           case 309: break;
           case 147:
-            { return NimTypes.UNTYPED;
+            { return NimElementTypes.UNTYPED;
             }
           // fall through
           case 310: break;
           case 148:
-            { return NimTypes.VARARGS;
+            { return NimElementTypes.VARARGS;
             }
           // fall through
           case 311: break;
           case 149:
-            { return NimTypes.CONTINUE;
+            { return NimElementTypes.CONTINUE;
             }
           // fall through
           case 312: break;
           case 150:
-            { return NimTypes.DISTINCT;
+            { return NimElementTypes.DISTINCT;
             }
           // fall through
           case 313: break;
           case 151:
-            { return NimTypes.ITERATOR;
+            { return NimElementTypes.ITERATOR;
             }
           // fall through
           case 314: break;
           case 152:
-            { return NimTypes.TEMPLATE;
+            { return NimElementTypes.TEMPLATE;
             }
           // fall through
           case 315: break;
           case 153:
-            { return NimTypes.CLONG_LONG;
+            { return NimElementTypes.CLONG_LONG;
             }
           // fall through
           case 316: break;
           case 154:
-            { return NimTypes.CONVERTER;
+            { return NimElementTypes.CONVERTER;
             }
           // fall through
           case 317: break;
           case 155:
-            { return NimTypes.INTERFACE;
+            { return NimElementTypes.INTERFACE;
             }
           // fall through
           case 318: break;
           case 156:
-            { return NimTypes.OPENARRAY;
+            { return NimElementTypes.OPENARRAY;
             }
           // fall through
           case 319: break;
           case 157:
-            { return NimTypes.BIGGEST_INT;
+            { return NimElementTypes.BIGGEST_INT;
             }
           // fall through
           case 320: break;
           case 158:
-            { return NimTypes.CULONG_LONG;
+            { return NimElementTypes.CULONG_LONG;
             }
           // fall through
           case 321: break;
           case 159:
-            { return NimTypes.BIGGEST_UINT;
+            { return NimElementTypes.BIGGEST_UINT;
             }
           // fall through
           case 322: break;
           case 160:
-            { return NimTypes.CLONG_DOUBLE;
+            { return NimElementTypes.CLONG_DOUBLE;
             }
           // fall through
           case 323: break;
           case 161:
-            { return NimTypes.BIGGEST_FLOAT;
+            { return NimElementTypes.BIGGEST_FLOAT;
             }
           // fall through
           case 324: break;
           case 162:
-            { return NimTypes.CSTRING_ARRAY;
+            { return NimElementTypes.CSTRING_ARRAY;
             }
           // fall through
           case 325: break;
           case 163:
-            { return NimTypes.UNCHECKEDARRAY;
+            { return NimElementTypes.UNCHECKEDARRAY;
             }
           // fall through
           case 326: break;

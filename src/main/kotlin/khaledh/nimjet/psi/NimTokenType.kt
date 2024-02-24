@@ -2,7 +2,6 @@ package khaledh.nimjet.psi
 
 import khaledh.nimjet.NimLanguage
 import com.intellij.psi.tree.IElementType
-import org.jetbrains.annotations.NonNls
 
 
 //class NimTokenType(debugName: String) : IElementType(debugName, NimLanguage.INSTANCE) {
@@ -28,37 +27,37 @@ import org.jetbrains.annotations.NonNls
 
 // create a map from token type to token name
 val placeholders = hashMapOf(
-    NimTypes.IDENT to "identifier",
-    NimTypes.INT_LIT to "int literal",
-    NimTypes.FLOAT_LIT to "float literal",
-    NimTypes.CUSTOM_NUMERIC_LIT to "custom numeric literal",
+    NimElementTypes.IDENT to "identifier",
+    NimElementTypes.INT_LIT to "int literal",
+    NimElementTypes.FLOAT_LIT to "float literal",
+    NimElementTypes.CUSTOM_NUMERIC_LIT to "custom numeric literal",
 //    NimTypes.LINE_COMMENT to "comment",
 //    NimTypes.MULTILINE_COMMENT to "comment",
 )
 
 val punctuations = hashMapOf(
-    NimTypes.COLON to ":",
-    NimTypes.SEMICOLON to ";",
-    NimTypes.COMMA to ",",
-    NimTypes.LPAREN to "(",
-    NimTypes.RPAREN to ")",
+    NimElementTypes.COLON to ":",
+    NimElementTypes.SEMICOLON to ";",
+    NimElementTypes.COMMA to ",",
+    NimElementTypes.LPAREN to "(",
+    NimElementTypes.RPAREN to ")",
 )
 
 val operators = hashMapOf(
-    NimTypes.EQUALS to "=",
-    NimTypes.DIV to "/",
+    NimElementTypes.EQUALS to "=",
+    NimElementTypes.DIV to "/",
 )
 
 val keywords = hashMapOf(
-    NimTypes.VAR to "var",
-    NimTypes.TYPE to "type",
-    NimTypes.OBJECT to "object",
-    NimTypes.DISCARD to "discard",
-    NimTypes.NIL to "nil",
-    NimTypes.PROC to "proc",
-    NimTypes.IF to "if",
-    NimTypes.ELIF to "elif",
-    NimTypes.ELSE to "else",
+    NimElementTypes.VAR to "var",
+    NimElementTypes.TYPE to "type",
+    NimElementTypes.OBJECT to "object",
+    NimElementTypes.DISCARD to "discard",
+    NimElementTypes.NIL to "nil",
+    NimElementTypes.PROC to "proc",
+    NimElementTypes.IF to "if",
+    NimElementTypes.ELIF to "elif",
+    NimElementTypes.ELSE to "else",
 )
 
 class NimTokenType(debugName: String) : IElementType(debugName, NimLanguage) {

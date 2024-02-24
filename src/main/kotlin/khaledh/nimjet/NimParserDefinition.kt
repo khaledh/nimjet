@@ -12,7 +12,7 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 import khaledh.nimjet.psi.NimFile
-import khaledh.nimjet.psi.NimTypes
+import khaledh.nimjet.psi.NimElementTypes
 
 class NimParserDefinition : ParserDefinition {
     override fun createLexer(project: Project): Lexer = NimLexerAdapter()
@@ -27,7 +27,7 @@ class NimParserDefinition : ParserDefinition {
 
     override fun getStringLiteralElements(): TokenSet = STRINGS
 
-    override fun createElement(node: ASTNode): PsiElement = NimTypes.Factory.createElement(node)
+    override fun createElement(node: ASTNode): PsiElement = NimElementTypes.Factory.createElement(node)
 
     override fun createFile(viewProvider: FileViewProvider): PsiFile = NimFile(viewProvider)
 
@@ -35,7 +35,7 @@ class NimParserDefinition : ParserDefinition {
         val WHITE_SPACES: TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
 //        val COMMENTS: TokenSet = TokenSet.create(NimTypes.MULTILINE_COMMENT, NimTypes.MULTILINE_COMMENT_ERROR)
         val COMMENTS: TokenSet = TokenSet.EMPTY
-        val STRINGS: TokenSet = TokenSet.create(NimTypes.STR_LIT, NimTypes.TRIPLESTR_LIT, NimTypes.RSTR_LIT)
+        val STRINGS: TokenSet = TokenSet.create(NimElementTypes.STR_LIT, NimElementTypes.TRIPLESTR_LIT, NimElementTypes.RSTR_LIT)
         val FILE = IFileElementType(NimLanguage)
     }
 }

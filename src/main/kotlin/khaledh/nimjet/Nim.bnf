@@ -9,7 +9,7 @@
   psiImplPackage="khaledh.nimjet.psi.impl"
   psiImplUtilClass="khaledh.nimjet.psi.impl.NimPsiImplUtil"
 
-  elementTypeHolderClass="khaledh.nimjet.psi.NimTypes"
+  elementTypeHolderClass="khaledh.nimjet.psi.NimElementTypes"
   elementTypeClass="khaledh.nimjet.psi.NimElementType"
   tokenTypeClass="khaledh.nimjet.psi.NimTokenType"
 

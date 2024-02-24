@@ -3,7 +3,7 @@ package khaledh.nimjet;
 
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
-import static khaledh.nimjet.psi.NimTypes.*;
+import static khaledh.nimjet.psi.NimElementTypes.*;
 import static khaledh.nimjet.NimParserUtil.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;

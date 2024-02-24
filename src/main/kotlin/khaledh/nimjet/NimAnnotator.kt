@@ -8,7 +8,6 @@ import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
-import com.intellij.refactoring.suggested.endOffset
 import khaledh.nimjet.psi.*
 import org.jetbrains.annotations.NotNull
 
@@ -23,8 +22,8 @@ class NimAnnotator : Annotator {
     }
     override fun annotate(@NotNull element: PsiElement, @NotNull holder: AnnotationHolder) {
         when (element.node.elementType) {
-            NimTypes.STR_ERROR, NimTypes.TRIPLESTR_ERROR -> {
-                val expected = if (element.node.elementType == NimTypes.STR_ERROR) "\"" else "\"\"\""
+            NimElementTypes.STR_ERROR, NimElementTypes.TRIPLESTR_ERROR -> {
+                val expected = if (element.node.elementType == NimElementTypes.STR_ERROR) "\"" else "\"\"\""
                 val endOffset = element.textRange.endOffset
                 val range = TextRange.create(endOffset - 1, endOffset)
                 holder.newAnnotation(HighlightSeverity.ERROR, "closing $expected expected")
@@ -33,7 +32,7 @@ class NimAnnotator : Annotator {
                     .create()
             }
 
-            NimTypes.MULTILINE_COMMENT_ERROR -> {
+            NimElementTypes.MULTILINE_COMMENT_ERROR -> {
                 val expected = "]#"
                 val endOffset = element.textRange.endOffset
                 val range = TextRange.create(endOffset - 1, endOffset)
@@ -43,7 +42,7 @@ class NimAnnotator : Annotator {
                     .create()
             }
 
-            NimTypes.INVALID_IDENT -> {
+            NimElementTypes.INVALID_IDENT -> {
                 holder.newAnnotation(HighlightSeverity.ERROR, "invalid identifier")
                     .create()
             }

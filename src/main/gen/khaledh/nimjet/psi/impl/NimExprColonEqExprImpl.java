@@ -7,7 +7,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static khaledh.nimjet.psi.NimTypes.*;
+import static khaledh.nimjet.psi.NimElementTypes.*;
 import khaledh.nimjet.psi.*;
 
 public class NimExprColonEqExprImpl extends NimExprImpl implements NimExprColonEqExpr {

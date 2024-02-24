@@ -1,6 +1,6 @@
 package khaledh.nimjet
 
-import khaledh.nimjet.psi.NimTypes
+import khaledh.nimjet.psi.NimElementTypes
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.io.StringReader
@@ -13,7 +13,7 @@ class NimLexerTest {
         val input = "# This is a comment"
         val lexer = NimLexer(StringReader(input))
         lexer.reset(input, 0, input.length, 0)
-        assertEquals(NimTypes.COMMENT, lexer.advance())
+        assertEquals(NimElementTypes.COMMENT, lexer.advance())
 //        assertEquals(" This is a comment", lexer.yytext())
     }
 }

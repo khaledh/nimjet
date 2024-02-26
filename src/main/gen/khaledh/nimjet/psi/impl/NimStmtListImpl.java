@@ -29,8 +29,86 @@ public class NimStmtListImpl extends ASTWrapperPsiElement implements NimStmtList
 
   @Override
   @NotNull
-  public List<NimSimpleStmt> getSimpleStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimSimpleStmt.class);
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimBreakStmt> getBreakStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimBreakStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimCommentStmt> getCommentStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimCommentStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimContinueStmt> getContinueStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimContinueStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimDiscardStmt> getDiscardStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimDiscardStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimExportStmt> getExportStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExportStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimExprStmt> getExprStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExprStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimFromStmt> getFromStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimFromStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimImportStmt> getImportStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimImportStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimIncludeStmt> getIncludeStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIncludeStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimPragmaStmt> getPragmaStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPragmaStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimRaiseStmt> getRaiseStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimRaiseStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimReturnStmt> getReturnStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimReturnStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimYieldStmt> getYieldStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimYieldStmt.class);
   }
 
 }

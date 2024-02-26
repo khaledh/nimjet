@@ -28,12 +28,6 @@ public class NimCastExprImpl extends NimExprImpl implements NimCastExpr {
   }
 
   @Override
-  @NotNull
-  public List<NimComment> getCommentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
-  }
-
-  @Override
   @Nullable
   public NimExpr getExpr() {
     return findChildByClass(NimExpr.class);

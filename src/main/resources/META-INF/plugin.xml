@@ -47,6 +47,10 @@
           language="Nim"
           implementationClass="khaledh.nimjet.NimAnnotator"/>
 
+      <completion.contributor
+          language="Nim"
+          implementationClass="khaledh.nimjet.NimCompletionContributor"/>
+
       <additionalTextAttributes
           scheme="Default"
           file="colorSchemes/NimTextAttributes.xml"/>

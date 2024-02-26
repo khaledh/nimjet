@@ -8,12 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface NimBlockExpr extends NimExpr {
 
   @Nullable
+  NimBuiltInMagics getBuiltInMagics();
+
+  @Nullable
   NimColonComment getColonComment();
 
   @Nullable
   NimStmtList getStmtList();
-
-  @Nullable
-  NimSymbol getSymbol();
 
 }

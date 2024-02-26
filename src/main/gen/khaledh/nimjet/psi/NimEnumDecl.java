@@ -11,12 +11,21 @@ public interface NimEnumDecl extends PsiElement {
   List<NimComment> getCommentList();
 
   @NotNull
+  List<NimIdent> getIdentList();
+
+  @NotNull
+  List<NimBuiltInMagics> getBuiltInMagicsList();
+
+  @NotNull
   List<NimExpr> getExprList();
 
   @NotNull
-  List<NimPragma> getPragmaList();
+  List<NimKeyword> getKeywordList();
 
   @NotNull
-  List<NimSymbol> getSymbolList();
+  List<NimOperator> getOperatorList();
+
+  @NotNull
+  List<NimPragma> getPragmaList();
 
 }

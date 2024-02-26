@@ -27,28 +27,12 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitAmpExpr(@NotNull NimAmpExpr o) {
-    visitExpr(o);
-  }
-
-  public void visitAndExpr(@NotNull NimAndExpr o) {
-    visitExpr(o);
-  }
-
   public void visitArrayConstr(@NotNull NimArrayConstr o) {
     visitPsiElement(o);
   }
 
-  public void visitArrowExpr(@NotNull NimArrowExpr o) {
-    visitExpr(o);
-  }
-
   public void visitAsmStmt(@NotNull NimAsmStmt o) {
     visitPsiElement(o);
-  }
-
-  public void visitAssignExpr(@NotNull NimAssignExpr o) {
-    visitExpr(o);
   }
 
   public void visitBlockExpr(@NotNull NimBlockExpr o) {
@@ -85,10 +69,6 @@ public class NimVisitor extends PsiElementVisitor {
 
   public void visitCmdStart(@NotNull NimCmdStart o) {
     visitPsiElement(o);
-  }
-
-  public void visitCmpExpr(@NotNull NimCmpExpr o) {
-    visitExpr(o);
   }
 
   public void visitColonBody(@NotNull NimColonBody o) {
@@ -157,10 +137,6 @@ public class NimVisitor extends PsiElementVisitor {
 
   public void visitDoBlock(@NotNull NimDoBlock o) {
     visitPsiElement(o);
-  }
-
-  public void visitDollarExpr(@NotNull NimDollarExpr o) {
-    visitExpr(o);
   }
 
   public void visitDotSuffix(@NotNull NimDotSuffix o) {
@@ -239,10 +215,6 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitIdentOrLiteral(@NotNull NimIdentOrLiteral o) {
-    visitPsiElement(o);
-  }
-
   public void visitIdentVis(@NotNull NimIdentVis o) {
     visitPsiElement(o);
   }
@@ -281,10 +253,6 @@ public class NimVisitor extends PsiElementVisitor {
 
   public void visitLiteral(@NotNull NimLiteral o) {
     visitPsiElement(o);
-  }
-
-  public void visitMulExpr(@NotNull NimMulExpr o) {
-    visitExpr(o);
   }
 
   public void visitNamedParams(@NotNull NimNamedParams o) {
@@ -335,10 +303,6 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitOrExpr(@NotNull NimOrExpr o) {
-    visitExpr(o);
-  }
-
   public void visitPar(@NotNull NimPar o) {
     visitPsiElement(o);
   }
@@ -367,10 +331,6 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitPlusExpr(@NotNull NimPlusExpr o) {
-    visitExpr(o);
-  }
-
   public void visitPostExprBlocks(@NotNull NimPostExprBlocks o) {
     visitPsiElement(o);
   }
@@ -381,10 +341,6 @@ public class NimVisitor extends PsiElementVisitor {
 
   public void visitPragmaStmt(@NotNull NimPragmaStmt o) {
     visitPsiElement(o);
-  }
-
-  public void visitPrimaryExpr(@NotNull NimPrimaryExpr o) {
-    visitExpr(o);
   }
 
   public void visitPrimarySuffix(@NotNull NimPrimarySuffix o) {
@@ -423,35 +379,11 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitSimpleExpr(@NotNull NimSimpleExpr o) {
-    visitExpr(o);
-  }
-
-  public void visitSimplePrimary(@NotNull NimSimplePrimary o) {
-    visitPsiElement(o);
-  }
-
-  public void visitSimpleStmt(@NotNull NimSimpleStmt o) {
-    visitPsiElement(o);
-  }
-
-  public void visitSliceExpr(@NotNull NimSliceExpr o) {
-    visitExpr(o);
-  }
-
   public void visitStaticStmt(@NotNull NimStaticStmt o) {
     visitPsiElement(o);
   }
 
-  public void visitStmt(@NotNull NimStmt o) {
-    visitPsiElement(o);
-  }
-
   public void visitStmtList(@NotNull NimStmtList o) {
-    visitPsiElement(o);
-  }
-
-  public void visitSymbol(@NotNull NimSymbol o) {
     visitPsiElement(o);
   }
 

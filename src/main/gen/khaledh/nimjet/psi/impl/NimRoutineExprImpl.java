@@ -41,12 +41,6 @@ public class NimRoutineExprImpl extends NimExprImpl implements NimRoutineExpr {
 
   @Override
   @Nullable
-  public NimPragma getPragma() {
-    return findChildByClass(NimPragma.class);
-  }
-
-  @Override
-  @Nullable
   public NimStmtList getStmtList() {
     return findChildByClass(NimStmtList.class);
   }

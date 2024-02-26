@@ -28,15 +28,27 @@ public class NimSymbolOrKeywordImpl extends ASTWrapperPsiElement implements NimS
   }
 
   @Override
-  @Nullable
-  public NimKeyword getKeyword() {
-    return findChildByClass(NimKeyword.class);
+  @NotNull
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
   }
 
   @Override
   @Nullable
-  public NimSymbol getSymbol() {
-    return findChildByClass(NimSymbol.class);
+  public NimBuiltInMagics getBuiltInMagics() {
+    return findChildByClass(NimBuiltInMagics.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimKeyword> getKeywordList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimKeyword.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimOperator> getOperatorList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
   }
 
 }

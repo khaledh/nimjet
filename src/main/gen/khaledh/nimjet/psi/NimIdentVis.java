@@ -7,10 +7,19 @@ import com.intellij.psi.PsiElement;
 
 public interface NimIdentVis extends PsiElement {
 
+  @NotNull
+  List<NimIdent> getIdentList();
+
   @Nullable
   NimOpr getOpr();
 
+  @Nullable
+  NimBuiltInMagics getBuiltInMagics();
+
   @NotNull
-  NimSymbol getSymbol();
+  List<NimKeyword> getKeywordList();
+
+  @NotNull
+  List<NimOperator> getOperatorList();
 
 }

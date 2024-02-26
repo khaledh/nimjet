@@ -35,20 +35,38 @@ public class NimEnumDeclImpl extends ASTWrapperPsiElement implements NimEnumDecl
 
   @Override
   @NotNull
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimBuiltInMagics> getBuiltInMagicsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimBuiltInMagics.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimExpr> getExprList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
   }
 
   @Override
   @NotNull
-  public List<NimPragma> getPragmaList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPragma.class);
+  public List<NimKeyword> getKeywordList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimKeyword.class);
   }
 
   @Override
   @NotNull
-  public List<NimSymbol> getSymbolList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimSymbol.class);
+  public List<NimOperator> getOperatorList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimPragma> getPragmaList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPragma.class);
   }
 
 }

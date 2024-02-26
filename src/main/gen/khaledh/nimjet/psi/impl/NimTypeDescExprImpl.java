@@ -28,12 +28,6 @@ public class NimTypeDescExprImpl extends NimExprImpl implements NimTypeDescExpr 
   }
 
   @Override
-  @NotNull
-  public List<NimExpr> getExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
-  }
-
-  @Override
   @Nullable
   public NimRoutineType getRoutineType() {
     return findChildByClass(NimRoutineType.class);

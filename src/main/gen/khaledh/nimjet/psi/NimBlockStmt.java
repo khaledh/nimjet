@@ -7,13 +7,22 @@ import com.intellij.psi.PsiElement;
 
 public interface NimBlockStmt extends PsiElement {
 
+  @NotNull
+  List<NimIdent> getIdentList();
+
+  @Nullable
+  NimBuiltInMagics getBuiltInMagics();
+
   @Nullable
   NimColonComment getColonComment();
 
-  @Nullable
-  NimStmtList getStmtList();
+  @NotNull
+  List<NimKeyword> getKeywordList();
+
+  @NotNull
+  List<NimOperator> getOperatorList();
 
   @Nullable
-  NimSymbol getSymbol();
+  NimStmtList getStmtList();
 
 }

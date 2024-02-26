@@ -29,14 +29,92 @@ public class NimRawTypeDescImpl extends ASTWrapperPsiElement implements NimRawTy
 
   @Override
   @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
+  }
+
+  @Override
+  @Nullable
+  public NimArrayConstr getArrayConstr() {
+    return findChildByClass(NimArrayConstr.class);
+  }
+
+  @Override
+  @Nullable
+  public NimBuiltInMagics getBuiltInMagics() {
+    return findChildByClass(NimBuiltInMagics.class);
+  }
+
+  @Override
+  @Nullable
   public NimExpr getExpr() {
     return findChildByClass(NimExpr.class);
   }
 
   @Override
   @Nullable
+  public NimExprColonEqExprList getExprColonEqExprList() {
+    return findChildByClass(NimExprColonEqExprList.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimKeyword> getKeywordList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimKeyword.class);
+  }
+
+  @Override
+  @Nullable
+  public NimLiteral getLiteral() {
+    return findChildByClass(NimLiteral.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimOperator> getOperatorList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
+  }
+
+  @Override
+  @Nullable
+  public NimPar getPar() {
+    return findChildByClass(NimPar.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimPrimarySuffix> getPrimarySuffixList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPrimarySuffix.class);
+  }
+
+  @Override
+  @Nullable
+  public NimRawTypeDesc getRawTypeDesc() {
+    return findChildByClass(NimRawTypeDesc.class);
+  }
+
+  @Override
+  @Nullable
   public NimRoutineType getRoutineType() {
     return findChildByClass(NimRoutineType.class);
+  }
+
+  @Override
+  @Nullable
+  public NimSetOrTableConstr getSetOrTableConstr() {
+    return findChildByClass(NimSetOrTableConstr.class);
+  }
+
+  @Override
+  @Nullable
+  public NimTupleConstr getTupleConstr() {
+    return findChildByClass(NimTupleConstr.class);
   }
 
   @Override

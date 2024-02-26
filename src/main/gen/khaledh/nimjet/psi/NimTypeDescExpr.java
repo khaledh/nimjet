@@ -7,9 +7,6 @@ import com.intellij.psi.PsiElement;
 
 public interface NimTypeDescExpr extends NimExpr {
 
-  @NotNull
-  List<NimExpr> getExprList();
-
   @Nullable
   NimRoutineType getRoutineType();
 

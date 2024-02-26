@@ -34,6 +34,36 @@ public class NimParImpl extends ASTWrapperPsiElement implements NimPar {
   }
 
   @Override
+  @NotNull
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimOp0> getOp0List() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOp0.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimOp6> getOp6List() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOp6.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimArrayConstr> getArrayConstrList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimArrayConstr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimBuiltInMagics> getBuiltInMagicsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimBuiltInMagics.class);
+  }
+
+  @Override
   @Nullable
   public NimDoBlock getDoBlock() {
     return findChildByClass(NimDoBlock.class);
@@ -47,8 +77,44 @@ public class NimParImpl extends ASTWrapperPsiElement implements NimPar {
 
   @Override
   @NotNull
+  public List<NimExprColonEqExprList> getExprColonEqExprListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExprColonEqExprList.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimExtraPostExprBlock> getExtraPostExprBlockList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExtraPostExprBlock.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimKeyword> getKeywordList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimKeyword.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimLiteral> getLiteralList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimLiteral.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimOperator> getOperatorList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimPar> getParList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPar.class);
+  }
+
+  @Override
+  @Nullable
+  public NimPragma getPragma() {
+    return findChildByClass(NimPragma.class);
   }
 
   @Override
@@ -58,9 +124,33 @@ public class NimParImpl extends ASTWrapperPsiElement implements NimPar {
   }
 
   @Override
+  @NotNull
+  public List<NimPrimarySuffix> getPrimarySuffixList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPrimarySuffix.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimRawTypeDesc> getRawTypeDescList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimRawTypeDesc.class);
+  }
+
+  @Override
   @Nullable
   public NimSemiStmtList getSemiStmtList() {
     return findChildByClass(NimSemiStmtList.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimSetOrTableConstr> getSetOrTableConstrList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimSetOrTableConstr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimTupleConstr> getTupleConstrList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimTupleConstr.class);
   }
 
 }

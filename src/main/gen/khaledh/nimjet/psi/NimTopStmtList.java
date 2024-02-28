@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimSemiStmtList extends PsiElement {
+public interface NimTopStmtList extends PsiElement {
 
   @NotNull
   List<NimComment> getCommentList();
@@ -39,9 +39,6 @@ public interface NimSemiStmtList extends PsiElement {
 
   @NotNull
   List<NimExportStmt> getExportStmtList();
-
-  @Nullable
-  NimExpr getExpr();
 
   @NotNull
   List<NimExprStmt> getExprStmtList();

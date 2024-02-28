@@ -104,6 +104,7 @@ public interface NimElementTypes {
   IElementType STATIC_STMT = new NimElementType("STATIC_STMT");
   IElementType STMT_LIST = new NimElementType("STMT_LIST");
   IElementType SYMBOL_OR_KEYWORD = new NimElementType("SYMBOL_OR_KEYWORD");
+  IElementType TOP_STMT_LIST = new NimElementType("TOP_STMT_LIST");
   IElementType TRY_EXPR = new NimElementType("TRY_EXPR");
   IElementType TRY_STMT = new NimElementType("TRY_STMT");
   IElementType TUPLE_CONSTR = new NimElementType("TUPLE_CONSTR");
@@ -220,7 +221,6 @@ public interface NimElementTypes {
   IElementType NOT = new NimTokenType("NOT");
   IElementType NOTIN = new NimTokenType("NOTIN");
   IElementType OBJECT = new NimTokenType("OBJECT");
-  IElementType OBJET = new NimTokenType("OBJET");
   IElementType OF = new NimTokenType("OF");
   IElementType OP1 = new NimTokenType("OP1");
   IElementType OP10 = new NimTokenType("OP10");
@@ -569,6 +569,9 @@ public interface NimElementTypes {
       }
       else if (type == SYMBOL_OR_KEYWORD) {
         return new NimSymbolOrKeywordImpl(node);
+      }
+      else if (type == TOP_STMT_LIST) {
+        return new NimTopStmtListImpl(node);
       }
       else if (type == TRY_EXPR) {
         return new NimTryExprImpl(node);

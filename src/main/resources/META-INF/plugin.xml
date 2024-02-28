@@ -47,6 +47,13 @@
           language="Nim"
           implementationClass="khaledh.nimjet.NimAnnotator"/>
 
+      <langCodeStyleSettingsProvider
+          implementation="khaledh.nimjet.NimLanguageCodeStyleSettingsProvider"/>
+
+<!--      <lang.formatter-->
+<!--          language="Nim"-->
+<!--          implementationClass="khaledh.nimjet.NimFormattingModelBuilder"/>-->
+
       <completion.contributor
           language="Nim"
           implementationClass="khaledh.nimjet.NimCompletionContributor"/>

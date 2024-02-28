@@ -20,7 +20,12 @@
   parserUtilClass="khaledh.nimjet.NimParserUtil"
 }
 
-module                ::= !<<eof>> <<initContext>> &INDZERO (stmt | SEMICOLON &(INDNONE | INDZERO))*
+module                ::= !<<eof>> <<initContext>> top_stmt_list
+
+top_stmt_list         ::= INDZERO (stmt | SEMICOLON &(INDNONE | INDZERO))*
+
+stmt_list             ::= &INDGT <<indented <<list stmt (SEMICOLON | INDEQ)>>>>
+                        | &INDNONE <<list simple_stmt SEMICOLON>>
 
 private stmt          ::= if_stmt
                         | when_stmt
@@ -69,9 +74,6 @@ defer_stmt            ::= DEFER colon_comment stmt_list {pin=1}
 asm_stmt              ::= ASM pragma? (STR_LIT | RSTR_LIT | TRIPLESTR_LIT | STR_ERROR | TRIPLESTR_ERROR)
                           {pin=1}
 
-stmt_list             ::= &INDNONE <<list simple_stmt SEMICOLON>>
-                        | &INDGT <<indented <<list stmt (SEMICOLON | INDEQ)>>>>
-
 private simple_stmt   ::= ( return_stmt
                           | raise_stmt
                           | yield_stmt
@@ -118,7 +120,7 @@ expr_stmt             ::= <<pmTrySimple simple_expr>>
                         {pin(".*_0")=1}
 
 expr_start            ::= IDENT | ACCENT | OPR | NOT | NIL | CAST | IF | FOR | PROC | FUNC | ITERATOR
-                        | BIND | LPAREN | LBRACKET | LBRACE | VAR | REF | PTR | ENUM | TUPLE | OBJET
+                        | BIND | LPAREN | LBRACKET | LBRACE | VAR | REF | PTR | ENUM | TUPLE | OBJECT
                         | WHEN | CASE | OUT | TRY | BLOCK
                         | literal
                         | built_in_magics
@@ -448,6 +450,7 @@ IDENT                 ::= ID
                         | CCHAR | CDOUBLE | CFLOAT | CINT | CLONG | CLONG_DOUBLE | CLONG_LONG
                         | CSCHAR | CSHORT | CSIZE_T | CSTRING_ARRAY
                         | CUCHAR | CUINT | CULONG | CULONG_LONG | CUSHORT
+                        {implements="khaledh.nimjet.psi.NimNamedElement" methods=[getName setName]}
 
 COMMENT               ::= LINE_COMMENT | MULTILINE_COMMENT | MULTILINE_COMMENT_ERROR
 

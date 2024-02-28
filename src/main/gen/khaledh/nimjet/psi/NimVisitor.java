@@ -12,7 +12,7 @@ public class NimVisitor extends PsiElementVisitor {
   }
 
   public void visitIdent(@NotNull NimIdent o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitOp0(@NotNull NimOp0 o) {
@@ -391,6 +391,10 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitTopStmtList(@NotNull NimTopStmtList o) {
+    visitPsiElement(o);
+  }
+
   public void visitTryExpr(@NotNull NimTryExpr o) {
     visitExpr(o);
   }
@@ -452,6 +456,10 @@ public class NimVisitor extends PsiElementVisitor {
   }
 
   public void visitYieldStmt(@NotNull NimYieldStmt o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamedElement(@NotNull NimNamedElement o) {
     visitPsiElement(o);
   }
 

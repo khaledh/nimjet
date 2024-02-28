@@ -27,4 +27,16 @@ public class NimIdentImpl extends ASTWrapperPsiElement implements NimIdent {
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public String getName() {
+    return NimPsiImplUtil.getName(this);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement setName(@NotNull String newName) {
+    return NimPsiImplUtil.setName(this, newName);
+  }
+
 }

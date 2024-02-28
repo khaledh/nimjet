@@ -11,14 +11,14 @@ import static khaledh.nimjet.psi.NimElementTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimStmtListImpl extends ASTWrapperPsiElement implements NimStmtList {
+public class NimTopStmtListImpl extends ASTWrapperPsiElement implements NimTopStmtList {
 
-  public NimStmtListImpl(@NotNull ASTNode node) {
+  public NimTopStmtListImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitStmtList(this);
+    visitor.visitTopStmtList(this);
   }
 
   @Override
@@ -35,8 +35,26 @@ public class NimStmtListImpl extends ASTWrapperPsiElement implements NimStmtList
 
   @Override
   @NotNull
+  public List<NimAsmStmt> getAsmStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimAsmStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimBlockStmt> getBlockStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimBlockStmt.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimBreakStmt> getBreakStmtList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimBreakStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimCaseStmt> getCaseStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimCaseStmt.class);
   }
 
   @Override
@@ -47,8 +65,20 @@ public class NimStmtListImpl extends ASTWrapperPsiElement implements NimStmtList
 
   @Override
   @NotNull
+  public List<NimConstant> getConstantList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimConstant.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimContinueStmt> getContinueStmtList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimContinueStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimDeferStmt> getDeferStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimDeferStmt.class);
   }
 
   @Override
@@ -71,8 +101,20 @@ public class NimStmtListImpl extends ASTWrapperPsiElement implements NimStmtList
 
   @Override
   @NotNull
+  public List<NimForStmt> getForStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimForStmt.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimFromStmt> getFromStmtList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimFromStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimIfStmt> getIfStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIfStmt.class);
   }
 
   @Override
@@ -103,6 +145,48 @@ public class NimStmtListImpl extends ASTWrapperPsiElement implements NimStmtList
   @NotNull
   public List<NimReturnStmt> getReturnStmtList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimReturnStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimRoutine> getRoutineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimRoutine.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimStaticStmt> getStaticStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimStaticStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimTryStmt> getTryStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimTryStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimTypeDef> getTypeDefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimTypeDef.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimVariable> getVariableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimVariable.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimWhenStmt> getWhenStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimWhenStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimWhileStmt> getWhileStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimWhileStmt.class);
   }
 
   @Override

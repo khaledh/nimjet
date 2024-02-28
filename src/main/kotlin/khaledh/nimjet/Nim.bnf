@@ -272,7 +272,7 @@ pattern               ::= LBRACE stmt_list RBRACE
 
 param_list_colon      ::= param_list? (COLON optind type_desc)? {pin(".*")="COLON"}
 param_list            ::= LPAREN optind
-                          <<optlist <<ident_colon_equals_0 ident_with_pragma>> ((COMMA | SEMICOLON) COMMENT?)>> COMMA?
+                          <<trllist <<ident_colon_equals_0 ident_with_pragma>> ((COMMA | SEMICOLON) COMMENT?)>>
                           optpar RPAREN
                         {pin=1}
 
@@ -478,6 +478,7 @@ external NOSPACE      ::= noSpace {name="NOSPACE"}
 
 private meta list     ::= <<p1>> (<<p2>> <<p1>>)*
 private meta optlist  ::= (<<p1>> (<<p2>> <<p1>>)*)?
+private meta trllist  ::= (<<p1>> <<p2>>)* <<p1>>?
 private meta section  ::= (INDNONE COMMENT)? (INDNONE <<p>> | <<indented_section <<p>>>>) {pin=1}
 private
 meta indented_section ::= <<indented <<list (<<p>> | COMMENT) INDEQ>>>>

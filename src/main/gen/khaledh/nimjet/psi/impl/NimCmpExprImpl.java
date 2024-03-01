@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static khaledh.nimjet.psi.NimElementTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimIdentColonEquals0Impl extends ASTWrapperPsiElement implements NimIdentColonEquals0 {
+public class NimCmpExprImpl extends NimExprImpl implements NimCmpExpr {
 
-  public NimIdentColonEquals0Impl(@NotNull ASTNode node) {
+  public NimCmpExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitIdentColonEquals0(this);
+    visitor.visitCmpExpr(this);
   }
 
   @Override
@@ -31,24 +31,6 @@ public class NimIdentColonEquals0Impl extends ASTWrapperPsiElement implements Ni
   @NotNull
   public List<NimComment> getCommentList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
-  }
-
-  @Override
-  @Nullable
-  public NimCommaOptcomment getCommaOptcomment() {
-    return findChildByClass(NimCommaOptcomment.class);
-  }
-
-  @Override
-  @Nullable
-  public NimExpr getExpr() {
-    return findChildByClass(NimExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public NimTypeDesc getTypeDesc() {
-    return findChildByClass(NimTypeDesc.class);
   }
 
 }

@@ -48,13 +48,13 @@ class NimAnnotator : Annotator {
             }
         }
 
-        if (element is NimIdentVis && element.parent is NimRoutine) {
+        if (element is NimIdent && element.parent is NimRoutine) {
             holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                 .textAttributes(ROUTINE_KEY)
                 .create()
         }
 
-        if (element is NimIdentVis && element.parent is NimTypeDef) {
+        if (element is NimIdent && element.parent is NimTypeDef) {
             holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                 .textAttributes(TYPE_KEY)
                 .create()

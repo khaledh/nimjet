@@ -29,6 +29,12 @@ public class NimTryExprImpl extends NimExprImpl implements NimTryExpr {
 
   @Override
   @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimColonComment> getColonCommentList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimColonComment.class);
   }

@@ -14,6 +14,9 @@ public interface NimRoutineExpr extends NimExpr {
   NimParamListColon getParamListColon();
 
   @Nullable
+  NimPragma getPragma();
+
+  @Nullable
   NimStmtList getStmtList();
 
 }

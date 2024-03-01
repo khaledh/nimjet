@@ -5,22 +5,13 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimVariable extends PsiElement {
+public interface NimVarSection extends PsiElement {
 
   @Nullable
   NimComment getComment();
 
   @Nullable
-  NimExpr getExpr();
-
-  @Nullable
-  NimIdentColonEquals1 getIdentColonEquals1();
-
-  @NotNull
-  NimIndAndComment getIndAndComment();
-
-  @Nullable
-  NimPostExprBlocks getPostExprBlocks();
+  NimIdentDefs getIdentDefs();
 
   @Nullable
   NimVarTuple getVarTuple();

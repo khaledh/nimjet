@@ -7,8 +7,17 @@ import com.intellij.psi.PsiElement;
 
 public interface NimConstant extends PsiElement {
 
+  @NotNull
+  List<NimComment> getCommentList();
+
+  @NotNull
+  List<NimIdent> getIdentList();
+
   @Nullable
-  NimComment getComment();
+  NimOpr getOpr();
+
+  @Nullable
+  NimBuiltInMagics getBuiltInMagics();
 
   @Nullable
   NimColonComment getColonComment();
@@ -16,11 +25,14 @@ public interface NimConstant extends PsiElement {
   @Nullable
   NimExpr getExpr();
 
-  @Nullable
-  NimIdentWithPragma getIdentWithPragma();
+  @NotNull
+  List<NimKeyword> getKeywordList();
+
+  @NotNull
+  List<NimOperator> getOperatorList();
 
   @Nullable
-  NimIndAndComment getIndAndComment();
+  NimPragma getPragma();
 
   @Nullable
   NimTypeDesc getTypeDesc();

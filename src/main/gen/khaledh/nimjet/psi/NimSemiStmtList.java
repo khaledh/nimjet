@@ -53,6 +53,9 @@ public interface NimSemiStmtList extends PsiElement {
   List<NimFromStmt> getFromStmtList();
 
   @NotNull
+  List<NimIdentDefs> getIdentDefsList();
+
+  @NotNull
   List<NimIfStmt> getIfStmtList();
 
   @NotNull
@@ -83,7 +86,10 @@ public interface NimSemiStmtList extends PsiElement {
   List<NimTypeDef> getTypeDefList();
 
   @NotNull
-  List<NimVariable> getVariableList();
+  List<NimVarSection> getVarSectionList();
+
+  @NotNull
+  List<NimVarTuple> getVarTupleList();
 
   @NotNull
   List<NimWhenStmt> getWhenStmtList();

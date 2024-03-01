@@ -5,15 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimRawTypeDesc extends PsiElement {
+public interface NimPrimaryExpr extends NimExpr {
 
   @Nullable
-  NimRoutineType getRoutineType();
+  NimComment getComment();
 
   @Nullable
-  NimTupleType getTupleType();
+  NimOperator getOperator();
 
   @Nullable
-  NimTypeDesc getTypeDesc();
+  NimRawTypeDesc getRawTypeDesc();
 
 }

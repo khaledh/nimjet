@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static khaledh.nimjet.psi.NimElementTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimIdentDotWithPragmaImpl extends ASTWrapperPsiElement implements NimIdentDotWithPragma {
+public class NimOrExprImpl extends NimExprImpl implements NimOrExpr {
 
-  public NimIdentDotWithPragmaImpl(@NotNull ASTNode node) {
+  public NimOrExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitIdentDotWithPragma(this);
+    visitor.visitOrExpr(this);
   }
 
   @Override
@@ -29,14 +29,8 @@ public class NimIdentDotWithPragmaImpl extends ASTWrapperPsiElement implements N
 
   @Override
   @NotNull
-  public NimIdentVisDot getIdentVisDot() {
-    return findNotNullChildByClass(NimIdentVisDot.class);
-  }
-
-  @Override
-  @Nullable
-  public NimPragma getPragma() {
-    return findChildByClass(NimPragma.class);
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
   }
 
 }

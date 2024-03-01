@@ -11,14 +11,14 @@ import static khaledh.nimjet.psi.NimElementTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimIdentVisImpl extends ASTWrapperPsiElement implements NimIdentVis {
+public class NimVarSectionImpl extends ASTWrapperPsiElement implements NimVarSection {
 
-  public NimIdentVisImpl(@NotNull ASTNode node) {
+  public NimVarSectionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitIdentVis(this);
+    visitor.visitVarSection(this);
   }
 
   @Override
@@ -28,33 +28,21 @@ public class NimIdentVisImpl extends ASTWrapperPsiElement implements NimIdentVis
   }
 
   @Override
-  @NotNull
-  public List<NimIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
+  @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
   }
 
   @Override
   @Nullable
-  public NimOpr getOpr() {
-    return findChildByClass(NimOpr.class);
+  public NimIdentDefs getIdentDefs() {
+    return findChildByClass(NimIdentDefs.class);
   }
 
   @Override
   @Nullable
-  public NimBuiltInMagics getBuiltInMagics() {
-    return findChildByClass(NimBuiltInMagics.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimKeyword> getKeywordList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimKeyword.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimOperator> getOperatorList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
+  public NimVarTuple getVarTuple() {
+    return findChildByClass(NimVarTuple.class);
   }
 
 }

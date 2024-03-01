@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static khaledh.nimjet.psi.NimElementTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimIdentVisDotImpl extends ASTWrapperPsiElement implements NimIdentVisDot {
+public class NimSimpleExprImpl extends NimExprImpl implements NimSimpleExpr {
 
-  public NimIdentVisDotImpl(@NotNull ASTNode node) {
+  public NimSimpleExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitIdentVisDot(this);
+    visitor.visitSimpleExpr(this);
   }
 
   @Override
@@ -28,15 +28,21 @@ public class NimIdentVisDotImpl extends ASTWrapperPsiElement implements NimIdent
   }
 
   @Override
-  @Nullable
-  public NimDotSuffix getDotSuffix() {
-    return findChildByClass(NimDotSuffix.class);
+  @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
   }
 
   @Override
   @NotNull
-  public NimIdentVis getIdentVis() {
-    return findNotNullChildByClass(NimIdentVis.class);
+  public List<NimOp0> getOp0List() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOp0.class);
+  }
+
+  @Override
+  @Nullable
+  public NimPragma getPragma() {
+    return findChildByClass(NimPragma.class);
   }
 
 }

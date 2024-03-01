@@ -11,14 +11,14 @@ import static khaledh.nimjet.psi.NimElementTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimParamListImpl extends ASTWrapperPsiElement implements NimParamList {
+public class NimIdentDefsImpl extends ASTWrapperPsiElement implements NimIdentDefs {
 
-  public NimParamListImpl(@NotNull ASTNode node) {
+  public NimIdentDefsImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitParamList(this);
+    visitor.visitIdentDefs(this);
   }
 
   @Override
@@ -52,15 +52,21 @@ public class NimParamListImpl extends ASTWrapperPsiElement implements NimParamLi
   }
 
   @Override
-  @NotNull
-  public List<NimCommaOptcomment> getCommaOptcommentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimCommaOptcomment.class);
+  @Nullable
+  public NimCommaOptcomment getCommaOptcomment() {
+    return findChildByClass(NimCommaOptcomment.class);
   }
 
   @Override
   @NotNull
-  public List<NimExpr> getExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
+  public List<NimDotSuffix> getDotSuffixList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimDotSuffix.class);
+  }
+
+  @Override
+  @Nullable
+  public NimExpr getExpr() {
+    return findChildByClass(NimExpr.class);
   }
 
   @Override
@@ -76,15 +82,21 @@ public class NimParamListImpl extends ASTWrapperPsiElement implements NimParamLi
   }
 
   @Override
+  @Nullable
+  public NimPostExprBlocks getPostExprBlocks() {
+    return findChildByClass(NimPostExprBlocks.class);
+  }
+
+  @Override
   @NotNull
   public List<NimPragma> getPragmaList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPragma.class);
   }
 
   @Override
-  @NotNull
-  public List<NimTypeDesc> getTypeDescList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimTypeDesc.class);
+  @Nullable
+  public NimTypeDesc getTypeDesc() {
+    return findChildByClass(NimTypeDesc.class);
   }
 
 }

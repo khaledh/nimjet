@@ -119,6 +119,12 @@ public class NimSemiStmtListImpl extends ASTWrapperPsiElement implements NimSemi
 
   @Override
   @NotNull
+  public List<NimIdentDefs> getIdentDefsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdentDefs.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimIfStmt> getIfStmtList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIfStmt.class);
   }
@@ -179,8 +185,14 @@ public class NimSemiStmtListImpl extends ASTWrapperPsiElement implements NimSemi
 
   @Override
   @NotNull
-  public List<NimVariable> getVariableList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimVariable.class);
+  public List<NimVarSection> getVarSectionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimVarSection.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimVarTuple> getVarTupleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimVarTuple.class);
   }
 
   @Override

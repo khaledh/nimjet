@@ -7,11 +7,20 @@ import com.intellij.psi.PsiElement;
 
 public interface NimBlockExpr extends NimExpr {
 
+  @NotNull
+  List<NimIdent> getIdentList();
+
   @Nullable
   NimBuiltInMagics getBuiltInMagics();
 
   @Nullable
   NimColonComment getColonComment();
+
+  @NotNull
+  List<NimKeyword> getKeywordList();
+
+  @NotNull
+  List<NimOperator> getOperatorList();
 
   @Nullable
   NimStmtList getStmtList();

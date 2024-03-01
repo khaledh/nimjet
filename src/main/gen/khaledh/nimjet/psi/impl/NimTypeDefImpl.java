@@ -28,9 +28,27 @@ public class NimTypeDefImpl extends ASTWrapperPsiElement implements NimTypeDef {
   }
 
   @Override
+  @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
+  }
+
+  @Override
   @Nullable
-  public NimComment getComment() {
-    return findChildByClass(NimComment.class);
+  public NimOpr getOpr() {
+    return findChildByClass(NimOpr.class);
+  }
+
+  @Override
+  @Nullable
+  public NimBuiltInMagics getBuiltInMagics() {
+    return findChildByClass(NimBuiltInMagics.class);
   }
 
   @Override
@@ -41,14 +59,14 @@ public class NimTypeDefImpl extends ASTWrapperPsiElement implements NimTypeDef {
 
   @Override
   @NotNull
-  public NimIdentVis getIdentVis() {
-    return findNotNullChildByClass(NimIdentVis.class);
+  public List<NimKeyword> getKeywordList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimKeyword.class);
   }
 
   @Override
-  @Nullable
-  public NimIndAndComment getIndAndComment() {
-    return findChildByClass(NimIndAndComment.class);
+  @NotNull
+  public List<NimOperator> getOperatorList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
   }
 
   @Override

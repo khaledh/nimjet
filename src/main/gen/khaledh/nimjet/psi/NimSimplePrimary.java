@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimDotSuffix extends PsiElement {
+public interface NimSimplePrimary extends PsiElement {
 
   @Nullable
   NimComment getComment();
@@ -14,18 +14,36 @@ public interface NimDotSuffix extends PsiElement {
   List<NimIdent> getIdentList();
 
   @Nullable
+  NimArrayConstr getArrayConstr();
+
+  @Nullable
   NimBuiltInMagics getBuiltInMagics();
 
   @Nullable
-  NimExpr getExpr();
+  NimCastExpr getCastExpr();
 
   @Nullable
-  NimExprList getExprList();
+  NimExprColonEqExprList getExprColonEqExprList();
 
   @NotNull
   List<NimKeyword> getKeywordList();
 
+  @Nullable
+  NimLiteral getLiteral();
+
   @NotNull
   List<NimOperator> getOperatorList();
+
+  @Nullable
+  NimPar getPar();
+
+  @NotNull
+  List<NimPrimarySuffix> getPrimarySuffixList();
+
+  @Nullable
+  NimSetOrTableConstr getSetOrTableConstr();
+
+  @Nullable
+  NimTupleConstr getTupleConstr();
 
 }

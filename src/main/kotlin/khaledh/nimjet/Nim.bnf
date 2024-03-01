@@ -23,6 +23,7 @@
 module                ::= !<<eof>> <<initContext>> top_stmt_list
 
 top_stmt_list         ::= INDZERO (stmt | SEMICOLON &(INDNONE | INDZERO))*
+                          {elementType=stmt_list}
 
 stmt_list             ::= &INDGT <<indented <<list stmt (SEMICOLON | INDEQ)>>>>
                         | &INDNONE <<list simple_stmt SEMICOLON>>
@@ -48,12 +49,16 @@ private stmt          ::= if_stmt
                         | CONVERTER routine
                         | TYPE <<section type_def>>
                         | CONST <<section constant>>
-                        | (LET | VAR | USING) <<section variable>>
+                        | var_section
+                        | (LET | USING) <<section variable>>
 //                        | bind_stmt
 //                        | mixin_stmt
                         | simple_stmt
                         {pin(".*")=1 recoverWhile=stmt_recover}
 private stmt_recover  ::= !(SEMICOLON | INDEQ | INDLT | INDZERO)
+
+
+var_section           ::= VAR <<section variable>> {pin=1}
 
 if_stmt               ::= IF cond_stmt {pin=1}
 when_stmt             ::= WHEN cond_stmt {pin=1}
@@ -153,20 +158,27 @@ constant              ::= (var_tuple | ident_with_pragma) (colon_comment type_de
                           EQUALS optind expr ind_and_comment
                           {pin=3}
 
-var_tuple             ::= LPAREN optind
-                          <<list ((ident_with_pragma | var_tuple) COMMENT?) COMMA>>
-                          optpar RPAREN
-                          {pin=1}
+private variable      ::= (var_tuple | ident_defs)
 
-variable              ::= (var_tuple EQUALS optind expr | <<ident_colon_equals_1 ident_dot_with_pragma>>)
+ident_defs            ::= <<ident_colon_equals_1 ident_dot_with_pragma>>
                           post_expr_blocks? ind_and_comment
 
-meta
+var_tuple             ::= var_tuple_lhs EQUALS optind expr
+                          post_expr_blocks? ind_and_comment
+
+private var_tuple_lhs ::= LPAREN optind
+                          <<list ((var_tuple_lhs | ident_with_pragma) COMMENT?) COMMA>>
+                          optpar RPAREN
+                          (COLON optind type_desc)?
+                          {pin=1}
+
+
+private meta
 ident_colon_equals_0  ::= <<list <<p>> (COMMA optind)>> comma_optcomment?
                           colon_type_desc? (EQUALS optind expr)?
                           {pin(".*")=1}
 
-meta
+private meta
 ident_colon_equals_1  ::= <<list <<p>> (COMMA optind)>> comma_optcomment?
                           <<and_or colon_type_desc (EQUALS optind expr)>>
                           {pin(".*")=1}
@@ -176,6 +188,7 @@ comma_optcomment      ::= COMMA COMMENT?
 colon_body            ::= colon_comment stmt_list post_expr_blocks?
 colon_comment         ::= COLON COMMENT? {pin=1}
 
+private
 ind_and_comment       ::= (COMMENT | <<indented COMMENT>>)?
 
 private optind        ::= COMMENT? INDGTOPT
@@ -241,9 +254,18 @@ routine               ::= optind ident_vis pattern? generic_param_list?
                           param_list_colon pragma? (EQUALS COMMENT? stmt_list)? ind_and_comment
                           {pin(".*_0")=1}
 
+
+
+private
 ident_with_pragma     ::= ident_vis pragma?
+
+private
 ident_dot_with_pragma ::= ident_vis_dot pragma?
+
+private
 ident_vis             ::= symbol OPR?  // postfix position
+
+private
 ident_vis_dot         ::= ident_vis (DOT dot_suffix)?
 
 generic_param_list    ::= LBRACKET optind <<optlist generic_param (COMMA | SEMICOLON)>> optpar RBRACKET
@@ -259,6 +281,7 @@ private symbol        ::= ( ACCENT
                           | IDENT | built_in_magics
                         {pin(".*")=1}
 
+private
 symbol_or_keyword     ::= symbol | keyword
 
 OP0                   ::= OP_ARROW | OP_ARROW_LIKE
@@ -336,25 +359,25 @@ expr                  ::= block_expr
                         | try_expr
                         | simple_expr
 
-private simple_expr   ::= arrow_expr (&INDNONE OP0 COMMENT? optpar arrow_expr)* pragma? {pin(".*_0")=2}
-private arrow_expr    ::= assign_expr (&INDNONE OP1 COMMENT? optpar assign_expr)* {pin(".*_0")=2}
-private assign_expr   ::= or_expr (&INDNONE OP2 COMMENT? optpar or_expr)* {pin(".*_0")=2}
-private or_expr       ::= and_expr (&INDNONE (OP3|OP3_KW) COMMENT? optpar and_expr)* {pin(".*_0")=2}
-private and_expr      ::= cmp_expr (&INDNONE (OP4|OP4_KW) COMMENT? optpar cmp_expr)* {pin(".*_0")=2}
-private cmp_expr      ::= slice_expr (&INDNONE (OP5|OP5_KW) COMMENT? optpar slice_expr)* {pin(".*_0")=2}
-private slice_expr    ::= amp_expr (&INDNONE OP6 COMMENT? optpar amp_expr)* {pin(".*_0")=2}
-private amp_expr      ::= plus_expr (&INDNONE OP7 COMMENT? optpar plus_expr)* {pin(".*_0")=2}
-private plus_expr     ::= mul_expr (&INDNONE OP8 COMMENT? optpar mul_expr)* {pin(".*_0")=2}
-private mul_expr      ::= dollar_expr (&INDNONE (OP9|OP9_KW) COMMENT? optpar dollar_expr)* {pin(".*_0")=2}
-private dollar_expr   ::= primary_expr (&INDNONE OP10 COMMENT? optpar primary_expr)* {pin(".*_0")=2}
-private primary_expr  ::= simple_primary // (command_start expr (do_block extra_post_expr_block*)?)?
+upper simple_expr   ::= arrow_expr (&INDNONE OP0 COMMENT? optpar arrow_expr)* pragma? {pin(".*_0")=2}
+upper arrow_expr    ::= assign_expr (&INDNONE OP1 COMMENT? optpar assign_expr)* {pin(".*_0")=2}
+upper assign_expr   ::= or_expr (&INDNONE OP2 COMMENT? optpar or_expr)* {pin(".*_0")=2}
+upper or_expr       ::= and_expr (&INDNONE (OP3|OP3_KW) COMMENT? optpar and_expr)* {pin(".*_0")=2}
+upper and_expr      ::= cmp_expr (&INDNONE (OP4|OP4_KW) COMMENT? optpar cmp_expr)* {pin(".*_0")=2}
+upper cmp_expr      ::= slice_expr (&INDNONE (OP5|OP5_KW) COMMENT? optpar slice_expr)* {pin(".*_0")=2}
+upper slice_expr    ::= amp_expr (&INDNONE OP6 COMMENT? optpar amp_expr)* {pin(".*_0")=2}
+upper amp_expr      ::= plus_expr (&INDNONE OP7 COMMENT? optpar plus_expr)* {pin(".*_0")=2}
+upper plus_expr     ::= mul_expr (&INDNONE OP8 COMMENT? optpar mul_expr)* {pin(".*_0")=2}
+upper mul_expr      ::= dollar_expr (&INDNONE (OP9|OP9_KW) COMMENT? optpar dollar_expr)* {pin(".*_0")=2}
+upper dollar_expr   ::= primary_expr (&INDNONE OP10 COMMENT? optpar primary_expr)* {pin(".*_0")=2}
+upper primary_expr  ::= simple_primary // (command_start expr (do_block extra_post_expr_block*)?)?
                         | operator optind primary_expr
                         | routine_expr
                         | raw_type_desc
 //                        | prefix_operator primary_expr
 
-private simple_primary::= (<<sigilOpr>> optind)? ident_or_literal primary_suffix*
-                          {pin=2}
+upper simple_primary::= (<<sigilOpr>> optind)? ident_or_literal primary_suffix* {pin=2}
+
 primary_suffix        ::= &INDNONE paren_suffix
                         | &INDNONE bracket_suffix
                         | &INDNONE brace_suffix
@@ -387,7 +410,7 @@ brace_suffix          ::= LBRACE optind expr_colon_eq_expr_list optpar RBRACE {p
 routine_expr          ::= (PROC | FUNC | ITERATOR) param_list_colon pragma? (EQUALS COMMENT? stmt_list)?
 
 
-private ident_or_literal
+upper ident_or_literal
                       ::= /* generalized_lit | */ symbol | literal
                         | LPAREN (<<inTypeDescMode>> | <<inTypeDefMode>>) expr_colon_eq_expr_list optpar RPAREN
                         | &LPAREN par

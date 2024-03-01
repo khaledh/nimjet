@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static khaledh.nimjet.psi.NimElementTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimVariableImpl extends ASTWrapperPsiElement implements NimVariable {
+public class NimPrimaryExprImpl extends NimExprImpl implements NimPrimaryExpr {
 
-  public NimVariableImpl(@NotNull ASTNode node) {
+  public NimPrimaryExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitVariable(this);
+    visitor.visitPrimaryExpr(this);
   }
 
   @Override
@@ -35,32 +35,14 @@ public class NimVariableImpl extends ASTWrapperPsiElement implements NimVariable
 
   @Override
   @Nullable
-  public NimExpr getExpr() {
-    return findChildByClass(NimExpr.class);
+  public NimOperator getOperator() {
+    return findChildByClass(NimOperator.class);
   }
 
   @Override
   @Nullable
-  public NimIdentColonEquals1 getIdentColonEquals1() {
-    return findChildByClass(NimIdentColonEquals1.class);
-  }
-
-  @Override
-  @NotNull
-  public NimIndAndComment getIndAndComment() {
-    return findNotNullChildByClass(NimIndAndComment.class);
-  }
-
-  @Override
-  @Nullable
-  public NimPostExprBlocks getPostExprBlocks() {
-    return findChildByClass(NimPostExprBlocks.class);
-  }
-
-  @Override
-  @Nullable
-  public NimVarTuple getVarTuple() {
-    return findChildByClass(NimVarTuple.class);
+  public NimRawTypeDesc getRawTypeDesc() {
+    return findChildByClass(NimRawTypeDesc.class);
   }
 
 }

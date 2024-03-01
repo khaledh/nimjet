@@ -5,21 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimTupleTypeBracket extends PsiElement {
+public interface NimSliceExpr extends NimExpr {
 
   @NotNull
   List<NimComment> getCommentList();
 
   @NotNull
-  List<NimIdent> getIdentList();
-
-  @NotNull
-  List<NimCommaOptcomment> getCommaOptcommentList();
-
-  @NotNull
-  List<NimExpr> getExprList();
-
-  @NotNull
-  List<NimTypeDesc> getTypeDescList();
+  List<NimOp6> getOp6List();
 
 }

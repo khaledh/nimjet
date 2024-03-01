@@ -34,6 +34,18 @@ public class NimDotSuffixImpl extends ASTWrapperPsiElement implements NimDotSuff
   }
 
   @Override
+  @NotNull
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
+  }
+
+  @Override
+  @Nullable
+  public NimBuiltInMagics getBuiltInMagics() {
+    return findChildByClass(NimBuiltInMagics.class);
+  }
+
+  @Override
   @Nullable
   public NimExpr getExpr() {
     return findChildByClass(NimExpr.class);
@@ -46,9 +58,15 @@ public class NimDotSuffixImpl extends ASTWrapperPsiElement implements NimDotSuff
   }
 
   @Override
-  @Nullable
-  public NimSymbolOrKeyword getSymbolOrKeyword() {
-    return findChildByClass(NimSymbolOrKeyword.class);
+  @NotNull
+  public List<NimKeyword> getKeywordList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimKeyword.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimOperator> getOperatorList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
   }
 
 }

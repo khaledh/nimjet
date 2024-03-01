@@ -11,14 +11,14 @@ import static khaledh.nimjet.psi.NimElementTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimRoutineImpl extends ASTWrapperPsiElement implements NimRoutine {
+public class NimSimplePrimaryImpl extends ASTWrapperPsiElement implements NimSimplePrimary {
 
-  public NimRoutineImpl(@NotNull ASTNode node) {
+  public NimSimplePrimaryImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitRoutine(this);
+    visitor.visitSimplePrimary(this);
   }
 
   @Override
@@ -28,9 +28,9 @@ public class NimRoutineImpl extends ASTWrapperPsiElement implements NimRoutine {
   }
 
   @Override
-  @NotNull
-  public List<NimComment> getCommentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
+  @Nullable
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
   }
 
   @Override
@@ -41,8 +41,8 @@ public class NimRoutineImpl extends ASTWrapperPsiElement implements NimRoutine {
 
   @Override
   @Nullable
-  public NimOpr getOpr() {
-    return findChildByClass(NimOpr.class);
+  public NimArrayConstr getArrayConstr() {
+    return findChildByClass(NimArrayConstr.class);
   }
 
   @Override
@@ -53,8 +53,14 @@ public class NimRoutineImpl extends ASTWrapperPsiElement implements NimRoutine {
 
   @Override
   @Nullable
-  public NimGenericParamList getGenericParamList() {
-    return findChildByClass(NimGenericParamList.class);
+  public NimCastExpr getCastExpr() {
+    return findChildByClass(NimCastExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public NimExprColonEqExprList getExprColonEqExprList() {
+    return findChildByClass(NimExprColonEqExprList.class);
   }
 
   @Override
@@ -64,33 +70,39 @@ public class NimRoutineImpl extends ASTWrapperPsiElement implements NimRoutine {
   }
 
   @Override
+  @Nullable
+  public NimLiteral getLiteral() {
+    return findChildByClass(NimLiteral.class);
+  }
+
+  @Override
   @NotNull
   public List<NimOperator> getOperatorList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
   }
 
   @Override
+  @Nullable
+  public NimPar getPar() {
+    return findChildByClass(NimPar.class);
+  }
+
+  @Override
   @NotNull
-  public NimParamListColon getParamListColon() {
-    return findNotNullChildByClass(NimParamListColon.class);
+  public List<NimPrimarySuffix> getPrimarySuffixList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPrimarySuffix.class);
   }
 
   @Override
   @Nullable
-  public NimPattern getPattern() {
-    return findChildByClass(NimPattern.class);
+  public NimSetOrTableConstr getSetOrTableConstr() {
+    return findChildByClass(NimSetOrTableConstr.class);
   }
 
   @Override
   @Nullable
-  public NimPragma getPragma() {
-    return findChildByClass(NimPragma.class);
-  }
-
-  @Override
-  @Nullable
-  public NimStmtList getStmtList() {
-    return findChildByClass(NimStmtList.class);
+  public NimTupleConstr getTupleConstr() {
+    return findChildByClass(NimTupleConstr.class);
   }
 
 }

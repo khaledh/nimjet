@@ -5,18 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimTryExpr extends NimExpr {
+public interface NimAssignExpr extends NimExpr {
 
   @NotNull
   List<NimComment> getCommentList();
-
-  @NotNull
-  List<NimColonComment> getColonCommentList();
-
-  @NotNull
-  List<NimOptionalExprList> getOptionalExprListList();
-
-  @NotNull
-  List<NimStmtList> getStmtListList();
 
 }

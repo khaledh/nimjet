@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimRoutine extends PsiElement {
+public interface NimIdentDefs extends PsiElement {
 
   @NotNull
   List<NimComment> getCommentList();
@@ -13,14 +13,20 @@ public interface NimRoutine extends PsiElement {
   @NotNull
   List<NimIdent> getIdentList();
 
-  @Nullable
-  NimOpr getOpr();
+  @NotNull
+  List<NimOpr> getOprList();
+
+  @NotNull
+  List<NimBuiltInMagics> getBuiltInMagicsList();
 
   @Nullable
-  NimBuiltInMagics getBuiltInMagics();
+  NimCommaOptcomment getCommaOptcomment();
+
+  @NotNull
+  List<NimDotSuffix> getDotSuffixList();
 
   @Nullable
-  NimGenericParamList getGenericParamList();
+  NimExpr getExpr();
 
   @NotNull
   List<NimKeyword> getKeywordList();
@@ -28,16 +34,13 @@ public interface NimRoutine extends PsiElement {
   @NotNull
   List<NimOperator> getOperatorList();
 
+  @Nullable
+  NimPostExprBlocks getPostExprBlocks();
+
   @NotNull
-  NimParamListColon getParamListColon();
+  List<NimPragma> getPragmaList();
 
   @Nullable
-  NimPattern getPattern();
-
-  @Nullable
-  NimPragma getPragma();
-
-  @Nullable
-  NimStmtList getStmtList();
+  NimTypeDesc getTypeDesc();
 
 }

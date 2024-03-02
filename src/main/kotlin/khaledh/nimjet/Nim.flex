@@ -47,39 +47,39 @@ private IElementType considerAssign(IElementType type) {
 }
 %}
 
-Opr            = [=+\-*/<>@$~&%|!?\^\.:\\]
-NotOpr         = [^=+\-*/<>@$~&%|!?\^\.:\\]
+Opr             = [=+\-*/<>@$~&%|!?\^\.:\\]
+NotOpr          = [^=+\-*/<>@$~&%|!?\^\.:\\]
 
-IdentStartChar = [a-zA-Z\x80-\xFF]
-IdentChar      = [a-zA-Z0-9\x80-\xFF]
-Ident          = {IdentStartChar} ("_"? {IdentChar})*
+SymbolStartChar = [a-zA-Z\x80-\xFF]
+SymbolChar      = [a-zA-Z0-9\x80-\xFF]
+Symbol          = {SymbolStartChar} ("_"? {SymbolChar})*
 
-Char           = [^\'\r\n]
-CharEsc        = \\[rR]|\\[cC]|\\[nN]|\\[lL]|\\[fF]|\\[tT]|\\[vV]|\\\\|\\\"|\\'|\\[0-9]+|\\[aA]|\\[bB]|\\[eE]|\\[xX][0-9a-fA-F]{2}
-CharLit        = \'({Char}|{CharEsc})\'
+Char            = [^\'\r\n]
+CharEsc         = \\[rR]|\\[cC]|\\[nN]|\\[lL]|\\[fF]|\\[tT]|\\[vV]|\\\\|\\\"|\\'|\\[0-9]+|\\[aA]|\\[bB]|\\[eE]|\\[xX][0-9a-fA-F]{2}
+CharLit         = \'({Char}|{CharEsc})\'
 
-Digit          = [0-9]
-BinDigit       = [01]
-OctDigit       = [0-7]
-HexDigit       = [0-9a-fA-F]
+Digit           = [0-9]
+BinDigit        = [01]
+OctDigit        = [0-7]
+HexDigit        = [0-9a-fA-F]
 
-DecNum         = {Digit} ("_"? {Digit})*
-BinNum         = "0" [bB] {BinDigit} ("_"? {BinDigit})*
-OctNum         = "0" [o] {OctDigit} ("_"? {OctDigit})*
-HexNum         = "0" [xX] {HexDigit} ("_"? {HexDigit})*
+DecNum          = {Digit} ("_"? {Digit})*
+BinNum          = "0" [bB] {BinDigit} ("_"? {BinDigit})*
+OctNum          = "0" [o] {OctDigit} ("_"? {OctDigit})*
+HexNum          = "0" [xX] {HexDigit} ("_"? {HexDigit})*
 
-IntNum         = {DecNum} | {BinNum} | {OctNum} | {HexNum}
-IntSuffix      = \'? [iIuU] (8 | 16 | 32 | 64)
-IntLit         = {IntNum} {IntSuffix}?
+IntNum          = {DecNum} | {BinNum} | {OctNum} | {HexNum}
+IntSuffix       = \'? [iIuU] (8 | 16 | 32 | 64)
+IntLit          = {IntNum} {IntSuffix}?
 
-Exp            = [eE] [+\-]? {DecNum}
-FloatNum       = {DecNum} ("\." {DecNum} {Exp}? | {Exp})
-FloatSuffix    = ([fF] (32 | 64) | [dD])
-FloatLit       = {FloatNum}
-               | ({FloatNum} | {DecNum} | {OctNum} | {BinNum}) \'? {FloatSuffix}
-               | {HexNum} \' {FloatSuffix}
+Exp             = [eE] [+\-]? {DecNum}
+FloatNum        = {DecNum} ("\." {DecNum} {Exp}? | {Exp})
+FloatSuffix     = ([fF] (32 | 64) | [dD])
+FloatLit        = {FloatNum}
+                | ({FloatNum} | {DecNum} | {OctNum} | {BinNum}) \'? {FloatSuffix}
+                | {HexNum} \' {FloatSuffix}
 
-CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
+CustomNumLit   = ({IntLit} | {FloatLit}) \' {Symbol}
 
 %%
 
@@ -269,9 +269,9 @@ CustomNumLit   = ({IntLit} | {FloatLit}) \' {Ident}
   "yield"                { return NimElementTypes.YIELD; }
 
 
-  "_"({IdentChar}|_)+    { return NimElementTypes.INVALID_IDENT; }
-  "_"                    { return NimElementTypes.ID; }
-  {Ident}                { return NimElementTypes.ID; }
+  "_"({SymbolChar}|_)+   { return NimElementTypes.INVALID_SYMBOL; }
+  "_"                    { return NimElementTypes.SYMBOL; }
+  {Symbol}               { return NimElementTypes.SYMBOL; }
 
 
   [ \t\n\r]+             { return TokenType.WHITE_SPACE; }

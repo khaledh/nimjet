@@ -42,7 +42,7 @@ class NimAnnotator : Annotator {
                     .create()
             }
 
-            NimElementTypes.INVALID_IDENT -> {
+            NimElementTypes.INVALID_SYMBOL -> {
                 holder.newAnnotation(HighlightSeverity.ERROR, "invalid identifier")
                     .create()
             }

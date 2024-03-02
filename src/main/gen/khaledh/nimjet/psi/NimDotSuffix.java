@@ -10,22 +10,16 @@ public interface NimDotSuffix extends PsiElement {
   @Nullable
   NimComment getComment();
 
-  @NotNull
-  List<NimIdent> getIdentList();
-
-  @Nullable
-  NimBuiltInMagics getBuiltInMagics();
-
   @Nullable
   NimExpr getExpr();
 
   @Nullable
   NimExprList getExprList();
 
-  @NotNull
-  List<NimKeyword> getKeywordList();
+  @Nullable
+  NimIdent getIdent();
 
-  @NotNull
-  List<NimOperator> getOperatorList();
+  @Nullable
+  NimKeyword getKeyword();
 
 }

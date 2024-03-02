@@ -15,9 +15,14 @@ enum class PrimaryMode {
     NORMAL, TYPE_DESC, TYPE_DEF, TRY_SIMPLE
 }
 
+enum class SymbolMode {
+    NORMAL, ALLOW_NIL, AFTER_DOT,
+}
+
 class ParserContext {
     var indentStack = stackOf<Int>(0)
     var primaryMode = PrimaryMode.NORMAL
+    var symbolMode = SymbolMode.NORMAL
 
     companion object {
         val KEY: Key<ParserContext> = Key.create("NIM_PARSER_CONTEXT")
@@ -196,28 +201,20 @@ class NimParserUtil : GeneratedParserUtilBase() {
         }
 
         @JvmStatic
-        fun inNormalMode(builder: PsiBuilder, level: Int): Boolean {
-            val ctx = builder.getUserData(ParserContext.KEY)!!
-            return ctx.primaryMode == PrimaryMode.NORMAL
+        fun isUnary(builder: PsiBuilder, level: Int, parser: Parser): Boolean {
+            val leading = (
+                    builder.currentOffset > 0 &&
+                            builder.originalText[builder.currentOffset - 1].isWhitespace()
+                    )
+            var trailing = false
+            builder.tokenText?.let {
+                trailing = builder.currentOffset + it.length < builder.originalText.length &&
+                        builder.originalText[builder.currentOffset + it.length].isWhitespace()
+            }
+            return leading && !trailing
         }
 
-        @JvmStatic
-        fun inTypeDescMode(builder: PsiBuilder, level: Int): Boolean {
-            val ctx = builder.getUserData(ParserContext.KEY)!!
-            return ctx.primaryMode == PrimaryMode.TYPE_DESC
-        }
-
-        @JvmStatic
-        fun inTypeDefMode(builder: PsiBuilder, level: Int): Boolean {
-            val ctx = builder.getUserData(ParserContext.KEY)!!
-            return ctx.primaryMode == PrimaryMode.TYPE_DEF
-        }
-
-        @JvmStatic
-        fun inTrySimpleMode(builder: PsiBuilder, level: Int): Boolean {
-            val ctx = builder.getUserData(ParserContext.KEY)!!
-            return ctx.primaryMode == PrimaryMode.TRY_SIMPLE
-        }
+        /**** Primary Mode ****/
 
         private fun withPrimaryMode(builder: PsiBuilder, level: Int, mode: PrimaryMode, parser: Parser): Boolean {
             val ctx = builder.getUserData(ParserContext.KEY)!!
@@ -249,17 +246,72 @@ class NimParserUtil : GeneratedParserUtilBase() {
         }
 
         @JvmStatic
-        fun isUnary(builder: PsiBuilder, level: Int, parser: Parser): Boolean {
-            val leading = (
-                builder.currentOffset > 0 &&
-                builder.originalText[builder.currentOffset - 1].isWhitespace()
-            )
-            var trailing = false
-            builder.tokenText?.let {
-                trailing = builder.currentOffset + it.length < builder.originalText.length &&
-                           builder.originalText[builder.currentOffset + it.length].isWhitespace()
-            }
-            return leading && !trailing
+        fun inPrimaryModeNormal(builder: PsiBuilder, level: Int): Boolean {
+            val ctx = builder.getUserData(ParserContext.KEY)!!
+            return ctx.primaryMode == PrimaryMode.NORMAL
         }
+
+        @JvmStatic
+        fun inPrimaryModeTypeDesc(builder: PsiBuilder, level: Int): Boolean {
+            val ctx = builder.getUserData(ParserContext.KEY)!!
+            return ctx.primaryMode == PrimaryMode.TYPE_DESC
+        }
+
+        @JvmStatic
+        fun inPrimaryModeTypeDef(builder: PsiBuilder, level: Int): Boolean {
+            val ctx = builder.getUserData(ParserContext.KEY)!!
+            return ctx.primaryMode == PrimaryMode.TYPE_DEF
+        }
+
+        @JvmStatic
+        fun inPrimaryModeTrySimple(builder: PsiBuilder, level: Int): Boolean {
+            val ctx = builder.getUserData(ParserContext.KEY)!!
+            return ctx.primaryMode == PrimaryMode.TRY_SIMPLE
+        }
+
+        /**** Symbol Mode ****/
+
+        private fun withSymbolMode(builder: PsiBuilder, level: Int, mode: SymbolMode, parser: Parser): Boolean {
+            val ctx = builder.getUserData(ParserContext.KEY)!!
+            val currentMode = ctx.symbolMode
+            ctx.symbolMode = mode
+            val innerResult = parser.parse(builder, level + 1)
+            ctx.symbolMode = currentMode
+            return innerResult
+        }
+
+        @JvmStatic
+        fun smNormal(builder: PsiBuilder, level: Int, parser: Parser): Boolean {
+            return withSymbolMode(builder, level, SymbolMode.NORMAL, parser)
+        }
+
+        @JvmStatic
+        fun smAllowNil(builder: PsiBuilder, level: Int, parser: Parser): Boolean {
+            return withSymbolMode(builder, level, SymbolMode.ALLOW_NIL, parser)
+        }
+
+        @JvmStatic
+        fun smAfterDot(builder: PsiBuilder, level: Int, parser: Parser): Boolean {
+            return withSymbolMode(builder, level, SymbolMode.AFTER_DOT, parser)
+        }
+
+        @JvmStatic
+        fun inSymbolModeNormal(builder: PsiBuilder, level: Int): Boolean {
+            val ctx = builder.getUserData(ParserContext.KEY)!!
+            return ctx.symbolMode == SymbolMode.NORMAL
+        }
+
+        @JvmStatic
+        fun inSymbolModeAllowNil(builder: PsiBuilder, level: Int): Boolean {
+            val ctx = builder.getUserData(ParserContext.KEY)!!
+            return ctx.symbolMode == SymbolMode.ALLOW_NIL
+        }
+
+        @JvmStatic
+        fun inSymbolModeAfterDot(builder: PsiBuilder, level: Int): Boolean {
+            val ctx = builder.getUserData(ParserContext.KEY)!!
+            return ctx.symbolMode == SymbolMode.AFTER_DOT
+        }
+
     }
 }

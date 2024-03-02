@@ -27,10 +27,4 @@ public class NimOperatorImpl extends ASTWrapperPsiElement implements NimOperator
     else super.accept(visitor);
   }
 
-  @Override
-  @Nullable
-  public NimOpr getOpr() {
-    return findChildByClass(NimOpr.class);
-  }
-
 }

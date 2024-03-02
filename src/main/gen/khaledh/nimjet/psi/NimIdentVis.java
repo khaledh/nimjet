@@ -5,15 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimSimpleExpr extends NimExpr {
-
-  @NotNull
-  List<NimComment> getCommentList();
-
-  @NotNull
-  List<NimOp0> getOp0List();
-
-  @Nullable
-  NimPragma getPragma();
+public interface NimIdentVis extends PsiElement {
 
 }

@@ -7,16 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface NimConceptParam extends PsiElement {
 
-  @NotNull
-  List<NimIdent> getIdentList();
-
-  @Nullable
-  NimBuiltInMagics getBuiltInMagics();
-
-  @NotNull
-  List<NimKeyword> getKeywordList();
-
-  @NotNull
-  List<NimOperator> getOperatorList();
-
 }

@@ -29,24 +29,6 @@ public class NimExprStartImpl extends ASTWrapperPsiElement implements NimExprSta
 
   @Override
   @Nullable
-  public NimIdent getIdent() {
-    return findChildByClass(NimIdent.class);
-  }
-
-  @Override
-  @Nullable
-  public NimOpr getOpr() {
-    return findChildByClass(NimOpr.class);
-  }
-
-  @Override
-  @Nullable
-  public NimBuiltInMagics getBuiltInMagics() {
-    return findChildByClass(NimBuiltInMagics.class);
-  }
-
-  @Override
-  @Nullable
   public NimLiteral getLiteral() {
     return findChildByClass(NimLiteral.class);
   }

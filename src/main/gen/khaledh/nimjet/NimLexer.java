@@ -1376,7 +1376,7 @@ private IElementType considerAssign(IElementType type) {
           // fall through
           case 178: break;
           case 16:
-            { return NimElementTypes.ID;
+            { return NimElementTypes.SYMBOL;
             }
           // fall through
           case 179: break;
@@ -1515,7 +1515,7 @@ private IElementType considerAssign(IElementType type) {
           // fall through
           case 203: break;
           case 41:
-            { return NimElementTypes.INVALID_IDENT;
+            { return NimElementTypes.INVALID_SYMBOL;
             }
           // fall through
           case 204: break;

@@ -35,12 +35,6 @@ public class NimBlockExprImpl extends NimExprImpl implements NimBlockExpr {
 
   @Override
   @Nullable
-  public NimBuiltInMagics getBuiltInMagics() {
-    return findChildByClass(NimBuiltInMagics.class);
-  }
-
-  @Override
-  @Nullable
   public NimColonComment getColonComment() {
     return findChildByClass(NimColonComment.class);
   }

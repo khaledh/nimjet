@@ -28,33 +28,15 @@ public class NimBlockStmtImpl extends ASTWrapperPsiElement implements NimBlockSt
   }
 
   @Override
-  @NotNull
-  public List<NimIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
-  }
-
-  @Override
-  @Nullable
-  public NimBuiltInMagics getBuiltInMagics() {
-    return findChildByClass(NimBuiltInMagics.class);
-  }
-
-  @Override
   @Nullable
   public NimColonComment getColonComment() {
     return findChildByClass(NimColonComment.class);
   }
 
   @Override
-  @NotNull
-  public List<NimKeyword> getKeywordList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimKeyword.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimOperator> getOperatorList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
+  @Nullable
+  public NimIdent getIdent() {
+    return findChildByClass(NimIdent.class);
   }
 
   @Override

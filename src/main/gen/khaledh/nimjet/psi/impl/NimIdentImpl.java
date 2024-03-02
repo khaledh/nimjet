@@ -28,6 +28,24 @@ public class NimIdentImpl extends ASTWrapperPsiElement implements NimIdent {
   }
 
   @Override
+  @Nullable
+  public NimAccQuoted getAccQuoted() {
+    return findChildByClass(NimAccQuoted.class);
+  }
+
+  @Override
+  @Nullable
+  public NimKeyword getKeyword() {
+    return findChildByClass(NimKeyword.class);
+  }
+
+  @Override
+  @Nullable
+  public NimNilLit getNilLit() {
+    return findChildByClass(NimNilLit.class);
+  }
+
+  @Override
   @NotNull
   public String getName() {
     return NimPsiImplUtil.getName(this);

@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface NimOperator extends PsiElement {
 
-  @Nullable
-  NimOpr getOpr();
-
 }

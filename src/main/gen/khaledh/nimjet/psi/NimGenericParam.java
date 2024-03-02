@@ -11,9 +11,9 @@ public interface NimGenericParam extends PsiElement {
   NimComment getComment();
 
   @NotNull
-  List<NimIdent> getIdentList();
+  List<NimExpr> getExprList();
 
   @NotNull
-  List<NimExpr> getExprList();
+  List<NimIdent> getIdentList();
 
 }

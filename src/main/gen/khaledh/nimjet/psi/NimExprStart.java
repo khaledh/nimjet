@@ -8,15 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface NimExprStart extends PsiElement {
 
   @Nullable
-  NimIdent getIdent();
-
-  @Nullable
-  NimOpr getOpr();
-
-  @Nullable
-  NimBuiltInMagics getBuiltInMagics();
-
-  @Nullable
   NimLiteral getLiteral();
 
 }

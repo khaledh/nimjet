@@ -19,7 +19,7 @@ class NimCompletionContributor : CompletionContributor() {
     init {
         extend(
             CompletionType.BASIC,
-            PlatformPatterns.psiElement(NimElementTypes.ID),
+            PlatformPatterns.psiElement(NimElementTypes.IDENT),
             object : CompletionProvider<CompletionParameters>() {
                 override fun addCompletions(
                     parameters: CompletionParameters,

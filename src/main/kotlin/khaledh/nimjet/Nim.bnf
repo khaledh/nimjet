@@ -73,7 +73,7 @@ try_stmt              ::= TRY colon_comment stmt_list &(INDEQ? (EXCEPT|FINALLY))
 for_stmt              ::= FOR <<list (var_tuple | ident_with_pragma) COMMA>>
                           IN expr colon_comment stmt_list
                           {pin=1}
-block_stmt            ::= BLOCK symbol? colon_comment stmt_list {pin=1}
+block_stmt            ::= BLOCK ident? colon_comment stmt_list {pin=1}
 static_stmt           ::= STATIC colon_comment stmt_list {pin=1}
 defer_stmt            ::= DEFER colon_comment stmt_list {pin=1}
 asm_stmt              ::= ASM pragma? (STR_LIT | RSTR_LIT | TRIPLESTR_LIT | STR_ERROR | TRIPLESTR_ERROR)
@@ -124,16 +124,15 @@ expr_stmt             ::= <<pmTrySimple simple_expr>>
                           post_expr_blocks?
                         {pin(".*_0")=1}
 
-expr_start            ::= IDENT | ACCENT | OPR | NOT | NIL | CAST | IF | FOR | PROC | FUNC | ITERATOR
+expr_start            ::= SYMBOL | ACCENT | OPR | NOT | NIL | CAST | IF | FOR | PROC | FUNC | ITERATOR
                         | BIND | LPAREN | LBRACKET | LBRACE | VAR | REF | PTR | ENUM | TUPLE | OBJECT
                         | WHEN | CASE | OUT | TRY | BLOCK
                         | literal
                         | built_in_magics
-built_in_magics       ::= TYPE | STATIC | ADDR
 
 expr_eq_expr          ::= expr (EQUALS expr | do_block extra_post_expr_block*)?
 
-private invalid       ::= INVALID_IDENT
+private invalid       ::= INVALID_SYMBOL
 
 type_desc             ::= raw_type_desc | type_desc_expr
 raw_type_desc         ::= ( tuple_type
@@ -147,7 +146,7 @@ raw_type_desc         ::= ( tuple_type
 type_desc_expr        ::= (routine_type | simple_expr) (NOT primary_expr)?
 tuple_type            ::= TUPLE tuple_type_bracket? {pin=1}
 tuple_type_bracket    ::= LBRACKET optind
-                          (<<ident_colon_equals_1 IDENT>> (COMMA|SEMICOLON)?)*
+                          (<<ident_colon_equals_1 ident>> (COMMA|SEMICOLON)?)*
                           optpar RBRACKET
                           {pin=1}
 
@@ -210,7 +209,7 @@ type_def_value        ::= ( ( tuple_decl | enum_decl | object_decl | concept_dec
 
 tuple_decl            ::= TUPLE
                           ( tuple_type_bracket
-                          | COMMENT? ( <<indented <<list <<ident_colon_equals_1 IDENT>> INDEQ>>>> )?
+                          | COMMENT? ( <<indented <<list <<ident_colon_equals_1 ident>> INDEQ>>>> )?
                           )
                           {pin=1}
 
@@ -235,7 +234,7 @@ object_branches       ::= <<list object_branch INDEQ>>
 object_branch         ::= OF expr_list colon_comment object_part {pin=1}
 
 enum_decl             ::= ENUM optind
-                          ( &INDGTOPT symbol pragma?
+                          ( &INDGTOPT SYMBOL pragma?
                             (&INDNONE EQUALS optind expr (&INDGTEOPT COMMENT)?)?
                             ( &INDNONE COMMA COMMENT? | &INDGTEOPT COMMENT? )?
 
@@ -244,7 +243,7 @@ enum_decl             ::= ENUM optind
 
 concept_decl          ::= CONCEPT <<optlist concept_param COMMA>> (pragma)? (OF <<optlist type_desc COMMA>>)?
                           <<indented stmt_list>>
-concept_param         ::= (VAR | OUT)? symbol
+concept_param         ::= (VAR | OUT)? SYMBOL
 
 decl_colon_equals     ::= <<list ident_with_pragma COMMA>> COMMA?
                           (COLON optind type_desc_expr)? (EQUALS optind expr)?
@@ -263,31 +262,43 @@ private
 ident_dot_with_pragma ::= ident_vis_dot pragma?
 
 private
-ident_vis             ::= symbol OPR?  // postfix position
+ident_vis             ::= SYMBOL OPR?  // postfix position
 
 private
 ident_vis_dot         ::= ident_vis (DOT dot_suffix)?
 
 generic_param_list    ::= LBRACKET optind <<optlist generic_param (COMMA | SEMICOLON)>> optpar RBRACKET
                           {pin=1}
-generic_param         ::= <<optlist IDENT COMMA>> (COLON expr)? (EQUALS optind expr)?
+generic_param         ::= <<optlist ident COMMA>> (COLON expr)? (EQUALS optind expr)?
 
-private symbol        ::= ( ACCENT
-                            ( keyword | IDENT
+ident                 ::= SYMBOL
+                          | built_in
+                          | built_in_magics
+                          | c_type
+                          | <<inSymbolModeAfterDot>> keyword
+                          | <<inSymbolModeAllowNil>> nil_lit
+                          | acc_quoted
+                        {implements="khaledh.nimjet.psi.NimNamedElement" methods=[getName setName]}
+
+nil_lit               ::= NIL
+
+acc_quoted            ::= ACCENT
+                            ( keyword | ident
                             | (operator|DOT|DOTDOT|EQUALS|LPAREN|RPAREN|LBRACKET|RBRACKET|LBRACE|RBRACE)+
                             )+
-                            ACCENT
-                          )
-                          | IDENT | built_in_magics
-                        {pin(".*")=1}
+                          ACCENT
+                          {pin=1}
 
 private
-symbol_or_keyword     ::= symbol | keyword
+ident_or_keyword      ::= ident | keyword
 
-OP0                   ::= OP_ARROW | OP_ARROW_LIKE
-OP6                   ::= DOTDOT | OP_DOTLIKE
-OPR                   ::= OP0 | OP1 | OP2 | OP3 | OP4 | OP5 | OP6 | OP7 | OP8 | OP9 | OP10
-
+private OP3_KW        ::= OR | XOR
+private OP4_KW        ::= AND
+private OP5_KW        ::= IN | NOTIN | IS | ISNOT | NOT | OF | AS // | FROM
+private OP9_KW        ::= DIV | MOD | SHL | SHR
+private OP0           ::= OP_ARROW | OP_ARROW_LIKE
+private OP6           ::= DOTDOT | OP_DOTLIKE
+private OPR           ::= OP0 | OP1 | OP2 | OP3 | OP4 | OP5 | OP6 | OP7 | OP8 | OP9 | OP10
 operator              ::= OPR | OP3_KW | OP4_KW | OP5_KW | OP9_KW | DOTDOT
 
 pattern               ::= LBRACE stmt_list RBRACE
@@ -330,7 +341,7 @@ cond_expr             ::= optind expr colon_comment stmt_list COMMENT?
                           (ELIF optind expr colon_comment stmt_list COMMENT?)*
                           ELSE colon_comment stmt_list
 
-block_expr            ::= BLOCK symbol? colon_comment stmt_list {pin=1}
+block_expr            ::= BLOCK SYMBOL? colon_comment stmt_list {pin=1}
 
 case_stmt             ::= CASE expr COLON? COMMENT?
                           ( &INDGT <<indented of_branches>>
@@ -384,21 +395,21 @@ primary_suffix        ::= &INDNONE paren_suffix
                         | optpar DOT dot_suffix
                         | &INDNONE OP_DOTLIKE dot_suffix
                         | &INDNONE
-                          ( <<inTrySimpleMode>> cmd_start
+                          ( <<inPrimaryModeTrySimple>> cmd_start
                           | cmd_start command_expr
                           )
 
-cmd_start             ::= IDENT | ACCENT | literal | NIL | CAST | VAR | OUT | STATIC | TYPE
+cmd_start             ::= ident | ACCENT | literal | NIL | CAST | VAR | OUT | STATIC | TYPE
                         | ENUM | TUPLE | OBJECT | PROC | <<isUnary OPR>> | <<isUnary DOTDOT>>
 
 paren_suffix          ::= &NOSPACE named_params
-                        | !<<inTrySimpleMode>> LPAREN command_expr RPAREN {pin(".*")="LPAREN"}
+                        | !<<inPrimaryModeTrySimple>> LPAREN command_expr RPAREN {pin(".*")="LPAREN"}
 named_params          ::= LPAREN optind expr_colon_eq_expr_list RPAREN {pin=1}
 command_expr          ::= command_param_first
 command_param_first   ::= expr (&DO post_expr_blocks)?
 command_param_extra   ::= expr_eq_expr
 
-dot_suffix            ::= optind symbol_or_keyword
+dot_suffix            ::= optind ident_or_keyword
                           ( &NOSPACE LBRACKET_COLON expr_list RBRACKET
                             (&NOSPACE LPAREN expr_colon_eq_expr RPAREN)?
                           )?
@@ -411,8 +422,8 @@ routine_expr          ::= (PROC | FUNC | ITERATOR) param_list_colon pragma? (EQU
 
 
 upper ident_or_literal
-                      ::= /* generalized_lit | */ symbol | literal
-                        | LPAREN (<<inTypeDescMode>> | <<inTypeDefMode>>) expr_colon_eq_expr_list optpar RPAREN
+                      ::= /* generalized_lit | */ ident | literal
+                        | LPAREN (<<inPrimaryModeTypeDesc>> | <<inPrimaryModeTypeDef>>) expr_colon_eq_expr_list optpar RPAREN
                         | &LPAREN par
                         | array_constr | tuple_constr | set_or_table_constr
                         | cast_expr
@@ -461,28 +472,22 @@ keyword               ::= ADDR | AND | AS | ASM | BIND | BLOCK | BREAK | CASE | 
                         | PROC | PTR | RAISE | REF | RETURN | SHL | SHR | STATIC | TEMPLATE | TRY
                         | TUPLE | TYPE | USING | VAR | WHEN | WHILE | XOR | YIELD
 
-IDENT                 ::= ID
-                        | BOOL | TRUE | FALSE
+private built_in      ::= BOOL | TRUE | FALSE
                         | CHAR | STRING | CSTRING
                         | INT | INT8 | INT16 | INT32 | INT64
                         | UINT | UINT8 | UINT16 | UINT32 | UINT64
                         | FLOAT | FLOAT32 | FLOAT64
-                        | ARRAY | SEQ | OPENARRAY | SET | UNCHECKEDARRAY | POINTER | VOID | UNTYPED
+                        | ARRAY | SEQ | OPENARRAY | UNCHECKEDARRAY | SET | POINTER | VOID | UNTYPED
                         | AUTO | VARARGS
-                        | BIGGEST_FLOAT | BIGGEST_INT | BIGGEST_UINT
+private
+built_in_magics       ::= TYPE | STATIC | ADDR
+
+private c_type        ::= BIGGEST_FLOAT | BIGGEST_INT | BIGGEST_UINT
                         | CCHAR | CDOUBLE | CFLOAT | CINT | CLONG | CLONG_DOUBLE | CLONG_LONG
                         | CSCHAR | CSHORT | CSIZE_T | CSTRING_ARRAY
                         | CUCHAR | CUINT | CULONG | CULONG_LONG | CUSHORT
-                        {implements="khaledh.nimjet.psi.NimNamedElement" methods=[getName setName]}
 
 COMMENT               ::= LINE_COMMENT | MULTILINE_COMMENT | MULTILINE_COMMENT_ERROR
-
-// operators
-
-private OP3_KW        ::= OR | XOR
-private OP4_KW        ::= AND
-private OP5_KW        ::= IN | NOTIN | IS | ISNOT | NOT | OF | AS // | FROM
-private OP9_KW        ::= DIV | MOD | SHL | SHR
 
 // external rules
 

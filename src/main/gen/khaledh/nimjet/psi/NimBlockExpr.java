@@ -11,9 +11,6 @@ public interface NimBlockExpr extends NimExpr {
   List<NimIdent> getIdentList();
 
   @Nullable
-  NimBuiltInMagics getBuiltInMagics();
-
-  @Nullable
   NimColonComment getColonComment();
 
   @NotNull

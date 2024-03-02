@@ -7,6 +7,15 @@ import com.intellij.psi.PsiElement;
 
 public interface NimIdent extends NimNamedElement {
 
+  @Nullable
+  NimAccQuoted getAccQuoted();
+
+  @Nullable
+  NimKeyword getKeyword();
+
+  @Nullable
+  NimNilLit getNilLit();
+
   @NotNull
   String getName();
 

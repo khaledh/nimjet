@@ -11,14 +11,14 @@ import static khaledh.nimjet.psi.NimElementTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimOp0Impl extends ASTWrapperPsiElement implements NimOp0 {
+public class NimNilLitImpl extends ASTWrapperPsiElement implements NimNilLit {
 
-  public NimOp0Impl(@NotNull ASTNode node) {
+  public NimNilLitImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitOp0(this);
+    visitor.visitNilLit(this);
   }
 
   @Override

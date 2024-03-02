@@ -28,9 +28,87 @@ public class NimExprImpl extends ASTWrapperPsiElement implements NimExpr {
   }
 
   @Override
+  @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimArrayConstr> getArrayConstrList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimArrayConstr.class);
+  }
+
+  @Override
   @Nullable
   public NimCaseStmt getCaseStmt() {
     return findChildByClass(NimCaseStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimExprColonEqExprList> getExprColonEqExprListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExprColonEqExprList.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimLiteral> getLiteralList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimLiteral.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimOperator> getOperatorList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimPar> getParList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPar.class);
+  }
+
+  @Override
+  @Nullable
+  public NimPragma getPragma() {
+    return findChildByClass(NimPragma.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimPrimarySuffix> getPrimarySuffixList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPrimarySuffix.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimRawTypeDesc> getRawTypeDescList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimRawTypeDesc.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimSetOrTableConstr> getSetOrTableConstrList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimSetOrTableConstr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimTupleConstr> getTupleConstrList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimTupleConstr.class);
   }
 
 }

@@ -35,12 +35,6 @@ public class NimCastExprImpl extends NimExprImpl implements NimCastExpr {
 
   @Override
   @Nullable
-  public NimExpr getExpr() {
-    return findChildByClass(NimExpr.class);
-  }
-
-  @Override
-  @Nullable
   public NimTypeDesc getTypeDesc() {
     return findChildByClass(NimTypeDesc.class);
   }

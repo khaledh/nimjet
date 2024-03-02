@@ -35,44 +35,8 @@ public class NimParamListImpl extends ASTWrapperPsiElement implements NimParamLi
 
   @Override
   @NotNull
-  public List<NimIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimOpr> getOprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOpr.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimBuiltInMagics> getBuiltInMagicsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimBuiltInMagics.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimCommaOptcomment> getCommaOptcommentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimCommaOptcomment.class);
-  }
-
-  @Override
-  @NotNull
   public List<NimExpr> getExprList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimKeyword> getKeywordList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimKeyword.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimOperator> getOperatorList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
   }
 
   @Override

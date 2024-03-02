@@ -29,18 +29,6 @@ public class NimCondExprImpl extends NimExprImpl implements NimCondExpr {
 
   @Override
   @NotNull
-  public List<NimComment> getCommentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimColonComment> getColonCommentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimColonComment.class);
-  }
-
-  @Override
-  @NotNull
   public List<NimExpr> getExprList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
   }

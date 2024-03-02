@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface NimStaticStmt extends PsiElement {
 
   @Nullable
-  NimColonComment getColonComment();
+  NimComment getComment();
 
   @Nullable
   NimStmtList getStmtList();

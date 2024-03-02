@@ -11,7 +11,7 @@ public interface NimBlockExpr extends NimExpr {
   List<NimIdent> getIdentList();
 
   @Nullable
-  NimColonComment getColonComment();
+  NimComment getComment();
 
   @NotNull
   List<NimKeyword> getKeywordList();

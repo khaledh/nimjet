@@ -13,17 +13,14 @@ public interface NimPar extends PsiElement {
   @NotNull
   List<NimArrayConstr> getArrayConstrList();
 
-  @Nullable
-  NimDoBlock getDoBlock();
+  @NotNull
+  List<NimDoBlock> getDoBlockList();
 
   @NotNull
   List<NimExpr> getExprList();
 
   @NotNull
-  List<NimExprColonEqExprList> getExprColonEqExprListList();
-
-  @NotNull
-  List<NimExtraPostExprBlock> getExtraPostExprBlockList();
+  List<NimExprList> getExprListList();
 
   @NotNull
   List<NimIdent> getIdentList();
@@ -33,6 +30,9 @@ public interface NimPar extends PsiElement {
 
   @NotNull
   List<NimOperator> getOperatorList();
+
+  @NotNull
+  List<NimOptExprList> getOptExprListList();
 
   @NotNull
   List<NimPar> getParList();
@@ -54,6 +54,9 @@ public interface NimPar extends PsiElement {
 
   @NotNull
   List<NimSetOrTableConstr> getSetOrTableConstrList();
+
+  @NotNull
+  List<NimStmtList> getStmtListList();
 
   @NotNull
   List<NimTupleConstr> getTupleConstrList();

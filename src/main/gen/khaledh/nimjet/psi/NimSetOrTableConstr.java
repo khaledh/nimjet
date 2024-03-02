@@ -11,6 +11,18 @@ public interface NimSetOrTableConstr extends PsiElement {
   List<NimComment> getCommentList();
 
   @NotNull
+  List<NimDoBlock> getDoBlockList();
+
+  @NotNull
   List<NimExpr> getExprList();
+
+  @NotNull
+  List<NimExprList> getExprListList();
+
+  @NotNull
+  List<NimOptExprList> getOptExprListList();
+
+  @NotNull
+  List<NimStmtList> getStmtListList();
 
 }

@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface NimObjectBranch extends PsiElement {
 
   @Nullable
-  NimColonComment getColonComment();
+  NimComment getComment();
 
   @Nullable
   NimExprList getExprList();

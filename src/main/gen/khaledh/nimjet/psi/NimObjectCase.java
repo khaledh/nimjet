@@ -7,13 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface NimObjectCase extends PsiElement {
 
-  @Nullable
-  NimComment getComment();
+  @NotNull
+  List<NimComment> getCommentList();
 
-  @Nullable
-  NimDeclColonEquals getDeclColonEquals();
+  @NotNull
+  List<NimExpr> getExprList();
 
   @Nullable
   NimObjectBranches getObjectBranches();
+
+  @NotNull
+  List<NimPragma> getPragmaList();
 
 }

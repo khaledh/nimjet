@@ -10,10 +10,19 @@ public interface NimExprStmt extends PsiElement {
   @NotNull
   List<NimComment> getCommentList();
 
-  @Nullable
-  NimExpr getExpr();
+  @NotNull
+  List<NimDoBlock> getDoBlockList();
 
-  @Nullable
-  NimPostExprBlocks getPostExprBlocks();
+  @NotNull
+  List<NimExpr> getExprList();
+
+  @NotNull
+  List<NimExprList> getExprListList();
+
+  @NotNull
+  List<NimOptExprList> getOptExprListList();
+
+  @NotNull
+  List<NimStmtList> getStmtListList();
 
 }

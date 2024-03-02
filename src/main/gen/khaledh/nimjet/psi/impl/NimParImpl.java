@@ -40,9 +40,9 @@ public class NimParImpl extends ASTWrapperPsiElement implements NimPar {
   }
 
   @Override
-  @Nullable
-  public NimDoBlock getDoBlock() {
-    return findChildByClass(NimDoBlock.class);
+  @NotNull
+  public List<NimDoBlock> getDoBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimDoBlock.class);
   }
 
   @Override
@@ -53,14 +53,8 @@ public class NimParImpl extends ASTWrapperPsiElement implements NimPar {
 
   @Override
   @NotNull
-  public List<NimExprColonEqExprList> getExprColonEqExprListList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExprColonEqExprList.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimExtraPostExprBlock> getExtraPostExprBlockList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExtraPostExprBlock.class);
+  public List<NimExprList> getExprListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExprList.class);
   }
 
   @Override
@@ -79,6 +73,12 @@ public class NimParImpl extends ASTWrapperPsiElement implements NimPar {
   @NotNull
   public List<NimOperator> getOperatorList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimOptExprList> getOptExprListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOptExprList.class);
   }
 
   @Override
@@ -121,6 +121,12 @@ public class NimParImpl extends ASTWrapperPsiElement implements NimPar {
   @NotNull
   public List<NimSetOrTableConstr> getSetOrTableConstrList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimSetOrTableConstr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimStmtList> getStmtListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimStmtList.class);
   }
 
   @Override

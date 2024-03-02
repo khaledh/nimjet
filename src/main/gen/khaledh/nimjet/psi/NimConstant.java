@@ -10,26 +10,8 @@ public interface NimConstant extends PsiElement {
   @NotNull
   List<NimComment> getCommentList();
 
-  @NotNull
-  List<NimIdent> getIdentList();
-
-  @Nullable
-  NimOpr getOpr();
-
-  @Nullable
-  NimBuiltInMagics getBuiltInMagics();
-
-  @Nullable
-  NimColonComment getColonComment();
-
   @Nullable
   NimExpr getExpr();
-
-  @NotNull
-  List<NimKeyword> getKeywordList();
-
-  @NotNull
-  List<NimOperator> getOperatorList();
 
   @Nullable
   NimPragma getPragma();

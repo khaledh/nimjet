@@ -34,45 +34,15 @@ public class NimRoutineImpl extends ASTWrapperPsiElement implements NimRoutine {
   }
 
   @Override
-  @NotNull
-  public List<NimIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
-  }
-
-  @Override
-  @Nullable
-  public NimOpr getOpr() {
-    return findChildByClass(NimOpr.class);
-  }
-
-  @Override
-  @Nullable
-  public NimBuiltInMagics getBuiltInMagics() {
-    return findChildByClass(NimBuiltInMagics.class);
-  }
-
-  @Override
   @Nullable
   public NimGenericParamList getGenericParamList() {
     return findChildByClass(NimGenericParamList.class);
   }
 
   @Override
-  @NotNull
-  public List<NimKeyword> getKeywordList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimKeyword.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimOperator> getOperatorList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
-  }
-
-  @Override
-  @NotNull
-  public NimParamListColon getParamListColon() {
-    return findNotNullChildByClass(NimParamListColon.class);
+  @Nullable
+  public NimParamList getParamList() {
+    return findChildByClass(NimParamList.class);
   }
 
   @Override
@@ -91,6 +61,12 @@ public class NimRoutineImpl extends ASTWrapperPsiElement implements NimRoutine {
   @Nullable
   public NimStmtList getStmtList() {
     return findChildByClass(NimStmtList.class);
+  }
+
+  @Override
+  @Nullable
+  public NimTypeDesc getTypeDesc() {
+    return findChildByClass(NimTypeDesc.class);
   }
 
 }

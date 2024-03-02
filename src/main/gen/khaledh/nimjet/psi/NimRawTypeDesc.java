@@ -7,17 +7,20 @@ import com.intellij.psi.PsiElement;
 
 public interface NimRawTypeDesc extends PsiElement {
 
-  @Nullable
-  NimComment getComment();
+  @NotNull
+  List<NimComment> getCommentList();
 
   @Nullable
   NimArrayConstr getArrayConstr();
 
-  @Nullable
-  NimExpr getExpr();
+  @NotNull
+  List<NimDoBlock> getDoBlockList();
 
-  @Nullable
-  NimExprColonEqExprList getExprColonEqExprList();
+  @NotNull
+  List<NimExpr> getExprList();
+
+  @NotNull
+  List<NimExprList> getExprListList();
 
   @Nullable
   NimIdent getIdent();
@@ -27,6 +30,9 @@ public interface NimRawTypeDesc extends PsiElement {
 
   @NotNull
   List<NimOperator> getOperatorList();
+
+  @NotNull
+  List<NimOptExprList> getOptExprListList();
 
   @Nullable
   NimPar getPar();
@@ -42,6 +48,9 @@ public interface NimRawTypeDesc extends PsiElement {
 
   @Nullable
   NimSetOrTableConstr getSetOrTableConstr();
+
+  @NotNull
+  List<NimStmtList> getStmtListList();
 
   @Nullable
   NimTupleConstr getTupleConstr();

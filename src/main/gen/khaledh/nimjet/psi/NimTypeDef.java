@@ -10,23 +10,8 @@ public interface NimTypeDef extends PsiElement {
   @NotNull
   List<NimComment> getCommentList();
 
-  @NotNull
-  List<NimIdent> getIdentList();
-
-  @Nullable
-  NimOpr getOpr();
-
-  @Nullable
-  NimBuiltInMagics getBuiltInMagics();
-
   @Nullable
   NimGenericParamList getGenericParamList();
-
-  @NotNull
-  List<NimKeyword> getKeywordList();
-
-  @NotNull
-  List<NimOperator> getOperatorList();
 
   @Nullable
   NimPragma getPragma();

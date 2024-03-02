@@ -11,25 +11,7 @@ public interface NimParamList extends PsiElement {
   List<NimComment> getCommentList();
 
   @NotNull
-  List<NimIdent> getIdentList();
-
-  @NotNull
-  List<NimOpr> getOprList();
-
-  @NotNull
-  List<NimBuiltInMagics> getBuiltInMagicsList();
-
-  @NotNull
-  List<NimCommaOptcomment> getCommaOptcommentList();
-
-  @NotNull
   List<NimExpr> getExprList();
-
-  @NotNull
-  List<NimKeyword> getKeywordList();
-
-  @NotNull
-  List<NimOperator> getOperatorList();
 
   @NotNull
   List<NimPragma> getPragmaList();

@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface NimTryStmt extends PsiElement {
 
   @NotNull
-  List<NimColonComment> getColonCommentList();
+  List<NimComment> getCommentList();
 
   @NotNull
   List<NimOptExprList> getOptExprListList();

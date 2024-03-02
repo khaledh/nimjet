@@ -29,8 +29,8 @@ public class NimObjectBranchesImpl extends ASTWrapperPsiElement implements NimOb
 
   @Override
   @NotNull
-  public List<NimColonComment> getColonCommentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimColonComment.class);
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
   }
 
   @Override

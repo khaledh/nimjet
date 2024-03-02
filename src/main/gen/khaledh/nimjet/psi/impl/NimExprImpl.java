@@ -47,14 +47,20 @@ public class NimExprImpl extends ASTWrapperPsiElement implements NimExpr {
 
   @Override
   @NotNull
+  public List<NimDoBlock> getDoBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimDoBlock.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimExpr> getExprList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
   }
 
   @Override
   @NotNull
-  public List<NimExprColonEqExprList> getExprColonEqExprListList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExprColonEqExprList.class);
+  public List<NimExprList> getExprListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExprList.class);
   }
 
   @Override
@@ -73,6 +79,12 @@ public class NimExprImpl extends ASTWrapperPsiElement implements NimExpr {
   @NotNull
   public List<NimOperator> getOperatorList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimOptExprList> getOptExprListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOptExprList.class);
   }
 
   @Override
@@ -103,6 +115,12 @@ public class NimExprImpl extends ASTWrapperPsiElement implements NimExpr {
   @NotNull
   public List<NimSetOrTableConstr> getSetOrTableConstrList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimSetOrTableConstr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimStmtList> getStmtListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimStmtList.class);
   }
 
   @Override

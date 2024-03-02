@@ -124,13 +124,13 @@ expr_stmt             ::= <<pmTrySimple simple_expr>>
                           post_expr_blocks?
                         {pin(".*_0")=1}
 
-expr_start            ::= SYMBOL | ACCENT | OPR | NOT | NIL | CAST | IF | FOR | PROC | FUNC | ITERATOR
+private expr_start    ::= SYMBOL | ACCENT | OPR | NOT | NIL | CAST | IF | FOR | PROC | FUNC | ITERATOR
                         | BIND | LPAREN | LBRACKET | LBRACE | VAR | REF | PTR | ENUM | TUPLE | OBJECT
                         | WHEN | CASE | OUT | TRY | BLOCK
                         | literal
                         | built_in_magics
 
-expr_eq_expr          ::= expr (EQUALS expr | do_block extra_post_expr_block*)?
+private expr_eq_expr  ::= expr (EQUALS expr | do_block extra_post_expr_block*)?
 
 private invalid       ::= INVALID_SYMBOL
 
@@ -182,9 +182,12 @@ ident_colon_equals_1  ::= <<list <<p>> (COMMA optind)>> comma_optcomment?
                           <<and_or colon_type_desc (EQUALS optind expr)>>
                           {pin(".*")=1}
 
+private
 comma_optcomment      ::= COMMA COMMENT?
 
+private
 colon_body            ::= colon_comment stmt_list post_expr_blocks?
+private
 colon_comment         ::= COLON COMMENT? {pin=1}
 
 private
@@ -245,6 +248,7 @@ concept_decl          ::= CONCEPT <<optlist concept_param COMMA>> (pragma)? (OF 
                           <<indented stmt_list>>
 concept_param         ::= (VAR | OUT)? SYMBOL
 
+private
 decl_colon_equals     ::= <<list ident_with_pragma COMMA>> COMMA?
                           (COLON optind type_desc_expr)? (EQUALS optind expr)?
                           {pin(".*_0")=1}
@@ -253,17 +257,12 @@ routine               ::= optind ident_vis pattern? generic_param_list?
                           param_list_colon pragma? (EQUALS COMMENT? stmt_list)? ind_and_comment
                           {pin(".*_0")=1}
 
-
-
 private
 ident_with_pragma     ::= ident_vis pragma?
-
 private
 ident_dot_with_pragma ::= ident_vis_dot pragma?
-
 private
 ident_vis             ::= SYMBOL OPR?  // postfix position
-
 private
 ident_vis_dot         ::= ident_vis (DOT dot_suffix)?
 
@@ -304,6 +303,7 @@ operator              ::= OPR | OP3_KW | OP4_KW | OP5_KW | OP9_KW | DOTDOT
 pattern               ::= LBRACE stmt_list RBRACE
                         {pin=1}
 
+private
 param_list_colon      ::= param_list? (COLON optind type_desc)? {pin(".*")="COLON"}
 param_list            ::= LPAREN optind
                           <<trllist <<ident_colon_equals_0 ident_with_pragma>> ((COMMA | SEMICOLON) COMMENT?)>>
@@ -312,22 +312,26 @@ param_list            ::= LPAREN optind
 
 pragma                ::= LBRACE_DOT optind (expr_colon_eq_expr COMMA?)* optpar (DOT_RBRACE | RBRACE) {pin=1}
 
+private
 expr_colon_eq_expr    ::= expr ( (COLON | EQUALS) expr
                                | do_block extra_post_expr_block*
                                )?
                           {pin(".*_1_0_0")=1}
+private
 expr_colon_eq_expr_list ::= optpar <<optlist expr_colon_eq_expr (COMMA optind)>> COMMA? optpar
 
 do_block              ::= DO param_list_arrow pragma? colon_comment stmt_list {pin=1}
 
 param_list_arrow      ::= param_list? (OP_ARROW optind type_desc)?
 
+private
 extra_post_expr_block ::= ( INDEQ do_block
                           | INDEQ OF expr_list COLON stmt_list
                           | INDEQ ELIF expr COLON stmt_list
                           | INDEQ EXCEPT opt_expr_list COLON stmt_list
                           | INDEQ FINALLY COLON stmt_list
                           | INDEQ ELSE COLON stmt_list )
+private
 post_expr_blocks      ::= &INDNONE (do_block | COLON (extra_post_expr_block | stmt_list)) extra_post_expr_block*
 
 

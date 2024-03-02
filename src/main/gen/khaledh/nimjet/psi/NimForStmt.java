@@ -7,26 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public interface NimForStmt extends PsiElement {
 
-  @NotNull
-  List<NimIdent> getIdentList();
-
-  @NotNull
-  List<NimOpr> getOprList();
-
-  @NotNull
-  List<NimBuiltInMagics> getBuiltInMagicsList();
-
   @Nullable
-  NimColonComment getColonComment();
+  NimComment getComment();
 
   @Nullable
   NimExpr getExpr();
-
-  @NotNull
-  List<NimKeyword> getKeywordList();
-
-  @NotNull
-  List<NimOperator> getOperatorList();
 
   @NotNull
   List<NimPragma> getPragmaList();

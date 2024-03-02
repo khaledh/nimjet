@@ -11,13 +11,10 @@ public interface NimTupleTypeBracket extends PsiElement {
   List<NimComment> getCommentList();
 
   @NotNull
-  List<NimIdent> getIdentList();
-
-  @NotNull
-  List<NimCommaOptcomment> getCommaOptcommentList();
-
-  @NotNull
   List<NimExpr> getExprList();
+
+  @NotNull
+  List<NimIdent> getIdentList();
 
   @NotNull
   List<NimTypeDesc> getTypeDescList();

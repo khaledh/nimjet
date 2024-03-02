@@ -11,9 +11,6 @@ public interface NimObjectWhen extends PsiElement {
   List<NimComment> getCommentList();
 
   @NotNull
-  List<NimColonComment> getColonCommentList();
-
-  @NotNull
   List<NimExpr> getExprList();
 
   @NotNull

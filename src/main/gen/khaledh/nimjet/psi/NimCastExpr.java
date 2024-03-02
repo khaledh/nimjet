@@ -11,9 +11,6 @@ public interface NimCastExpr extends NimExpr {
   List<NimComment> getCommentList();
 
   @Nullable
-  NimExpr getExpr();
-
-  @Nullable
   NimTypeDesc getTypeDesc();
 
 }

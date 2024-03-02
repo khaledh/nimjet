@@ -5,30 +5,36 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimDeclColonEquals extends PsiElement {
+public interface NimVariable extends PsiElement {
 
   @NotNull
   List<NimComment> getCommentList();
 
   @NotNull
-  List<NimIdent> getIdentList();
+  List<NimDoBlock> getDoBlockList();
 
   @NotNull
-  List<NimOpr> getOprList();
-
-  @NotNull
-  List<NimBuiltInMagics> getBuiltInMagicsList();
+  List<NimDotSuffix> getDotSuffixList();
 
   @NotNull
   List<NimExpr> getExprList();
 
   @NotNull
-  List<NimKeyword> getKeywordList();
+  List<NimExprList> getExprListList();
 
   @NotNull
-  List<NimOperator> getOperatorList();
+  List<NimOptExprList> getOptExprListList();
 
   @NotNull
   List<NimPragma> getPragmaList();
+
+  @NotNull
+  List<NimStmtList> getStmtListList();
+
+  @Nullable
+  NimTypeDesc getTypeDesc();
+
+  @Nullable
+  NimVarTuple getVarTuple();
 
 }

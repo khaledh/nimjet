@@ -8,15 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface NimRoutineExpr extends NimExpr {
 
   @Nullable
-  NimComment getComment();
-
-  @NotNull
-  NimParamListColon getParamListColon();
+  NimParamList getParamList();
 
   @Nullable
   NimPragma getPragma();
 
   @Nullable
   NimStmtList getStmtList();
+
+  @Nullable
+  NimTypeDesc getTypeDesc();
 
 }

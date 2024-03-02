@@ -8,6 +8,18 @@ import com.intellij.psi.PsiElement;
 public interface NimCommandParamExtra extends PsiElement {
 
   @NotNull
-  NimExprEqExpr getExprEqExpr();
+  List<NimDoBlock> getDoBlockList();
+
+  @NotNull
+  List<NimExpr> getExprList();
+
+  @NotNull
+  List<NimExprList> getExprListList();
+
+  @NotNull
+  List<NimOptExprList> getOptExprListList();
+
+  @NotNull
+  List<NimStmtList> getStmtListList();
 
 }

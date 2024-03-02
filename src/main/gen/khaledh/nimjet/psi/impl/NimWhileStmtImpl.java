@@ -29,8 +29,8 @@ public class NimWhileStmtImpl extends ASTWrapperPsiElement implements NimWhileSt
 
   @Override
   @Nullable
-  public NimColonComment getColonComment() {
-    return findChildByClass(NimColonComment.class);
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
   }
 
   @Override

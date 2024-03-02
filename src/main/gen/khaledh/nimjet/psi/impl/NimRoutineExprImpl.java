@@ -29,14 +29,8 @@ public class NimRoutineExprImpl extends NimExprImpl implements NimRoutineExpr {
 
   @Override
   @Nullable
-  public NimComment getComment() {
-    return findChildByClass(NimComment.class);
-  }
-
-  @Override
-  @NotNull
-  public NimParamListColon getParamListColon() {
-    return findNotNullChildByClass(NimParamListColon.class);
+  public NimParamList getParamList() {
+    return findChildByClass(NimParamList.class);
   }
 
   @Override
@@ -49,6 +43,12 @@ public class NimRoutineExprImpl extends NimExprImpl implements NimRoutineExpr {
   @Nullable
   public NimStmtList getStmtList() {
     return findChildByClass(NimStmtList.class);
+  }
+
+  @Override
+  @Nullable
+  public NimTypeDesc getTypeDesc() {
+    return findChildByClass(NimTypeDesc.class);
   }
 
 }

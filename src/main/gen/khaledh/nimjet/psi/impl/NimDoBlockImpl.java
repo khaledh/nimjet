@@ -29,8 +29,8 @@ public class NimDoBlockImpl extends ASTWrapperPsiElement implements NimDoBlock {
 
   @Override
   @Nullable
-  public NimColonComment getColonComment() {
-    return findChildByClass(NimColonComment.class);
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
   }
 
   @Override

@@ -7,11 +7,8 @@ import com.intellij.psi.PsiElement;
 
 public interface NimCondStmt extends PsiElement {
 
-  @Nullable
-  NimComment getComment();
-
   @NotNull
-  List<NimColonComment> getColonCommentList();
+  List<NimComment> getCommentList();
 
   @NotNull
   List<NimExpr> getExprList();

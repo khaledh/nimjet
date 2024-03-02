@@ -8,9 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface NimRoutineType extends PsiElement {
 
   @Nullable
-  NimParamListColon getParamListColon();
+  NimComment getComment();
+
+  @Nullable
+  NimParamList getParamList();
 
   @Nullable
   NimPragma getPragma();
+
+  @Nullable
+  NimTypeDesc getTypeDesc();
 
 }

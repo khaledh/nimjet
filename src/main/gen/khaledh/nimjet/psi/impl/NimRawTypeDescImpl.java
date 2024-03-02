@@ -28,9 +28,9 @@ public class NimRawTypeDescImpl extends ASTWrapperPsiElement implements NimRawTy
   }
 
   @Override
-  @Nullable
-  public NimComment getComment() {
-    return findChildByClass(NimComment.class);
+  @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
   }
 
   @Override
@@ -40,15 +40,21 @@ public class NimRawTypeDescImpl extends ASTWrapperPsiElement implements NimRawTy
   }
 
   @Override
-  @Nullable
-  public NimExpr getExpr() {
-    return findChildByClass(NimExpr.class);
+  @NotNull
+  public List<NimDoBlock> getDoBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimDoBlock.class);
   }
 
   @Override
-  @Nullable
-  public NimExprColonEqExprList getExprColonEqExprList() {
-    return findChildByClass(NimExprColonEqExprList.class);
+  @NotNull
+  public List<NimExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimExprList> getExprListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExprList.class);
   }
 
   @Override
@@ -67,6 +73,12 @@ public class NimRawTypeDescImpl extends ASTWrapperPsiElement implements NimRawTy
   @NotNull
   public List<NimOperator> getOperatorList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimOptExprList> getOptExprListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOptExprList.class);
   }
 
   @Override
@@ -97,6 +109,12 @@ public class NimRawTypeDescImpl extends ASTWrapperPsiElement implements NimRawTy
   @Nullable
   public NimSetOrTableConstr getSetOrTableConstr() {
     return findChildByClass(NimSetOrTableConstr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimStmtList> getStmtListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimStmtList.class);
   }
 
   @Override

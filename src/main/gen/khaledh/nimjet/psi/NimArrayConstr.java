@@ -7,10 +7,22 @@ import com.intellij.psi.PsiElement;
 
 public interface NimArrayConstr extends PsiElement {
 
-  @Nullable
-  NimComment getComment();
+  @NotNull
+  List<NimComment> getCommentList();
 
-  @Nullable
-  NimExprColonEqExprList getExprColonEqExprList();
+  @NotNull
+  List<NimDoBlock> getDoBlockList();
+
+  @NotNull
+  List<NimExpr> getExprList();
+
+  @NotNull
+  List<NimExprList> getExprListList();
+
+  @NotNull
+  List<NimOptExprList> getOptExprListList();
+
+  @NotNull
+  List<NimStmtList> getStmtListList();
 
 }

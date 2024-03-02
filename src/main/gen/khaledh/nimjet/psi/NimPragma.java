@@ -11,6 +11,18 @@ public interface NimPragma extends PsiElement {
   NimComment getComment();
 
   @NotNull
+  List<NimDoBlock> getDoBlockList();
+
+  @NotNull
   List<NimExpr> getExprList();
+
+  @NotNull
+  List<NimExprList> getExprListList();
+
+  @NotNull
+  List<NimOptExprList> getOptExprListList();
+
+  @NotNull
+  List<NimStmtList> getStmtListList();
 
 }

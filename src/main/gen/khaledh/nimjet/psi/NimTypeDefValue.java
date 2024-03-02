@@ -16,6 +16,9 @@ public interface NimTypeDefValue extends PsiElement {
   @Nullable
   NimConceptDecl getConceptDecl();
 
+  @NotNull
+  List<NimDoBlock> getDoBlockList();
+
   @Nullable
   NimEnumDecl getEnumDecl();
 
@@ -23,7 +26,7 @@ public interface NimTypeDefValue extends PsiElement {
   List<NimExpr> getExprList();
 
   @NotNull
-  List<NimExprColonEqExprList> getExprColonEqExprListList();
+  List<NimExprList> getExprListList();
 
   @NotNull
   List<NimIdent> getIdentList();
@@ -38,10 +41,10 @@ public interface NimTypeDefValue extends PsiElement {
   List<NimOperator> getOperatorList();
 
   @NotNull
-  List<NimPar> getParList();
+  List<NimOptExprList> getOptExprListList();
 
-  @Nullable
-  NimPostExprBlocks getPostExprBlocks();
+  @NotNull
+  List<NimPar> getParList();
 
   @Nullable
   NimPragma getPragma();
@@ -54,6 +57,9 @@ public interface NimTypeDefValue extends PsiElement {
 
   @NotNull
   List<NimSetOrTableConstr> getSetOrTableConstrList();
+
+  @NotNull
+  List<NimStmtList> getStmtListList();
 
   @NotNull
   List<NimTupleConstr> getTupleConstrList();

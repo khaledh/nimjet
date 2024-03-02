@@ -35,20 +35,14 @@ public class NimTupleTypeBracketImpl extends ASTWrapperPsiElement implements Nim
 
   @Override
   @NotNull
-  public List<NimIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimCommaOptcomment> getCommaOptcommentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimCommaOptcomment.class);
-  }
-
-  @Override
-  @NotNull
   public List<NimExpr> getExprList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
   }
 
   @Override

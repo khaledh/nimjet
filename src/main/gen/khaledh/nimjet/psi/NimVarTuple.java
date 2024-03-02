@@ -11,30 +11,9 @@ public interface NimVarTuple extends PsiElement {
   List<NimComment> getCommentList();
 
   @NotNull
-  List<NimIdent> getIdentList();
-
-  @NotNull
-  List<NimOpr> getOprList();
-
-  @NotNull
-  List<NimBuiltInMagics> getBuiltInMagicsList();
-
-  @NotNull
-  NimExpr getExpr();
-
-  @NotNull
-  List<NimKeyword> getKeywordList();
-
-  @NotNull
-  List<NimOperator> getOperatorList();
-
-  @Nullable
-  NimPostExprBlocks getPostExprBlocks();
-
-  @NotNull
   List<NimPragma> getPragmaList();
 
-  @Nullable
-  NimTypeDesc getTypeDesc();
+  @NotNull
+  List<NimVarTuple> getVarTupleList();
 
 }

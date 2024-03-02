@@ -28,15 +28,15 @@ public class NimObjectPartItemImpl extends ASTWrapperPsiElement implements NimOb
   }
 
   @Override
-  @Nullable
-  public NimComment getComment() {
-    return findChildByClass(NimComment.class);
+  @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
   }
 
   @Override
-  @Nullable
-  public NimDeclColonEquals getDeclColonEquals() {
-    return findChildByClass(NimDeclColonEquals.class);
+  @NotNull
+  public List<NimExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
   }
 
   @Override
@@ -49,6 +49,12 @@ public class NimObjectPartItemImpl extends ASTWrapperPsiElement implements NimOb
   @Nullable
   public NimObjectWhen getObjectWhen() {
     return findChildByClass(NimObjectWhen.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimPragma> getPragmaList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPragma.class);
   }
 
 }

@@ -29,14 +29,26 @@ public class NimRoutineTypeImpl extends ASTWrapperPsiElement implements NimRouti
 
   @Override
   @Nullable
-  public NimParamListColon getParamListColon() {
-    return findChildByClass(NimParamListColon.class);
+  public NimComment getComment() {
+    return findChildByClass(NimComment.class);
+  }
+
+  @Override
+  @Nullable
+  public NimParamList getParamList() {
+    return findChildByClass(NimParamList.class);
   }
 
   @Override
   @Nullable
   public NimPragma getPragma() {
     return findChildByClass(NimPragma.class);
+  }
+
+  @Override
+  @Nullable
+  public NimTypeDesc getTypeDesc() {
+    return findChildByClass(NimTypeDesc.class);
   }
 
 }

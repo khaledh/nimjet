@@ -8,15 +8,15 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static khaledh.nimjet.psi.NimElementTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimCommandExprImpl extends NimExprImpl implements NimCommandExpr {
+public class NimCommandExprImpl extends ASTWrapperPsiElement implements NimCommandExpr {
 
   public NimCommandExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
-  @Override
   public void accept(@NotNull NimVisitor visitor) {
     visitor.visitCommandExpr(this);
   }

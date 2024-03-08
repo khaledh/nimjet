@@ -8,15 +8,15 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static khaledh.nimjet.psi.NimElementTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimCaseStmtImpl extends ASTWrapperPsiElement implements NimCaseStmt {
+public class NimCaseStmtImpl extends NimExprImpl implements NimCaseStmt {
 
   public NimCaseStmtImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull NimVisitor visitor) {
     visitor.visitCaseStmt(this);
   }

@@ -5,31 +5,24 @@ import khaledh.nimjet.psi.NimNamedElement
 import khaledh.nimjet.psi.NimElementTypes
 import com.intellij.lang.ASTNode
 import com.intellij.navigation.ItemPresentation
+import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiReference
+import khaledh.nimjet.psi.NimIdent
+import khaledh.nimjet.psi.NimIdentReference
 import javax.swing.Icon
 
 class NimPsiImplUtil {
 
     companion object {
-//        @JvmStatic
-//        fun getKey(element: NimProperty): String? {
-//            val keyNode: ASTNode? = element.node.findChildByType(NimTypes.KEY)
-//            //  convert escaped spaces to simple spaces
-//            return keyNode?.text?.replace("\\ ", " ")
-//        }
-//
-//        @JvmStatic
-//        fun getValue(element: NimProperty): String? {
-//            val valueNode: ASTNode? = element.node.findChildByType(NimTypes.VALUE)
-//            return valueNode?.text
-//        }
 
         @JvmStatic
         fun getName(element: NimNamedElement): String {
-            return element.node.findChildByType(NimElementTypes.IDENT)?.text ?: ""
+            return element.text
         }
 
         @JvmStatic
+        @Suppress("UNUSED_PARAMETER")
         fun setName(element: NimNamedElement, newName: String): PsiElement {
 //            val node: ASTNode = element.node.findChildByType(NimTypes.ID)!!
 //            if (node != null) {
@@ -41,8 +34,13 @@ class NimPsiImplUtil {
         }
 
         @JvmStatic
-        fun getNameIdentifier(element: NimNamedElement): ASTNode {
-            return element.node.findChildByType(NimElementTypes.IDENT)!!
+        fun getNameIdentifier(element: NimNamedElement): PsiElement {
+            return element
+        }
+
+        @JvmStatic
+        fun getReference(element: NimIdent): PsiReference {
+            return NimIdentReference(element, TextRange(0, element.textLength))
         }
 
         @JvmStatic

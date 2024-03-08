@@ -5,10 +5,25 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimCastExpr extends NimExpr {
+public interface NimCastExpr extends PsiElement {
 
   @NotNull
   List<NimComment> getCommentList();
+
+  @NotNull
+  List<NimDoBlock> getDoBlockList();
+
+  @NotNull
+  List<NimExpr> getExprList();
+
+  @NotNull
+  List<NimExprList> getExprListList();
+
+  @NotNull
+  List<NimOptExprList> getOptExprListList();
+
+  @NotNull
+  List<NimStmtList> getStmtListList();
 
   @Nullable
   NimTypeDesc getTypeDesc();

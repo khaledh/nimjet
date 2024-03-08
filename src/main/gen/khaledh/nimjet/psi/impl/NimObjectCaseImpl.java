@@ -34,9 +34,15 @@ public class NimObjectCaseImpl extends ASTWrapperPsiElement implements NimObject
   }
 
   @Override
+  @Nullable
+  public NimExpr getExpr() {
+    return findChildByClass(NimExpr.class);
+  }
+
+  @Override
   @NotNull
-  public List<NimExpr> getExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
   }
 
   @Override
@@ -49,6 +55,12 @@ public class NimObjectCaseImpl extends ASTWrapperPsiElement implements NimObject
   @NotNull
   public List<NimPragma> getPragmaList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPragma.class);
+  }
+
+  @Override
+  @Nullable
+  public NimTypeDescExpr getTypeDescExpr() {
+    return findChildByClass(NimTypeDescExpr.class);
   }
 
 }

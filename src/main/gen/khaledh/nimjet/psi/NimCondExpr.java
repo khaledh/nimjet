@@ -5,7 +5,10 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimCondExpr extends NimExpr {
+public interface NimCondExpr extends PsiElement {
+
+  @NotNull
+  List<NimComment> getCommentList();
 
   @NotNull
   List<NimExpr> getExprList();

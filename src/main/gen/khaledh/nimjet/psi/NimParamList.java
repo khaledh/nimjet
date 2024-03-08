@@ -14,6 +14,9 @@ public interface NimParamList extends PsiElement {
   List<NimExpr> getExprList();
 
   @NotNull
+  List<NimIdent> getIdentList();
+
+  @NotNull
   List<NimPragma> getPragmaList();
 
   @NotNull

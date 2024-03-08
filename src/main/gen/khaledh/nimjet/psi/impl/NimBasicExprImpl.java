@@ -10,33 +10,21 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static khaledh.nimjet.psi.NimElementTypes.*;
 import khaledh.nimjet.psi.*;
 
-public class NimPlusExprImpl extends NimBasicExprImpl implements NimPlusExpr {
+public abstract class NimBasicExprImpl extends NimExprImpl implements NimBasicExpr {
 
-  public NimPlusExprImpl(@NotNull ASTNode node) {
+  public NimBasicExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   @Override
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitPlusExpr(this);
+    visitor.visitBasicExpr(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof NimVisitor) accept((NimVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public NimComment getComment() {
-    return findChildByClass(NimComment.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimBasicExpr> getBasicExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimBasicExpr.class);
   }
 
 }

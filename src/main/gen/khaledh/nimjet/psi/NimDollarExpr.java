@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimDollarExpr extends NimExpr {
+public interface NimDollarExpr extends NimBasicExpr {
+
+  @Nullable
+  NimComment getComment();
 
   @NotNull
-  List<NimComment> getCommentList();
+  List<NimBasicExpr> getBasicExprList();
 
 }

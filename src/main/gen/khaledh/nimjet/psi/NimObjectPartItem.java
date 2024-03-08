@@ -10,8 +10,11 @@ public interface NimObjectPartItem extends PsiElement {
   @NotNull
   List<NimComment> getCommentList();
 
+  @Nullable
+  NimExpr getExpr();
+
   @NotNull
-  List<NimExpr> getExprList();
+  List<NimIdent> getIdentList();
 
   @Nullable
   NimObjectCase getObjectCase();
@@ -21,5 +24,8 @@ public interface NimObjectPartItem extends PsiElement {
 
   @NotNull
   List<NimPragma> getPragmaList();
+
+  @Nullable
+  NimTypeDescExpr getTypeDescExpr();
 
 }

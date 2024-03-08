@@ -29,14 +29,14 @@ public class NimTypeDescImpl extends ASTWrapperPsiElement implements NimTypeDesc
 
   @Override
   @Nullable
-  public NimExpr getExpr() {
-    return findChildByClass(NimExpr.class);
+  public NimRawTypeDesc getRawTypeDesc() {
+    return findChildByClass(NimRawTypeDesc.class);
   }
 
   @Override
   @Nullable
-  public NimRawTypeDesc getRawTypeDesc() {
-    return findChildByClass(NimRawTypeDesc.class);
+  public NimTypeDescExpr getTypeDescExpr() {
+    return findChildByClass(NimTypeDescExpr.class);
   }
 
 }

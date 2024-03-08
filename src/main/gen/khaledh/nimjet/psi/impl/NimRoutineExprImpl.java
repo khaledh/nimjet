@@ -8,15 +8,15 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static khaledh.nimjet.psi.NimElementTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimRoutineExprImpl extends NimExprImpl implements NimRoutineExpr {
+public class NimRoutineExprImpl extends ASTWrapperPsiElement implements NimRoutineExpr {
 
   public NimRoutineExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
-  @Override
   public void accept(@NotNull NimVisitor visitor) {
     visitor.visitRoutineExpr(this);
   }
@@ -25,6 +25,12 @@ public class NimRoutineExprImpl extends NimExprImpl implements NimRoutineExpr {
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof NimVisitor) accept((NimVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public List<NimComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimComment.class);
   }
 
   @Override

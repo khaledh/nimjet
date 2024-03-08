@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static khaledh.nimjet.psi.NimElementTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
 
-public class NimPlusExprImpl extends NimBasicExprImpl implements NimPlusExpr {
+public class NimVarSectionImpl extends ASTWrapperPsiElement implements NimVarSection {
 
-  public NimPlusExprImpl(@NotNull ASTNode node) {
+  public NimVarSectionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
-  @Override
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitPlusExpr(this);
+    visitor.visitVarSection(this);
   }
 
   @Override
@@ -34,9 +34,15 @@ public class NimPlusExprImpl extends NimBasicExprImpl implements NimPlusExpr {
   }
 
   @Override
-  @NotNull
-  public List<NimBasicExpr> getBasicExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimBasicExpr.class);
+  @Nullable
+  public NimIdentDefs getIdentDefs() {
+    return findChildByClass(NimIdentDefs.class);
+  }
+
+  @Override
+  @Nullable
+  public NimVarTuple getVarTuple() {
+    return findChildByClass(NimVarTuple.class);
   }
 
 }

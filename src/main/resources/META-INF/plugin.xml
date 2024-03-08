@@ -54,9 +54,13 @@
 <!--          language="Nim"-->
 <!--          implementationClass="khaledh.nimjet.NimFormattingModelBuilder"/>-->
 
-      <completion.contributor
+<!--      <completion.contributor-->
+<!--          language="Nim"-->
+<!--          implementationClass="khaledh.nimjet.NimCompletionContributor"/>-->
+
+      <lang.findUsagesProvider
           language="Nim"
-          implementationClass="khaledh.nimjet.NimCompletionContributor"/>
+          implementationClass="khaledh.nimjet.NimFindUsagesProvider"/>
 
       <additionalTextAttributes
           scheme="Default"

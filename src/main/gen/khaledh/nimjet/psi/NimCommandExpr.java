@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NimCommandExpr extends NimExpr {
+public interface NimCommandExpr extends PsiElement {
 
   @NotNull
   NimCommandParamFirst getCommandParamFirst();

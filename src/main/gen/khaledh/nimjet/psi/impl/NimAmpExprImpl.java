@@ -10,15 +10,15 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static khaledh.nimjet.psi.NimElementTypes.*;
 import khaledh.nimjet.psi.*;
 
-public class NimPlusExprImpl extends NimBasicExprImpl implements NimPlusExpr {
+public class NimAmpExprImpl extends NimBasicExprImpl implements NimAmpExpr {
 
-  public NimPlusExprImpl(@NotNull ASTNode node) {
+  public NimAmpExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   @Override
   public void accept(@NotNull NimVisitor visitor) {
-    visitor.visitPlusExpr(this);
+    visitor.visitAmpExpr(this);
   }
 
   @Override

@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static khaledh.nimjet.psi.NimElementTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import khaledh.nimjet.psi.*;
+import com.intellij.psi.PsiReference;
 
-public class NimIdentImpl extends ASTWrapperPsiElement implements NimIdent {
+public class NimIdentImpl extends NimNamedElementImpl implements NimIdent {
 
   public NimIdentImpl(@NotNull ASTNode node) {
     super(node);
@@ -55,6 +55,18 @@ public class NimIdentImpl extends ASTWrapperPsiElement implements NimIdent {
   @NotNull
   public PsiElement setName(@NotNull String newName) {
     return NimPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getNameIdentifier() {
+    return NimPsiImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  @NotNull
+  public PsiReference getReference() {
+    return NimPsiImplUtil.getReference(this);
   }
 
 }

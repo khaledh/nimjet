@@ -15,12 +15,32 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitAmpExpr(@NotNull NimAmpExpr o) {
+    visitBasicExpr(o);
+  }
+
+  public void visitAndExpr(@NotNull NimAndExpr o) {
+    visitBasicExpr(o);
+  }
+
   public void visitArrayConstr(@NotNull NimArrayConstr o) {
     visitPsiElement(o);
   }
 
+  public void visitArrowExpr(@NotNull NimArrowExpr o) {
+    visitBasicExpr(o);
+  }
+
   public void visitAsmStmt(@NotNull NimAsmStmt o) {
     visitPsiElement(o);
+  }
+
+  public void visitAssignExpr(@NotNull NimAssignExpr o) {
+    visitBasicExpr(o);
+  }
+
+  public void visitBasicExpr(@NotNull NimBasicExpr o) {
+    visitExpr(o);
   }
 
   public void visitBlockExpr(@NotNull NimBlockExpr o) {
@@ -44,19 +64,23 @@ public class NimVisitor extends PsiElementVisitor {
   }
 
   public void visitCaseStmt(@NotNull NimCaseStmt o) {
-    visitPsiElement(o);
+    visitExpr(o);
   }
 
   public void visitCastExpr(@NotNull NimCastExpr o) {
-    visitExpr(o);
+    visitPsiElement(o);
   }
 
   public void visitCmdStart(@NotNull NimCmdStart o) {
     visitPsiElement(o);
   }
 
+  public void visitCmpExpr(@NotNull NimCmpExpr o) {
+    visitBasicExpr(o);
+  }
+
   public void visitCommandExpr(@NotNull NimCommandExpr o) {
-    visitExpr(o);
+    visitPsiElement(o);
   }
 
   public void visitCommandParamExtra(@NotNull NimCommandParamExtra o) {
@@ -80,7 +104,7 @@ public class NimVisitor extends PsiElementVisitor {
   }
 
   public void visitCondExpr(@NotNull NimCondExpr o) {
-    visitExpr(o);
+    visitPsiElement(o);
   }
 
   public void visitCondStmt(@NotNull NimCondStmt o) {
@@ -105,6 +129,10 @@ public class NimVisitor extends PsiElementVisitor {
 
   public void visitDoBlock(@NotNull NimDoBlock o) {
     visitPsiElement(o);
+  }
+
+  public void visitDollarExpr(@NotNull NimDollarExpr o) {
+    visitBasicExpr(o);
   }
 
   public void visitDotSuffix(@NotNull NimDotSuffix o) {
@@ -155,6 +183,10 @@ public class NimVisitor extends PsiElementVisitor {
     visitNamedElement(o);
   }
 
+  public void visitIdentDefs(@NotNull NimIdentDefs o) {
+    visitPsiElement(o);
+  }
+
   public void visitIfExpr(@NotNull NimIfExpr o) {
     visitExpr(o);
   }
@@ -177,6 +209,10 @@ public class NimVisitor extends PsiElementVisitor {
 
   public void visitLiteral(@NotNull NimLiteral o) {
     visitPsiElement(o);
+  }
+
+  public void visitMulExpr(@NotNull NimMulExpr o) {
+    visitBasicExpr(o);
   }
 
   public void visitNamedParams(@NotNull NimNamedParams o) {
@@ -231,6 +267,10 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitOrExpr(@NotNull NimOrExpr o) {
+    visitBasicExpr(o);
+  }
+
   public void visitPar(@NotNull NimPar o) {
     visitPsiElement(o);
   }
@@ -255,12 +295,20 @@ public class NimVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPlusExpr(@NotNull NimPlusExpr o) {
+    visitBasicExpr(o);
+  }
+
   public void visitPragma(@NotNull NimPragma o) {
     visitPsiElement(o);
   }
 
   public void visitPragmaStmt(@NotNull NimPragmaStmt o) {
     visitPsiElement(o);
+  }
+
+  public void visitPrimaryExpr(@NotNull NimPrimaryExpr o) {
+    visitBasicExpr(o);
   }
 
   public void visitPrimarySuffix(@NotNull NimPrimarySuffix o) {
@@ -284,7 +332,7 @@ public class NimVisitor extends PsiElementVisitor {
   }
 
   public void visitRoutineExpr(@NotNull NimRoutineExpr o) {
-    visitExpr(o);
+    visitPsiElement(o);
   }
 
   public void visitRoutineType(@NotNull NimRoutineType o) {
@@ -297,6 +345,14 @@ public class NimVisitor extends PsiElementVisitor {
 
   public void visitSetOrTableConstr(@NotNull NimSetOrTableConstr o) {
     visitPsiElement(o);
+  }
+
+  public void visitSimpleExpr(@NotNull NimSimpleExpr o) {
+    visitBasicExpr(o);
+  }
+
+  public void visitSliceExpr(@NotNull NimSliceExpr o) {
+    visitBasicExpr(o);
   }
 
   public void visitStaticStmt(@NotNull NimStaticStmt o) {
@@ -344,14 +400,14 @@ public class NimVisitor extends PsiElementVisitor {
   }
 
   public void visitTypeDescExpr(@NotNull NimTypeDescExpr o) {
-    visitExpr(o);
-  }
-
-  public void visitVarTuple(@NotNull NimVarTuple o) {
     visitPsiElement(o);
   }
 
-  public void visitVariable(@NotNull NimVariable o) {
+  public void visitVarSection(@NotNull NimVarSection o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVarTuple(@NotNull NimVarTuple o) {
     visitPsiElement(o);
   }
 

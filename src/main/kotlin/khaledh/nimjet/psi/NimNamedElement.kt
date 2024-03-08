@@ -1,5 +1,5 @@
 package khaledh.nimjet.psi
 
-import com.intellij.psi.PsiNamedElement
+import com.intellij.psi.PsiNameIdentifierOwner
 
-interface NimNamedElement : PsiNamedElement
+interface NimNamedElement : PsiNameIdentifierOwner

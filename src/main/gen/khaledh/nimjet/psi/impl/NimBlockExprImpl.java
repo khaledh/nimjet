@@ -28,27 +28,9 @@ public class NimBlockExprImpl extends NimExprImpl implements NimBlockExpr {
   }
 
   @Override
-  @NotNull
-  public List<NimIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
-  }
-
-  @Override
   @Nullable
   public NimComment getComment() {
     return findChildByClass(NimComment.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimKeyword> getKeywordList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimKeyword.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NimOperator> getOperatorList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOperator.class);
   }
 
   @Override

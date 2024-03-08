@@ -41,6 +41,12 @@ public class NimConstantImpl extends ASTWrapperPsiElement implements NimConstant
 
   @Override
   @Nullable
+  public NimIdent getIdent() {
+    return findChildByClass(NimIdent.class);
+  }
+
+  @Override
+  @Nullable
   public NimPragma getPragma() {
     return findChildByClass(NimPragma.class);
   }

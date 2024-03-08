@@ -13,6 +13,9 @@ public interface NimTypeDef extends PsiElement {
   @Nullable
   NimGenericParamList getGenericParamList();
 
+  @NotNull
+  NimIdent getIdent();
+
   @Nullable
   NimPragma getPragma();
 

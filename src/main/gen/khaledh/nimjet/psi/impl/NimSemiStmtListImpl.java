@@ -53,12 +53,6 @@ public class NimSemiStmtListImpl extends ASTWrapperPsiElement implements NimSemi
 
   @Override
   @NotNull
-  public List<NimCaseStmt> getCaseStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimCaseStmt.class);
-  }
-
-  @Override
-  @NotNull
   public List<NimCommentStmt> getCommentStmtList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimCommentStmt.class);
   }
@@ -94,9 +88,9 @@ public class NimSemiStmtListImpl extends ASTWrapperPsiElement implements NimSemi
   }
 
   @Override
-  @Nullable
-  public NimExpr getExpr() {
-    return findChildByClass(NimExpr.class);
+  @NotNull
+  public List<NimExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
   }
 
   @Override

@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface NimTypeDesc extends PsiElement {
 
   @Nullable
-  NimExpr getExpr();
+  NimRawTypeDesc getRawTypeDesc();
 
   @Nullable
-  NimRawTypeDesc getRawTypeDesc();
+  NimTypeDescExpr getTypeDescExpr();
 
 }

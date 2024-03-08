@@ -40,6 +40,12 @@ public class NimTypeDefImpl extends ASTWrapperPsiElement implements NimTypeDef {
   }
 
   @Override
+  @NotNull
+  public NimIdent getIdent() {
+    return findNotNullChildByClass(NimIdent.class);
+  }
+
+  @Override
   @Nullable
   public NimPragma getPragma() {
     return findChildByClass(NimPragma.class);

@@ -20,9 +20,6 @@ public interface NimSemiStmtList extends PsiElement {
   List<NimBreakStmt> getBreakStmtList();
 
   @NotNull
-  List<NimCaseStmt> getCaseStmtList();
-
-  @NotNull
   List<NimCommentStmt> getCommentStmtList();
 
   @NotNull
@@ -40,8 +37,8 @@ public interface NimSemiStmtList extends PsiElement {
   @NotNull
   List<NimExportStmt> getExportStmtList();
 
-  @Nullable
-  NimExpr getExpr();
+  @NotNull
+  List<NimExpr> getExprList();
 
   @NotNull
   List<NimExprStmt> getExprStmtList();

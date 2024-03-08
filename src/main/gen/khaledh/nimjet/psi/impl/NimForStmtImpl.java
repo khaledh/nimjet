@@ -41,6 +41,12 @@ public class NimForStmtImpl extends ASTWrapperPsiElement implements NimForStmt {
 
   @Override
   @NotNull
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimPragma> getPragmaList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPragma.class);
   }

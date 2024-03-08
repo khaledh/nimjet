@@ -7,17 +7,8 @@ import com.intellij.psi.PsiElement;
 
 public interface NimBlockExpr extends NimExpr {
 
-  @NotNull
-  List<NimIdent> getIdentList();
-
   @Nullable
   NimComment getComment();
-
-  @NotNull
-  List<NimKeyword> getKeywordList();
-
-  @NotNull
-  List<NimOperator> getOperatorList();
 
   @Nullable
   NimStmtList getStmtList();

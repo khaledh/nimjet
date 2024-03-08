@@ -10,13 +10,19 @@ public interface NimObjectCase extends PsiElement {
   @NotNull
   List<NimComment> getCommentList();
 
+  @Nullable
+  NimExpr getExpr();
+
   @NotNull
-  List<NimExpr> getExprList();
+  List<NimIdent> getIdentList();
 
   @Nullable
   NimObjectBranches getObjectBranches();
 
   @NotNull
   List<NimPragma> getPragmaList();
+
+  @Nullable
+  NimTypeDescExpr getTypeDescExpr();
 
 }

@@ -35,14 +35,50 @@ public class NimVarTupleImpl extends ASTWrapperPsiElement implements NimVarTuple
 
   @Override
   @NotNull
+  public List<NimDoBlock> getDoBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimDoBlock.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimExprList> getExprListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimExprList.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimIdent.class);
+  }
+
+  @Override
+  @NotNull
+  public List<NimOptExprList> getOptExprListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimOptExprList.class);
+  }
+
+  @Override
+  @NotNull
   public List<NimPragma> getPragmaList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, NimPragma.class);
   }
 
   @Override
   @NotNull
-  public List<NimVarTuple> getVarTupleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimVarTuple.class);
+  public List<NimStmtList> getStmtListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NimStmtList.class);
+  }
+
+  @Override
+  @Nullable
+  public NimTypeDesc getTypeDesc() {
+    return findChildByClass(NimTypeDesc.class);
   }
 
 }

@@ -11,9 +11,6 @@ public interface NimPar extends PsiElement {
   List<NimComment> getCommentList();
 
   @NotNull
-  List<NimArrayConstr> getArrayConstrList();
-
-  @NotNull
   List<NimDoBlock> getDoBlockList();
 
   @NotNull
@@ -23,42 +20,15 @@ public interface NimPar extends PsiElement {
   List<NimExprList> getExprListList();
 
   @NotNull
-  List<NimIdent> getIdentList();
-
-  @NotNull
-  List<NimLiteral> getLiteralList();
-
-  @NotNull
-  List<NimOperator> getOperatorList();
-
-  @NotNull
   List<NimOptExprList> getOptExprListList();
-
-  @NotNull
-  List<NimPar> getParList();
-
-  @Nullable
-  NimPragma getPragma();
 
   @Nullable
   NimPragmaStmt getPragmaStmt();
-
-  @NotNull
-  List<NimPrimarySuffix> getPrimarySuffixList();
-
-  @NotNull
-  List<NimRawTypeDesc> getRawTypeDescList();
 
   @Nullable
   NimSemiStmtList getSemiStmtList();
 
   @NotNull
-  List<NimSetOrTableConstr> getSetOrTableConstrList();
-
-  @NotNull
   List<NimStmtList> getStmtListList();
-
-  @NotNull
-  List<NimTupleConstr> getTupleConstrList();
 
 }

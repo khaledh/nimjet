@@ -14,6 +14,9 @@ public interface NimForStmt extends PsiElement {
   NimExpr getExpr();
 
   @NotNull
+  List<NimIdent> getIdentList();
+
+  @NotNull
   List<NimPragma> getPragmaList();
 
   @Nullable

@@ -11,34 +11,28 @@ public interface NimIdentDefs extends PsiElement {
   List<NimComment> getCommentList();
 
   @NotNull
-  List<NimIdent> getIdentList();
-
-  @NotNull
-  List<NimOpr> getOprList();
-
-  @NotNull
-  List<NimBuiltInMagics> getBuiltInMagicsList();
-
-  @Nullable
-  NimCommaOptcomment getCommaOptcomment();
+  List<NimDoBlock> getDoBlockList();
 
   @NotNull
   List<NimDotSuffix> getDotSuffixList();
 
-  @Nullable
-  NimExpr getExpr();
+  @NotNull
+  List<NimExpr> getExprList();
 
   @NotNull
-  List<NimKeyword> getKeywordList();
+  List<NimExprList> getExprListList();
 
   @NotNull
-  List<NimOperator> getOperatorList();
+  List<NimIdent> getIdentList();
 
-  @Nullable
-  NimPostExprBlocks getPostExprBlocks();
+  @NotNull
+  List<NimOptExprList> getOptExprListList();
 
   @NotNull
   List<NimPragma> getPragmaList();
+
+  @NotNull
+  List<NimStmtList> getStmtListList();
 
   @Nullable
   NimTypeDesc getTypeDesc();

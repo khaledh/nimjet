@@ -1,7 +1,7 @@
 plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.17.2"
-    kotlin("jvm") version "1.9.22"
+    id("org.jetbrains.intellij") version "1.17.3"
+    kotlin("jvm") version "1.9.23"
 }
 
 group = "khaledh"
@@ -23,7 +23,7 @@ sourceSets {
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("2023.3")
+    version.set("2024.1")
     type.set("IC") // Target IDE Platform
 
     plugins.set(listOf(/* Plugin Dependencies */))
@@ -39,9 +39,13 @@ tasks {
         kotlinOptions.jvmTarget = "17"
     }
 
+    buildSearchableOptions {
+        enabled = false
+    }
+
     patchPluginXml {
-        sinceBuild.set("233")
-        untilBuild.set("233.*")
+        sinceBuild.set("241")
+        untilBuild.set("241.*")
     }
 
     signPlugin {
